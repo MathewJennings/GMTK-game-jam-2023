@@ -70,3 +70,9 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+
+# UI Layout
+UserSettings/Layouts/default-2022.dwlt
+
+# Temp folder
+GMTK-game-jam-2023/Temp/*
