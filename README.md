@@ -79,6 +79,10 @@ Sprints:
 ** [Franklin?] Event System:
 *** First day event for purchasing seeds from merchant
 *** Tax event on day 2 (can you pay or not?)
+** [Cho] Basic UI:
+***Title screen
+***Setting Screen
+***
 * Sprint 2:
 ** end days early
 ** starvation
