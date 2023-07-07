@@ -67,8 +67,9 @@ Sprints:
 ** [Mat, Sam S] Player Systems
 *** Map for farm
 *** Player sprite + movement
-*** Money
 ** [Felix] Inventory System (attachable to both Player and Merchants)
+*** Money
+*** Seeds, Crops (items)
 ** [Sam S] Crop management
 *** Planting seeds, watering seeds
 ***  Harvest quick seeds/plants on day 2
