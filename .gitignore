@@ -73,3 +73,4 @@ crashlytics-build.properties
 
 # UI Layout
 UserSettings/Layouts/default-2022.dwlt
+ProjectSettings/Packages/com.unity.testtools.codecoverage/Settings.json
