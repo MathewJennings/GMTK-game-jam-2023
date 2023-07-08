@@ -34,6 +34,16 @@ public class Plot : MonoBehaviour
         }
     }
 
+
+    public void highlight()
+    {
+        spriteRenderer.color = Color.yellow;
+    }
+
+    public void unhilight()
+    {
+        spriteRenderer.color = Color.white;
+    }
     private void checkWater()
     {
         if (isWatered && outOfWater())

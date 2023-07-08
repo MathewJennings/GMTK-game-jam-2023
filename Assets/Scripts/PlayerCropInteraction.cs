@@ -81,15 +81,27 @@ public class PlayerCropInteraction : MonoBehaviour
         Plot collidedPlot = collision.gameObject.GetComponent<Plot>();
         if (collidedPlot != null)
         {
+            selectPlot(collidedPlot);
             plot = collidedPlot;
+        }
+    }
+
+    private void selectPlot(Plot selectedPlot)
+    {
+        if (plot != null && selectedPlot != plot)
+        {
+            plot.unhilight();
+            selectedPlot.highlight();
+            plot = selectedPlot;
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         Plot collidedPlot = collision.gameObject.GetComponent<Plot>();
-        if (collidedPlot == plot)
+        if (collidedPlot == plot && plot != null)
         {
+            plot.unhilight();
             plot = null;
         }
     }
