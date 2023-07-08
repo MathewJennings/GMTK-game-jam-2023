@@ -95,6 +95,15 @@
 	* Gameplay elements for Action Points + Hunger
 	* End of Day systems
 	* How hungry are you? (affects AP for the next day)
+ * [Jenn] UI Document for Event popup
+ * [Mat] Fleshing out user input / interaction with the merchant on day 1
+ * [Mat eventually] The game design / feel of how Day 1 passes, how hunger develops, how the player spends AP
+ * [Cho] Designing the Tax Collector event for Day 2
+ * [Frankin] Fail and restart conditions
+ * [Sam S] Better NPCs for Events
+ 	* NEXT: better crop animations  
+ * [Sam M] Better crop user experience
+ * [Felix] Something something Events
 
 
 * end days early
