@@ -26,13 +26,6 @@ public class InventoryUI : MonoBehaviour
     private float inventory_width=100; 
 
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Q)) {
-            toggleInventory();
-        }
-    }
-
     private void toggleInventory()
     {
         if (isOpen)
