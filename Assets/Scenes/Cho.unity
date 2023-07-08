@@ -445,16 +445,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 160512b0af927444183e7d44b7892c45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  temp: 0
-  current_inventory: {fileID: 0}
   allItems: {fileID: 2013104876}
   itemName: {fileID: 82880390}
   itemQuantity: {fileID: 1363639759}
   itemDescription: {fileID: 1368611072}
-  totalItems: 0
   inventory_image: {fileID: 0}
-  current_inventory_images: []
-  inventory_position: {fileID: 0}
+  item_images: []
+  inventory_transform: {fileID: 0}
 --- !u!4 &168755133
 Transform:
   m_ObjectHideFlags: 0

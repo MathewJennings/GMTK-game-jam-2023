@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Diagnostics.Contracts;
 //using UnityEngine.UIElements;
 
 public class Inventory_UI : MonoBehaviour
@@ -35,6 +36,8 @@ public class Inventory_UI : MonoBehaviour
 
     //where the inventory should be.
     public Transform inventory_transform;
+
+    public Canvas inventory_canvas;
 
     // Start is called before the first frame update
     void Start()
@@ -91,6 +94,7 @@ public class Inventory_UI : MonoBehaviour
                         //current_inventory_images[totalItems_temp].transform.GetComponentInChildren<Button>().targetGraphic = item_images[];
 
                         current_inventory_images[totalItems_temp].transform.position = inventory_transform.position + new Vector3((totalItems - 1 + totalItems_temp)*(inventory_width*-0.5f), 0, 0);
+                        current_inventory_images[totalItems_temp].transform.parent = inventory_canvas.transform;
                     }
                 }
             }
