@@ -6930,6 +6930,55 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &387106653 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 295168019865161338, guid: aa2292d6d5083244d88a9a0035904307,
+    type: 3}
+  m_PrefabInstance: {fileID: 5980493494236986338}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &387106658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 387106653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: ae32feda6068e274aa05500d5ea1817c,
+    type: 3}
+  m_NotificationBehavior: 1
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: UIInteractions
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
+--- !u!114 &387106659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 387106653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f12656d381887db419ae67f4a1eb1922, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &417231712
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11402,9 +11451,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 635cff0b51987974189d2fff8fd755f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maturationHours: 0
-  waterHours: 0
-  dryHours: 0
+  maturationHours: 3
+  waterHours: 2
+  dryHours: 1
   yield: {fileID: 0}
 --- !u!4 &1907840420
 Transform:
@@ -11856,6 +11905,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 295168019865161338, guid: aa2292d6d5083244d88a9a0035904307,
+        type: 3}
+      propertyPath: m_TagString
+      value: UIInputManager
+      objectReference: {fileID: 0}
     - target: {fileID: 421045862628893355, guid: aa2292d6d5083244d88a9a0035904307,
         type: 3}
       propertyPath: m_Name
@@ -11870,7 +11924,7 @@ PrefabInstance:
     - target: {fileID: 1404973091818599975, guid: aa2292d6d5083244d88a9a0035904307,
         type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2614463780112110927, guid: aa2292d6d5083244d88a9a0035904307,
         type: 3}
@@ -12011,7 +12065,15 @@ PrefabInstance:
     m_RemovedGameObjects:
     - {fileID: 4851181905354041289, guid: aa2292d6d5083244d88a9a0035904307, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 295168019865161338, guid: aa2292d6d5083244d88a9a0035904307,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 387106658}
+    - targetCorrespondingSourceObject: {fileID: 295168019865161338, guid: aa2292d6d5083244d88a9a0035904307,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 387106659}
   m_SourcePrefab: {fileID: 100100000, guid: aa2292d6d5083244d88a9a0035904307, type: 3}
 --- !u!1 &5980493494236986339 stripped
 GameObject:
