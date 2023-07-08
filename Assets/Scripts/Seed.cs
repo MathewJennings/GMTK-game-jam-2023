@@ -8,7 +8,9 @@ public class Seed : MonoBehaviour
     public float maturationHours;
     public float waterHours;
     public float dryHours;
-    public Yield yield;
+    public int yieldQuantity;
+    public Item yield;
+    public Sprite sproutSprite;
     private DayTimeController dayTimeController;
 
     // Start is called before the first frame update

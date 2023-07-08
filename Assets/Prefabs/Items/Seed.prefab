@@ -98,4 +98,6 @@ MonoBehaviour:
   maturationHours: 0
   waterHours: 0
   dryHours: 0
-  yield: {fileID: 0}
+  yield:
+  - {fileID: 3859690282092915132, guid: 5d27bef0a40645e44b45440aaba17509, type: 3}
+  sproutSprite: {fileID: 0}

@@ -64,7 +64,7 @@ public class PlayerCropInteraction : MonoBehaviour
         {
             if (playerManager.canAffordAction(3)) { 
                 playerManager.ChangeAp(-3);
-                Yield yield = plot.harvest();
+                Item yield = plot.harvest();
                 //STICK IT IN THE INVENTORY!!!!!
             } else
             {

@@ -16,6 +16,7 @@ public class Plot : MonoBehaviour
     public Sprite seeded;
     public Sprite watered;
     public Sprite seededAndWatered;
+    public SpriteRenderer sproutRenderer;
     public DayTimeController dayTimeController;
     // Start is called before the first frame update
     void Start()
@@ -65,13 +66,23 @@ public class Plot : MonoBehaviour
     {
         if (seed != null && isMature())
         {
-            // Set mature sprite from Seed
+            growPlant();
         }
     }
 
     public void updateSprite(Sprite sprite)
     {
         spriteRenderer.sprite = sprite;
+    }
+
+    public void growPlant()
+    {
+        sproutRenderer.sprite = seed.sproutSprite;
+    }
+
+    public void removePlant()
+    {
+        sproutRenderer.sprite = null;
     }
 
     public void plantSeed(Seed seed)
@@ -91,12 +102,14 @@ public class Plot : MonoBehaviour
         this.timeWatered = dayTimeController.getCurrentTimeSeconds();
         updateSprite(isEmpty() ? watered : seededAndWatered);
     }
-    public Yield harvest()
+    public Item harvest()
     {
         // Update sprite when harvested
-        Yield yield = seed.yield;
+        Item yield = Instantiate(seed.yield);
+        yield.SetQuantity(seed.yieldQuantity);
         seed = null;
         updateSprite(isWatered ? watered : barren);
+        removePlant();
         return yield;
     }
 
@@ -106,6 +119,7 @@ public class Plot : MonoBehaviour
         this.isWatered = false;
         this.seed = null;
         updateSprite(barren);
+        removePlant();
     }
 
     public bool needsWatering()
