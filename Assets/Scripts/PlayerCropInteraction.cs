@@ -27,9 +27,7 @@ public class PlayerCropInteraction : MonoBehaviour
         if (context.performed)
         {
             serviceCrop();
-        }
-
-        
+        }        
     }
 
     private void serviceCrop()

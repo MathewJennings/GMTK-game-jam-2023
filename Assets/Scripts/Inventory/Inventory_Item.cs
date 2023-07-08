@@ -3,21 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Inventory_Button : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class Inventory_Item : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    public Inventory_UI inventory_UI;
+    private Inventory_UI inventory_UI;
     public string itemID;
-    // Start is called before the first frame update
-    void Start()
-    {
 
+    private void Start()
+    {
+        inventory_UI = GameObject.FindGameObjectWithTag("InventoryUI").GetComponent<Inventory_UI>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
     public void OnPointerEnter(PointerEventData eventData)
     {
         inventory_UI.UpdateItemDescription(itemID);
