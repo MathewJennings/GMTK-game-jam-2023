@@ -55,8 +55,8 @@ public class DayTimeController : MonoBehaviour
         inventoryUi.CloseInventory();
         dayTransitionOverlay.SetActive(true);
 
-        PlayerManager playerManager= GameObject.FindGameObjectsWithTag("Player")[0].GetComponent<PlayerManager>();
-        int hunger = playerManager.hunger;
+        PlayerStats playerStats= GameObject.FindGameObjectsWithTag("Player")[0].GetComponent<PlayerStats>();
+        int hunger = playerStats.hunger;
 
         var textFields = dayTransitionOverlay.GetComponentsInChildren<TMP_Text>();
         int dayNumberTextIndex = 0;
@@ -64,7 +64,7 @@ public class DayTimeController : MonoBehaviour
         textFields[dayNumberTextIndex].text = "Day " + (currentDay + 1).ToString();
         textFields[apGainedText].text = "Hunger was " + hunger.ToString() + "\nAp gained is " + hunger.ToString();
 
-        playerManager.ChangeAp(hunger);
+        playerStats.ChangeAp(hunger);
 
         //fade in
         while (elapsedTime < fadeTime)

@@ -26,18 +26,6 @@ public class InventoryUI : MonoBehaviour
     private float inventory_width=100; 
 
 
-    private void toggleInventory()
-    {
-        if (isOpen)
-        {
-            CloseInventory();
-        } else
-        {
-            OpenInventory();
-        }
-        isOpen = !isOpen;
-    }
-
     public bool isInventoryOpen()
     {
         return isOpen;
@@ -45,10 +33,15 @@ public class InventoryUI : MonoBehaviour
 
     public void OpenInventory()
     {
+        if(isOpen)
+        {
+            return;
+        }
         inventoryBackground.SetActive(true);
         currentInventoryImages = new List<Image>();
         instantiateImages();
         ArrangeImagesHorizontally();
+        isOpen = true;
     }
 
     private void instantiateImages()
@@ -83,6 +76,7 @@ public class InventoryUI : MonoBehaviour
             Destroy(image.gameObject);
         }
         currentInventoryImages.Clear();
+        isOpen = false;
     }
 
     public void UpdateItemDescription(Item item)
