@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,18 +9,62 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float speed;
 
     private Rigidbody2D rigidbody;
+    private Animator animator;
+    public Plot crop;
 
     // Start is called before the first frame update
     void Start()
     {
         rigidbody = gameObject.GetComponent<Rigidbody2D>();
+        animator = gameObject.GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
         float h = Input.GetAxisRaw("Horizontal");
+        Debug.Log(h);
         float v = Input.GetAxisRaw("Vertical");
+        if (h > 0)
+        {
+            animator.SetBool("walkRight", true);
+        }
+        else if (h < 0)
+        {
+            animator.SetBool("walkLeft", true);
+        }
+        else
+        {
+            animator.SetBool("walkRight", false);
+            animator.SetBool("walkLeft", false);
+        }
+        if (v > 0)
+        {
+            animator.SetBool("walkUp", true);
+        } else if (v < 0)
+        {
+            animator.SetBool("walkDown", true);
+        }
+        else
+        {
+            animator.SetBool("walkUp", false);
+            animator.SetBool("walkDown", false);
+        }
         rigidbody.velocity = new Vector2(h * speed, v * speed);
+    }
+
+    [ContextMenu("cropStuff")]
+    public void interactWithCrop()
+    {
+        Debug.Log("button pressed");
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Plot collidedCrop = collision.gameObject.GetComponent<Plot>();
+        if (collidedCrop != null)
+        {
+            crop = collidedCrop;
+        }
     }
 }
