@@ -21,17 +21,35 @@ public class EventManager : MonoBehaviour
     public GameObject npcManager;
 
     //when the next event that was added to the queue is
-    private float nextEventTime;
+    private static float nextEventTime;
 
     // What day the EventManager thinks it currently is
     private float eventCurrentDay;
 
     private static GameObject npc;
 
+
     private static List<EventTemplate> eventTemplates;
 
-    // Start is called before the first frame update
-    public void Start()
+
+
+
+    public static int human_loyalty =0 ;
+    public static int goblin_loyalty = 0;
+    public static int philanthropic = 0;
+    public static int business = 0;
+
+    public static int human_loyalty_guests_threshold = 3;
+    public static int goblin_loyalty_guests_threshold = 3;
+    public static int goblin_loyalty_kick_threshold = -3;
+
+    public bool human_guests_occurred;
+    public bool goblin_guests_occurred;
+    public bool goblin_kick_occured;
+  
+
+// Start is called before the first frame update
+public void Start()
     {
         eventTemplates = new List<EventTemplate> {
             new EventTemplate(
@@ -62,6 +80,13 @@ public class EventManager : MonoBehaviour
                 new List<EventDelegate> { GoblinSoldier_GiveUp, GoblinSoldier_FightBack },
                 allNpcPrefabsList[0],0
             ),
+              new EventTemplate(
+                "tax Event",
+                "You hear yelling from your gate. You see goblin soldiers standing there. \"We have come today to collect your taxes! This will be crucial to win this war! Now behave and pay your taxes!\"",
+                new List<string> { "Pay", "Ignore" },
+                new List<EventDelegate> { PayTax, NotPayTax },
+                allNpcPrefabsList[0],0
+            ),
         };
 
         eventCurrentDay = 0;
@@ -71,9 +96,8 @@ public class EventManager : MonoBehaviour
         nextEvent = new Event(eventTemplates[0]);
 
         events = new Queue<Event>();
-        AddRandomEvent();
-        AddRandomEvent();
-        AddRandomEvent();
+        AddSpecificEvent("tax Event");
+        
     }
 
     public void PrintResult(string message)
@@ -99,6 +123,7 @@ public class EventManager : MonoBehaviour
         }
 
         playerInventory.RemoveItem("gold", 5);
+        philanthropic++;
         GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
             .PrintResult("You gave 5 gold.");
         return true;
@@ -109,6 +134,7 @@ public class EventManager : MonoBehaviour
         playerInventory.AddItem("gold", 10);
         GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
             .PrintResult("You got 5 gold.");
+        business--;
         return true;
     };
     EventDelegate giveFoo = () => {
@@ -125,10 +151,13 @@ public class EventManager : MonoBehaviour
             .PrintResult("You gave 2 apples.");
         UpdateEventPossibility("Angry Goblin Soldier: Human Soldier", 1);
         UpdateEventPossibility("human soldier", 0);
+        philanthropic++;
+        human_loyalty++;
         return true;
     };
     EventDelegate reportHumanSoldier = () => {
         Inventory playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
+        goblin_loyalty++;
         playerInventory.AddItem("gold", 2);
         GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
             .PrintResult("You got 2 gold.");
@@ -153,6 +182,8 @@ public class EventManager : MonoBehaviour
         UpdateEventPossibility("Angry Goblin Soldier: Human Soldier", 0);
         UpdateEventPossibility("human soldier", 1);
         return true;
+
+
     };
     EventDelegate GoblinSoldier_FightBack = () => {
         GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>().ChangeAp(-3);
@@ -160,7 +191,31 @@ public class EventManager : MonoBehaviour
             .PrintResult("Lost 3 AP.");
         UpdateEventPossibility("Angry Goblin Soldier: Human Soldier", 0);
         UpdateEventPossibility("human soldier", 1);
+        goblin_loyalty--;
         return true;
+    };
+    EventDelegate PayTax = () => {
+        Inventory playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
+        if (playerInventory.inventory["gold"].GetQuantity() < 5)
+        {
+            PrintResult("You do not have enough resources to give.");
+            return false;
+        }
+
+        playerInventory.RemoveItem("gold", 5);
+        PrintResult("Lost 5 gold.");
+        goblin_loyalty++;
+        return true;
+
+
+    };
+    EventDelegate NotPayTax = () => {
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>().ChangeAp(-3);
+        PrintResult("Lost 3 AP.");
+        goblin_loyalty--;
+        return true;
+
+
     };
 
     EventDelegate openShopMenu = () =>
@@ -169,6 +224,37 @@ public class EventManager : MonoBehaviour
         return true;
     };
 
+    //Events that occur based on parameters are added through this method
+    public bool AddSpecialEvents()
+    {
+        if (human_loyalty > human_loyalty_guests_threshold && !human_guests_occurred)
+        {
+            human_guests_occurred = true;
+            //AddSpecificEvent("Human Guests");
+            //Debug.Log("Special Event added");
+            return true;
+
+        }
+        else if (human_loyalty > goblin_loyalty_guests_threshold && !goblin_guests_occurred)
+        {
+            goblin_guests_occurred = true;
+            //AddSpecificEvent("Goblin Guests");
+           // Debug.Log("Special Event added");
+
+            return true;
+
+        }
+        else if (human_loyalty < goblin_loyalty_kick_threshold && !goblin_kick_occured)
+        {
+            goblin_kick_occured = true;
+            //AddSpecificEvent("Goblin Exiled");
+            //Debug.Log("Special Event added");
+
+            return true;
+
+        }
+        return false;
+    }
 
     //Add a random event to the queue
     public void AddRandomEvent()
@@ -176,31 +262,31 @@ public class EventManager : MonoBehaviour
         float currentPossibility = UnityEngine.Random.Range(0f, 1f);
         int randomIndex = UnityEngine.Random.Range(0, eventTemplates.Count - 1);
         int testing = 0;
-        Debug.Log("random index:" + randomIndex + "out of "+ (eventTemplates.Count - 1));
-        Debug.Log("last one"+eventTemplates[eventTemplates.Count - 1].name);
+        //Debug.Log("random index:" + randomIndex + "out of "+ (eventTemplates.Count - 1));
+        //Debug.Log("last one"+eventTemplates[eventTemplates.Count - 1].name);
     
         //If the event that we are thinking about does not occur based on the possibility, we try to look for another event. This is repeated.
         while (currentPossibility >= eventTemplates[randomIndex].possibility)
         {
-            Debug.Log("random index:" + randomIndex);
+            //Debug.Log("random index:" + randomIndex);
 
-            Debug.Log(randomIndex);
+            //Debug.Log(randomIndex);
             currentPossibility = UnityEngine.Random.Range(0f, 1f);
             randomIndex = UnityEngine.Random.Range(0, eventTemplates.Count);
             testing++;
             if(testing>=100)
             {
-                Debug.Log("possibily infinite while loop");
+                //Debug.Log("possibily infinite while loop");
                 return;
             }
         }
-        Debug.Log(eventTemplates[randomIndex].name + "");
+        //Debug.Log(eventTemplates[randomIndex].name + "");
 
         events.Enqueue(new Event(eventTemplates[randomIndex]));
 
     }
     //Add an event of name "name"
-    public void AddEvent(string name)
+    public void AddSpecificEvent(string name)
     {
         foreach(EventTemplate template in eventTemplates) 
         {
@@ -209,6 +295,18 @@ public class EventManager : MonoBehaviour
                 events.Enqueue(new Event(template));
                 return;
             }
+        }
+
+    }
+    public void AddEvent()
+    {
+        if(AddSpecialEvents())
+        {
+
+        }
+        else
+        {
+            AddRandomEvent();
         }
 
     }
@@ -247,14 +345,21 @@ public class EventManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (eventCurrentDay < dayTimeController.getCurrentDay())
+        Debug.Log("event current day " + eventCurrentDay);
+        Debug.Log("next event time " + nextEventTime);
+        if (eventCurrentDay <= dayTimeController.getCurrentDay() && nextEvent==null)
         {
             // We hit the next day. Pull out an event from the queue.
-            eventCurrentDay = dayTimeController.getCurrentDay();
+            Debug.Log("We started a new day");
+            eventCurrentDay = dayTimeController.getCurrentDay()+1;
             if (events.Count > 0)
             {
                 nextEventTime = RandomNextEventTime();
                 nextEvent = events.Dequeue();
+            }
+            else
+            {
+                AddEvent();
             }
         }
 
@@ -263,10 +368,10 @@ public class EventManager : MonoBehaviour
             Debug.Log("length of event: "+ events.Count);
             if (events.Count < 2)
             {
-                AddRandomEvent();
-                Debug.Log("adding an event");
+                AddEvent();
 
             }
+            //AddSpecialEvents();
             nextEvent.eventStarted = true;
             npc = Instantiate(nextEvent.template.npcPrefab);
             DialogDelegate dialogDelegate = () =>
