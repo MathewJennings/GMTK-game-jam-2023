@@ -289,7 +289,7 @@ MonoBehaviour:
   startGold: 20
   startAppleSeed: 3
   startAppleCrop: 0
-  startCarrotSeed: 3
+  startCarrotSeed: 6
   startCarrotCrop: 0
   priceAppleSeed: 2
   priceAppleCrop: 10

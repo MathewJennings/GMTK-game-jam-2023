@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Linq;
+using System.Globalization;
 
 public class Inventory_UI : MonoBehaviour
 {
     [SerializeField] Inventory player_inventory;
     [SerializeField] Image inventoryItemPrefab;
+    [SerializeField] GameObject inventoryBackground;
     [SerializeField] public TMP_Text itemName;
-    [SerializeField] public TMP_Text itemQuantity;
     [SerializeField] public TMP_Text itemDescription;
+    [SerializeField] Transform inventoryParentTrasform;
 
     private bool isOpen;
 
@@ -24,8 +27,6 @@ public class Inventory_UI : MonoBehaviour
 
     //where the inventory should be.
     public Transform inventory_transform;
-
-    public Canvas inventory_canvas;
 
     void Update()
     {
@@ -48,6 +49,7 @@ public class Inventory_UI : MonoBehaviour
 
     public void OpenInventory()
     {
+        inventoryBackground.SetActive(true);
         currentInventoryImages = new List<Image>();
         instantiateImages();
         ArrangeImagesHorizontally();
@@ -60,9 +62,10 @@ public class Inventory_UI : MonoBehaviour
             if (item.GetQuantity() != 0)
             {
                 Image image = Instantiate(inventoryItemPrefab);
-                image.transform.SetParent(inventory_canvas.transform, false);
-                image.transform.position = new Vector3(Screen.width * 0.5f, Screen.height * 0.25f, 0); ;
-                image.gameObject.GetComponentInChildren<Inventory_Item>().itemID = item.GetItemId();
+                image.GetComponent<Inventory_Item>().setItem(item);
+                image.sprite = item.GetInventoryIcon();
+                image.transform.SetParent(inventoryParentTrasform, false);
+                image.transform.position = new Vector3(Screen.width * 0.5f, 105, 0); ;
                 currentInventoryImages.Add(image);
             }
         }
@@ -78,16 +81,16 @@ public class Inventory_UI : MonoBehaviour
     }
     public void CloseInventory()
     {
+        inventoryBackground.SetActive(false);
         foreach (Image image in currentInventoryImages)
         {
             Destroy(image.gameObject);
         }
     }
 
-    public void UpdateItemDescription(string itemID)
+    public void UpdateItemDescription(Item item)
     {
-        itemName.text = player_inventory.inventory[itemID].GetItemId();
-        itemQuantity.text = player_inventory.inventory[itemID].GetQuantity()+"";
-        itemDescription.text = player_inventory.inventory[itemID].GetDescription();
+        itemName.text = new CultureInfo("en-US", false).TextInfo.ToTitleCase(item.GetItemId());
+        itemDescription.text = item.GetDescription();
     }
 }

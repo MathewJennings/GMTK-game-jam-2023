@@ -4,17 +4,20 @@ using UnityEngine;
 
 public class AllItems : MonoBehaviour
 {
-    private List<Item> allItems = new List<Item>
-    {
-        new Item("gold", Item.ItemType.Gold, 0, 1, "Dwarves love it, Goblins see it as a necessary evil, but humans will kill for it."),
-        new Item("appleSeed", Item.ItemType.Seed, 0, 10, "Grows into a foo. What is a foo anyway?", "fooCrop"),
-        new Item("appleCrop", Item.ItemType.Crop, 0, 10, "I see, so this is a foo.", "fooSeed"),
-        new Item("carrotSeed", Item.ItemType.Seed, 0, 10, "Grows into a bar. Takes 3 days to grow", "barCrop"),
-        new Item("carrotCrop", Item.ItemType.Crop, 0, 10, "Bars are high in protien, but also high in sugar. Great for a war torn hellscape no?", "barSeed"),
-    };
+    [SerializeField] List<GameObject> itemPrefabs;
+
+    private List<Item> items;
 
     public List<Item> GetAllItems()
     {
-        return allItems;
+        if (items == null)
+        {
+            items = new List<Item>(itemPrefabs.Count);
+            foreach (GameObject prefab in itemPrefabs)
+            {
+                items.Add(prefab.GetComponent<Item>());
+            }
+        }
+        return items;
     }
 }
