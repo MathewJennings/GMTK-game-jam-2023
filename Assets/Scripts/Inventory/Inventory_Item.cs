@@ -48,12 +48,26 @@ public class Inventory_Item : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     {
         if (uiInputManager.GetClickedGameObjects().Contains(this.gameObject))
         {
-            Seed seed = item.GetSeed();
-            if (seed != null)
+            Item.ItemType itemType = item.GetItemType();
+
+            if (Item.ItemType.Seed == itemType)
             {
-                playerCropInteraction.plantSeed(item, seed);
-                inventoryUI.CloseInventory();
+                Seed seed = item.GetSeed();
+                if (seed != null)
+                {
+                    playerCropInteraction.plantSeed(item, seed);
+                    inventoryUI.CloseInventory();
+                }
+            } else if (Item.ItemType.Crop == itemType)
+            {
+                Crop crop = item.GetCrop();
+                if (crop != null)
+                {
+                   playerCropInteraction.eatCrop(item, crop);
+                    inventoryUI.CloseInventory();
+                }
             }
+            
         }
     }
 

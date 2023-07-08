@@ -272,9 +272,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 301412385f786874aae7125f11da663f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxAp: 10
+  maxAp: 15
   maxHunger: 10
-  hungerTickIntervalSeconds: 1
   hungerLostPerTick: 1
   hungerEmptyBar: {fileID: 0}
   apEmptyBar: {fileID: 0}

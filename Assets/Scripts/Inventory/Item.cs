@@ -22,9 +22,10 @@ public class Item :MonoBehaviour
     [SerializeField] string correspondingId;
     [SerializeField] Sprite inventoryIcon;
     [SerializeField] Seed seed;
+    [SerializeField] Crop crop;
 
     public Item(string itemId, ItemType itemType, int quantity,
-                int price, string description, Sprite inventoryIcon, string correspondingId = "", Seed seed = null)
+                int price, string description, Sprite inventoryIcon, string correspondingId = "", Seed seed = null, Crop crop = null)
     {
         this.itemId = itemId;
         this.itemType = itemType;
@@ -34,6 +35,7 @@ public class Item :MonoBehaviour
         this.inventoryIcon = inventoryIcon;
         this.correspondingId = correspondingId;
         this.seed = seed;
+        this.crop = crop;
     }
 
     public Item(Item item)
@@ -46,6 +48,7 @@ public class Item :MonoBehaviour
         this.inventoryIcon = item.inventoryIcon;
         this.correspondingId = item.correspondingId;
         this.seed = item.seed;
+        this.crop = item.crop;
     }
 
     public override string ToString()
@@ -123,6 +126,11 @@ public class Item :MonoBehaviour
     public Seed GetSeed()
     {
         return seed;
+    }
+
+    public Crop GetCrop()
+    {
+        return crop;
     }
 
 }

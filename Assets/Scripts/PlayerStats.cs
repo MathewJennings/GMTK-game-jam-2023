@@ -8,7 +8,6 @@ public class PlayerStats : MonoBehaviour
 
     public int maxAp;
     public int maxHunger;
-    public float hungerTickIntervalSeconds;
     public int hungerLostPerTick;
     public int hunger { set; get; }
     public int ap { set; get; }
@@ -17,6 +16,7 @@ public class PlayerStats : MonoBehaviour
     public GameObject overlayManager;
 
     float nextHungerTick;
+    float hungerTickIntervalSeconds = DayTimeController.secondsInAnHour;
     DayTimeController dayTimeController;
     Vector2 originalStartPosition;
 

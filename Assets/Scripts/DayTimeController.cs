@@ -7,8 +7,8 @@ using UnityEngine.UI;
 public class DayTimeController : MonoBehaviour
 {
 
-    public static float secondsInADay = 6;
-    public static float secondsInAnHour = 2;
+    public static float secondsInADay = 30;
+    public static float secondsInAnHour = 6;
 
     public Color nightLightColor;
     public AnimationCurve nightTimeCurve;

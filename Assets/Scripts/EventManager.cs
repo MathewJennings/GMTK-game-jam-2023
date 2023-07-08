@@ -17,75 +17,60 @@ public class EventManager : MonoBehaviour
     public List<GameObject> allNpcPrefabsList;
     public GameObject npcManager;
 
-    //when the last event that was added to the queue is
-    private float lastEventTime;
-
     //when the next event that was added to the queue is
     private float nextEventTime;
 
-    //minimum time that needs to pass since the last event for the next event to occur
-    private float minEventGap = 5f;
-
-    //maximum time that needs to pass since the last event for the next event to occur
-    private float maxEventGap = 10f;
+    // What day the EventManager thinks it currently is
+    private float eventCurrentDay;
 
     private static GameObject npc;
 
-
     private static List<EventTemplate> eventTemplates;
-
-
 
     // Start is called before the first frame update
     public void Start()
     {
-        // TODO: Gray out options that you are unable to do.
         eventTemplates = new List<EventTemplate> {
             new EventTemplate(
                 "merchant",
                 "You hear a knock at your gate. \"Would you like to make a trade?",
                 new List<string> { "Let's Trade", "Ignore" },
                 new List<EventDelegate> { openShopMenu, closeDialog },
-                allNpcPrefabsList[0],1,0
+                allNpcPrefabsList[0],1
             ),
             new EventTemplate(
                 "old lady", 
                 "You hear a knock at your gate. \"Would you help me? I'm a poor defenseless grandma and my child is sick. I need 5 gold to buy some medicine\". You ponder your options", 
                 new List<string> { "Give gold!", "Rob her!" }, 
                 new List<EventDelegate> { giveGrandma, robGrandma },
-                allNpcPrefabsList[0],1,0
+                allNpcPrefabsList[0],1
             ),
             new EventTemplate(
                 "human soldier",
                 "You hear a voice coming from your gate. It's a human soldier. He seems tired and injured. Maybe some foo will help him.",
                 new List<string> { "Give Foo", "Report to Goblin soliders" },
                 new List<EventDelegate> { giveFoo, reportHumanSoldier },
-                allNpcPrefabsList[0],1,0
+                allNpcPrefabsList[0],1
             ),
             new EventTemplate(
-                "Angry Goblin Solider: Human Soldier",
+                "Angry Goblin Soldier: Human Soldier",
                 "You hear a knock at your gate. It's goblin soldiers. \"Someone saw you helping the human soldiers!\" you betrayed us!",
                 new List<string> { "Give up", "fight back" },
                 new List<EventDelegate> { GoblinSoldier_GiveUp, GoblinSoldier_FightBack },
-                allNpcPrefabsList[0],0,0
+                allNpcPrefabsList[0],0
             ),
         };
 
-        // Next event needs to have timestamp less than everything in events, and all events in
-        // the queue must be in order.
-        nextEventTime = UnityEngine.Random.Range(minEventGap, maxEventGap);
-        nextEvent = new Event(nextEventTime, eventTemplates[0]);
+        eventCurrentDay = 0;
+
+        // Hard code first event to be merchant appearing 2 seconds in.
+        nextEventTime = 2f;
+        nextEvent = new Event(eventTemplates[0]);
+
         events = new Queue<Event>();
-        lastEventTime = nextEventTime;
         AddRandomEvent();
         AddRandomEvent();
         AddRandomEvent();
-
-
-
-
-
-
     }
 
     EventDelegate closeDialog = () =>
@@ -97,7 +82,6 @@ public class EventManager : MonoBehaviour
         Inventory playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
         playerInventory.RemoveItem("gold", 5);
         Debug.Log(playerInventory.inventory["gold"].GetQuantity());
-
     };
 
     EventDelegate robGrandma = () => {
@@ -124,13 +108,11 @@ public class EventManager : MonoBehaviour
         playerInventory.RemoveItem("gold", 5);
         UpdateEventPossibility("Angry Goblin Solider: Human Soldier", 0);
         UpdateEventPossibility("human soldier", 1);
-
     };
     EventDelegate GoblinSoldier_FightBack = () => {
         GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>().ChangeAp(-3);
         UpdateEventPossibility("Angry Goblin Solider: Human Soldier", 0);
         UpdateEventPossibility("human soldier", 1);
-
     };
 
     EventDelegate openShopMenu = () =>
@@ -142,7 +124,6 @@ public class EventManager : MonoBehaviour
     //Add a random event to the queue
     public void AddRandomEvent()
     {
-       nextEventTime = lastEventTime + UnityEngine.Random.Range(minEventGap, maxEventGap);
         float currentPossibility = UnityEngine.Random.Range(0f, 1f);
         int randomIndex = UnityEngine.Random.Range(0, eventTemplates.Count - 1);
         int testing = 0;
@@ -150,7 +131,7 @@ public class EventManager : MonoBehaviour
         Debug.Log("last one"+eventTemplates[eventTemplates.Count - 1].name);
     
         //If the event that we are thinking about does not occur based on the possibility, we try to look for another event. This is repeated.
-        while (currentPossibility >= eventTemplates[randomIndex].possibility || eventTemplates[randomIndex].minTime>dayTimeController.getCurrentTimeSeconds())
+        while (currentPossibility >= eventTemplates[randomIndex].possibility)
         {
             Debug.Log("random index:" + randomIndex);
 
@@ -166,25 +147,33 @@ public class EventManager : MonoBehaviour
         }
         Debug.Log(eventTemplates[randomIndex].name + "");
 
-        events.Enqueue(new Event(nextEventTime, eventTemplates[randomIndex]));
-        lastEventTime = nextEventTime;
+        events.Enqueue(new Event(eventTemplates[randomIndex]));
 
     }
     //Add an event of name "name"
     public void AddEvent(string name)
     {
-        nextEventTime = lastEventTime + UnityEngine.Random.Range(minEventGap, maxEventGap);
-        foreach(EventTemplate template in  eventTemplates) 
+        foreach(EventTemplate template in eventTemplates) 
         {
             if(template.name == name)
             {
-                events.Enqueue(new Event(nextEventTime, template));
-                lastEventTime = nextEventTime;
+                events.Enqueue(new Event(template));
                 return;
             }
         }
 
     }
+
+    public float RandomNextEventTime()
+    {
+        // Earliest time is 5 seconds into the day.
+        float earliestTime = (eventCurrentDay * DayTimeController.secondsInADay) + 5f;
+        // Latest time is 5 seconds before end of day.
+        float latestTime = ((eventCurrentDay + 1) * DayTimeController.secondsInADay) - 5f;
+
+        return UnityEngine.Random.Range(earliestTime, latestTime);
+    }
+
     private static void UpdateEventPossibility(string name, float possibility)
     {
         foreach (EventTemplate template in eventTemplates)
@@ -209,11 +198,18 @@ public class EventManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if(events.Count<2)
-        //{
-        //    AddRandomEvent();
-        //}
-        if (nextEvent != null && !nextEvent.eventStarted && nextEvent.time < dayTimeController.getCurrentTimeSeconds())
+        if (eventCurrentDay < dayTimeController.getCurrentDay())
+        {
+            // We hit the next day. Pull out an event from the queue.
+            eventCurrentDay = dayTimeController.getCurrentDay();
+            if (events.Count > 0)
+            {
+                nextEventTime = RandomNextEventTime();
+                nextEvent = events.Dequeue();
+            }
+        }
+
+        if (nextEvent != null && !nextEvent.eventStarted && nextEventTime < dayTimeController.getCurrentTimeSeconds())
         {
             Debug.Log("length of event: "+ events.Count);
             if (events.Count < 2)
@@ -246,7 +242,7 @@ public class EventManager : MonoBehaviour
                         npc.GetComponent<Animator>().SetBool("walkRight", true);
                     });
                 }
-                nextEvent = events.Count > 0 ? events.Dequeue() : null;
+                nextEvent = null;
             };
 
             npc.GetComponent<Npc>().SetFields(dialogDelegate);
@@ -256,13 +252,11 @@ public class EventManager : MonoBehaviour
 
 public class Event
 {
-    public float time { get; }
     public EventTemplate template { get; }
     public bool eventStarted { get; set; }
 
-    public Event(float time, EventTemplate template)
+    public Event(EventTemplate template)
     {
-        this.time = time;
         this.template = template;
         eventStarted = false;
     }
@@ -280,10 +274,7 @@ public class EventTemplate
     //Can be used when events are conditional of other events
     public float possibility;
 
-    //Earliest when this event can occur.
-    public float minTime;
-
-    public EventTemplate(string name, string dialogText, List<string> choices, List<EventDelegate> consequences, GameObject npcPrefab, float possibility, float minTime)
+    public EventTemplate(string name, string dialogText, List<string> choices, List<EventDelegate> consequences, GameObject npcPrefab, float possibility)
     {
         this.name = name;
         this.dialogText = dialogText;
@@ -291,7 +282,6 @@ public class EventTemplate
         this.consequences = consequences;
         this.npcPrefab = npcPrefab;
         this.possibility = possibility;
-        this.minTime = minTime;
     }
 
     public void executeOption(int option)
