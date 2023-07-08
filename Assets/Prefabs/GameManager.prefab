@@ -2887,6 +2887,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   dayLightColor: {r: 0.8301887, g: 0.69312924, b: 0.69312924, a: 1}
   overlayManager: {fileID: 8443958275546190256}
+  playerMovement: {fileID: 5347596603119480014}
   isTimePaused: 0
   currTime: {fileID: 8370897722651218487}
 --- !u!114 &1404973091818599975
@@ -2937,6 +2938,7 @@ MonoBehaviour:
   farmPlots: {fileID: 3134312597066147223}
   playerInventory: {fileID: 837200613407389485}
   merchantInventory: {fileID: 4954467861480814968}
+  playerMovement: {fileID: 5347596603119480014}
 --- !u!1 &6740177115036083952
 GameObject:
   m_ObjectHideFlags: 0
@@ -8718,6 +8720,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 301412385f786874aae7125f11da663f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5347596603119480014 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: -5959350627749875866, guid: 3664f3d38cdefcb42b4822bc9f0c381f,
+    type: 3}
+  m_PrefabInstance: {fileID: 7456369897525871528}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8923f518b9a6204dac8f3ca40c9b07e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &7772791736979818168

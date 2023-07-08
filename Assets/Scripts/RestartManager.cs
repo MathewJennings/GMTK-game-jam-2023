@@ -11,6 +11,7 @@ public class RestartManager : MonoBehaviour
     public GameObject farmPlots;
     public Inventory playerInventory;
     public Inventory merchantInventory;
+    public PlayerMovement playerMovement;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,5 +29,6 @@ public class RestartManager : MonoBehaviour
         }
         playerInventory.Start();
         merchantInventory.Start();
+        playerMovement.Start();
     }
 }

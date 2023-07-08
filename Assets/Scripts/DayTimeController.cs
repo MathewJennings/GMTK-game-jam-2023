@@ -14,9 +14,7 @@ public class DayTimeController : MonoBehaviour
     public AnimationCurve nightTimeCurve;
     public Color dayLightColor = Color.white;
     public OverlayManager overlayManager;
-
-    private InventoryUI playerInventoryUi;
-
+    public PlayerMovement playerMovement;
 
     float time = 0;
     public bool isTimePaused = false;
@@ -30,7 +28,6 @@ public class DayTimeController : MonoBehaviour
         time = 0;
         isTimePaused = false;
         currentDay = 0;
-        playerInventoryUi = GameObject.FindGameObjectWithTag("Player").GetComponent<InventoryUI>();
     }
     void Update()
     {
@@ -58,6 +55,7 @@ public class DayTimeController : MonoBehaviour
     public void SetPausedTime(bool paused)
     {
         isTimePaused = paused;
+        playerMovement.setAllowMovement(!paused);
     }
 
     public float getCurrentTimeSeconds()
