@@ -233,26 +233,18 @@ public void Start()
         if (human_loyalty > human_loyalty_guests_threshold && !human_guests_occurred)
         {
             human_guests_occurred = true;
-            //AddSpecificEvent("Human Guests");
-            //Debug.Log("Special Event added");
             return true;
 
         }
         else if (human_loyalty > goblin_loyalty_guests_threshold && !goblin_guests_occurred)
         {
             goblin_guests_occurred = true;
-            //AddSpecificEvent("Goblin Guests");
-           // Debug.Log("Special Event added");
-
             return true;
 
         }
         else if (human_loyalty < goblin_loyalty_kick_threshold && !goblin_kick_occured)
         {
             goblin_kick_occured = true;
-            //AddSpecificEvent("Goblin Exiled");
-            //Debug.Log("Special Event added");
-
             return true;
 
         }
@@ -265,25 +257,18 @@ public void Start()
         float currentPossibility = UnityEngine.Random.Range(0f, 1f);
         int randomIndex = UnityEngine.Random.Range(0, eventTemplates.Count - 1);
         int testing = 0;
-        //Debug.Log("random index:" + randomIndex + "out of "+ (eventTemplates.Count - 1));
-        //Debug.Log("last one"+eventTemplates[eventTemplates.Count - 1].name);
     
         //If the event that we are thinking about does not occur based on the possibility, we try to look for another event. This is repeated.
         while (currentPossibility >= eventTemplates[randomIndex].possibility)
         {
-            //Debug.Log("random index:" + randomIndex);
-
-            //Debug.Log(randomIndex);
             currentPossibility = UnityEngine.Random.Range(0f, 1f);
             randomIndex = UnityEngine.Random.Range(0, eventTemplates.Count);
             testing++;
             if(testing>=100)
             {
-                //Debug.Log("possibily infinite while loop");
                 return;
             }
         }
-        //Debug.Log(eventTemplates[randomIndex].name + "");
 
         events.Enqueue(new Event(eventTemplates[randomIndex]));
 
@@ -348,19 +333,16 @@ public void Start()
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("event current day " + eventCurrentDay);
-        Debug.Log("next event time " + nextEventTime);
-        if (eventCurrentDay <= dayTimeController.getCurrentDay() && nextEvent==null)
+        if (eventCurrentDay < dayTimeController.getCurrentDay() && nextEvent==null)
         {
             // We hit the next day. Pull out an event from the queue.
-            Debug.Log("We started a new day");
-            eventCurrentDay = dayTimeController.getCurrentDay()+1;
+            eventCurrentDay = dayTimeController.getCurrentDay();
             if (events.Count > 0)
             {
                 nextEventTime = RandomNextEventTime();
                 nextEvent = events.Dequeue();
             }
-            else
+            if (events.Count < 2)
             {
                 AddEvent();
             }
@@ -368,12 +350,6 @@ public void Start()
 
         if (nextEvent != null && !nextEvent.eventStarted && nextEventTime < dayTimeController.getCurrentTimeSeconds())
         {
-            Debug.Log("length of event: "+ events.Count);
-            if (events.Count < 2)
-            {
-                AddEvent();
-
-            }
             //AddSpecialEvents();
             nextEvent.eventStarted = true;
             npc = Instantiate(nextEvent.template.npcPrefab);
