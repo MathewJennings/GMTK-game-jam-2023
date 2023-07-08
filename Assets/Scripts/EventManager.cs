@@ -29,6 +29,8 @@ public class EventManager : MonoBehaviour
     //maximum time that needs to pass since the last event for the next event to occur
     private float maxEventGap = 10f;
 
+    private static GameObject npc;
+
 
     private static List<EventTemplate> eventTemplates;
 
@@ -42,7 +44,7 @@ public class EventManager : MonoBehaviour
             new EventTemplate(
                 "merchant",
                 "You hear a knock at your gate. \"Would you like to make a trade?",
-                new List<string> { "Browse", "Ignore" },
+                new List<string> { "Let's Trade", "Ignore" },
                 new List<EventDelegate> { openShopMenu, closeDialog },
                 allNpcPrefabsList[0],1,0
             ),
@@ -133,7 +135,7 @@ public class EventManager : MonoBehaviour
 
     EventDelegate openShopMenu = () =>
     {
-        // Open shop UI.
+        npc.GetComponent<InventoryUI>().OpenInventory(); //TODO
     };
 
 
@@ -221,7 +223,7 @@ public class EventManager : MonoBehaviour
 
             }
             nextEvent.eventStarted = true;
-            GameObject npc = Instantiate(nextEvent.template.npcPrefab);
+            npc = Instantiate(nextEvent.template.npcPrefab);
             DialogDelegate dialogDelegate = () =>
             {
                 dialogBox.SetActive(true);

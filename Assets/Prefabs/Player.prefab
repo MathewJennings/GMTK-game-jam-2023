@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 229923360912203666}
   - component: {fileID: 5435077983625184426}
   - component: {fileID: 7846411221716759685}
+  - component: {fileID: 7963742395487797735}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -38,7 +39,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &-5959350627749875866
 MonoBehaviour:
@@ -211,7 +212,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plot: {fileID: 0}
-  seed: {fileID: 0}
   playerManager: {fileID: 5435077983625184426}
 --- !u!114 &229923360912203666
 MonoBehaviour:
@@ -299,3 +299,21 @@ MonoBehaviour:
   priceAppleCrop: 10
   priceCarrotSeed: 2
   priceCarrotCrop: 10
+--- !u!114 &7963742395487797735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3885562788245913499}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 160512b0af927444183e7d44b7892c45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventory: {fileID: 7846411221716759685}
+  inventoryItemPrefab: {fileID: 6460754405479298437, guid: be429873bb8a8f748953d7284ad63a82,
+    type: 3}
+  inventoryBackground: {fileID: 0}
+  itemName: {fileID: 0}
+  itemDescription: {fileID: 0}

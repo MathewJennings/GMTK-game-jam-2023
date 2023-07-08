@@ -10826,12 +10826,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1494323930}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1501979743 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1337556105351859235, guid: aa2292d6d5083244d88a9a0035904307,
-    type: 3}
-  m_PrefabInstance: {fileID: 5980493494236986338}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1511394478
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11084,18 +11078,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1623866406}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1630037099 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 837200613407389485, guid: aa2292d6d5083244d88a9a0035904307,
-    type: 3}
-  m_PrefabInstance: {fileID: 5980493494236986338}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a6806cf9773fd1b4bad637c32af12731, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1727616945
 GameObject:
   m_ObjectHideFlags: 0
@@ -12366,16 +12348,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3569950538923823818, guid: 41869ef1355d8854ca5ac675b58f9a43,
-        type: 3}
-      propertyPath: m_Size.y
-      value: 0.88
-      objectReference: {fileID: 0}
-    - target: {fileID: 3569950538923823818, guid: 41869ef1355d8854ca5ac675b58f9a43,
-        type: 3}
-      propertyPath: m_Offset.y
-      value: 0.26
-      objectReference: {fileID: 0}
     - target: {fileID: 4593180718332273900, guid: 41869ef1355d8854ca5ac675b58f9a43,
         type: 3}
       propertyPath: m_Name
@@ -12449,106 +12421,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 421045862628893355, guid: aa2292d6d5083244d88a9a0035904307,
-        type: 3}
-      propertyPath: m_Name
-      value: Merchant Waypoint 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1337556105351859235, guid: aa2292d6d5083244d88a9a0035904307,
-        type: 3}
-      propertyPath: m_Icon
-      value: 
-      objectReference: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000,
-        type: 0}
-    - target: {fileID: 1404973091818599975, guid: aa2292d6d5083244d88a9a0035904307,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1404973091818599975, guid: aa2292d6d5083244d88a9a0035904307,
-        type: 3}
-      propertyPath: npcManager
-      value: 
-      objectReference: {fileID: 1501979743}
-    - target: {fileID: 1547921024885940035, guid: aa2292d6d5083244d88a9a0035904307,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 3.26
-      objectReference: {fileID: 0}
-    - target: {fileID: 1547921024885940035, guid: aa2292d6d5083244d88a9a0035904307,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 5.4000015
-      objectReference: {fileID: 0}
-    - target: {fileID: 2614463780112110927, guid: aa2292d6d5083244d88a9a0035904307,
-        type: 3}
-      propertyPath: m_Name
-      value: Merchant Waypoint 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3572910094679576943, guid: aa2292d6d5083244d88a9a0035904307,
-        type: 3}
-      propertyPath: m_Color.a
-      value: 0.78431374
-      objectReference: {fileID: 0}
-    - target: {fileID: 5658619004483071775, guid: aa2292d6d5083244d88a9a0035904307,
-        type: 3}
-      propertyPath: m_Size.x
-      value: 1.38
-      objectReference: {fileID: 0}
-    - target: {fileID: 5658619004483071775, guid: aa2292d6d5083244d88a9a0035904307,
-        type: 3}
-      propertyPath: m_Size.y
-      value: 2.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6339555457619556112, guid: aa2292d6d5083244d88a9a0035904307,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6557457336749286637, guid: aa2292d6d5083244d88a9a0035904307,
         type: 3}
       propertyPath: m_Name
       value: GameManager
-      objectReference: {fileID: 0}
-    - target: {fileID: 7359216834223482408, guid: aa2292d6d5083244d88a9a0035904307,
-        type: 3}
-      propertyPath: m_Name
-      value: Merchant  Waypoint 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8010511046765969236, guid: aa2292d6d5083244d88a9a0035904307,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 14.32
-      objectReference: {fileID: 0}
-    - target: {fileID: 8010511046765969236, guid: aa2292d6d5083244d88a9a0035904307,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -1.02
-      objectReference: {fileID: 0}
-    - target: {fileID: 8010511046765969236, guid: aa2292d6d5083244d88a9a0035904307,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8010511046765969236, guid: aa2292d6d5083244d88a9a0035904307,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8010511046765969236, guid: aa2292d6d5083244d88a9a0035904307,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8574908962339779395, guid: aa2292d6d5083244d88a9a0035904307,
-        type: 3}
-      propertyPath: player_inventory
-      value: 
-      objectReference: {fileID: 1630037099}
-    - target: {fileID: 8574908962339779395, guid: aa2292d6d5083244d88a9a0035904307,
-        type: 3}
-      propertyPath: inventory_transform
-      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 8916128969497441438, guid: aa2292d6d5083244d88a9a0035904307,
         type: 3}
@@ -12606,8 +12482,7 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: 4851181905354041289, guid: aa2292d6d5083244d88a9a0035904307, type: 3}
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aa2292d6d5083244d88a9a0035904307, type: 3}

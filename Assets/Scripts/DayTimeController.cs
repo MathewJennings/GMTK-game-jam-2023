@@ -15,7 +15,7 @@ public class DayTimeController : MonoBehaviour
     public Color dayLightColor = Color.white;
     public GameObject dayTransitionOverlay;
 
-    InventoryUI inventoryUi;
+    private InventoryUI playerInventoryUi;
 
 
     float time = 0;
@@ -27,7 +27,7 @@ public class DayTimeController : MonoBehaviour
 
     private void Start()
     {
-        inventoryUi = GameObject.FindGameObjectWithTag("InventoryUI").GetComponent<InventoryUI>();
+        playerInventoryUi = GameObject.FindGameObjectWithTag("Player").GetComponent<InventoryUI>();
     }
     void Update()
     {
@@ -52,7 +52,7 @@ public class DayTimeController : MonoBehaviour
         float fadeTime = 3f;
         float waitTime = 3f;
         float elapsedTime = 0f;
-        inventoryUi.CloseInventory();
+        playerInventoryUi.CloseInventory();
         dayTransitionOverlay.SetActive(true);
 
         PlayerStats playerStats= GameObject.FindGameObjectsWithTag("Player")[0].GetComponent<PlayerStats>();
