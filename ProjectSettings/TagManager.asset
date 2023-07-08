@@ -6,6 +6,7 @@ TagManager:
   tags:
   - ItemManager
   - InventoryUI
+  - UIInputManager
   layers:
   - Default
   - TransparentFX

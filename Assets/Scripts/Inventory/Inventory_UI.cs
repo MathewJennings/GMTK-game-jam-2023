@@ -47,6 +47,11 @@ public class Inventory_UI : MonoBehaviour
         isOpen = !isOpen;
     }
 
+    public bool isInventoryOpen()
+    {
+        return isOpen;
+    }
+
     public void OpenInventory()
     {
         inventoryBackground.SetActive(true);

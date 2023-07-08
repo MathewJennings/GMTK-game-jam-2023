@@ -9,10 +9,12 @@ public class PlayerCropInteraction : MonoBehaviour
     public Seed seed;
     public PlayerManager playerManager;
 
+    private Inventory_UI inventoryUI;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        inventoryUI = GameObject.FindGameObjectWithTag("InventoryUI").GetComponent<Inventory_UI>();
     }
 
     // Update is called once per frame
@@ -21,13 +23,10 @@ public class PlayerCropInteraction : MonoBehaviour
         
     }
 
-    [ContextMenu("cropStuff")]
-    public void interactWithCrop(InputAction.CallbackContext context)
+    public void OnUse()
     {
-        if (context.performed)
-        {
-            serviceCrop();
-        }        
+        Debug.Log("USE");
+        serviceCrop();
     }
 
     private void serviceCrop()
@@ -39,6 +38,10 @@ public class PlayerCropInteraction : MonoBehaviour
 
         if (plot.isEmpty())
         {
+            if (!inventoryUI.isInventoryOpen())
+            {
+                inventoryUI.OpenInventory();
+            }
             //WE SHOULD GET THE SEED FROM UI!!!!
             if (playerManager.canAffordAction(2)) {
                 playerManager.ChangeAp(-2);
