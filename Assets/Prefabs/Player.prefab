@@ -38,7 +38,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &-5959350627749875866
 MonoBehaviour:
@@ -274,6 +274,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxAp: 10
   maxHunger: 10
+  hungerTickIntervalSeconds: 1
+  hungerLostPerTick: 1
+  hungerEmptyBar: {fileID: 0}
+  apEmptyBar: {fileID: 0}
 --- !u!114 &7846411221716759685
 MonoBehaviour:
   m_ObjectHideFlags: 0
