@@ -64,7 +64,7 @@ public class EventManager : MonoBehaviour
             ),
         };
 
-        eventCurrentDay = 1;
+        eventCurrentDay = 0;
 
         // Hard code first event to be merchant appearing 2 seconds in.
         nextEventTime = 2f;
@@ -85,7 +85,6 @@ public class EventManager : MonoBehaviour
         Inventory playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
         playerInventory.RemoveItem("gold", 5);
         Debug.Log(playerInventory.inventory["gold"].GetQuantity());
-
     };
 
     EventDelegate robGrandma = () => {
@@ -112,13 +111,11 @@ public class EventManager : MonoBehaviour
         playerInventory.RemoveItem("gold", 5);
         UpdateEventPossibility("Angry Goblin Solider: Human Soldier", 0);
         UpdateEventPossibility("human soldier", 1);
-
     };
     EventDelegate GoblinSoldier_FightBack = () => {
         GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>().ChangeAp(-3);
         UpdateEventPossibility("Angry Goblin Solider: Human Soldier", 0);
         UpdateEventPossibility("human soldier", 1);
-
     };
 
     EventDelegate openShopMenu = () =>
@@ -173,9 +170,9 @@ public class EventManager : MonoBehaviour
     public float RandomNextEventTime()
     {
         // Earliest time is 5 seconds into the day.
-        float earliestTime = ((eventCurrentDay - 1) * DayTimeController.secondsInAnHour) + 5f;
+        float earliestTime = (eventCurrentDay * DayTimeController.secondsInADay) + 5f;
         // Latest time is 5 seconds before end of day.
-        float latestTime = (eventCurrentDay * DayTimeController.secondsInAnHour) - 5f;
+        float latestTime = ((eventCurrentDay + 1) * DayTimeController.secondsInADay) - 5f;
 
         return UnityEngine.Random.Range(earliestTime, latestTime);
     }
@@ -204,8 +201,6 @@ public class EventManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("event current day " + eventCurrentDay);
-        Debug.Log("next event time " + nextEventTime);
         if (eventCurrentDay < dayTimeController.getCurrentDay())
         {
             // We hit the next day. Pull out an event from the queue.
