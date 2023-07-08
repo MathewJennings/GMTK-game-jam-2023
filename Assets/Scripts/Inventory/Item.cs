@@ -17,7 +17,7 @@ public class Item
     private ItemType itemType;
     private int quantity;
     private int price;
-    private string description { get; set; };
+    private string description { get; set; }
     private string correspondingId;
 
     public Item(string itemId, ItemType itemType, int quantity,
