@@ -15,6 +15,8 @@ public class EventManager : MonoBehaviour
     public TMP_Text dialogText;
     public List<Button> choiceButtons;
     public GameObject dialogBox;
+    public GameObject consequenceBox;
+    public TMP_Text consequenceText;
     public List<GameObject> allNpcPrefabsList;
     public GameObject npcManager;
 
@@ -74,10 +76,11 @@ public class EventManager : MonoBehaviour
         AddRandomEvent();
     }
 
-    public static void PrintResult(string message)
+    public void PrintResult(string message)
     {
         // TODO: Make this print to UI.
-        Debug.Log(message);
+        
+        consequenceText.text = message;
     }
 
     EventDelegate closeDialog = () =>
@@ -90,31 +93,36 @@ public class EventManager : MonoBehaviour
         Inventory playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
         if (playerInventory.inventory["gold"].GetQuantity() < 5)
         {
-            PrintResult("You do not have enough gold.");
+            GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
+                .PrintResult("You do not have enough gold.");
             return false;
         }
 
         playerInventory.RemoveItem("gold", 5);
-        PrintResult("You gave 5 gold.");
+        GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
+            .PrintResult("You gave 5 gold.");
         return true;
     };
 
     EventDelegate robGrandma = () => {
         Inventory playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
         playerInventory.AddItem("gold", 10);
-        PrintResult("You got 5 gold.");
+        GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
+            .PrintResult("You got 5 gold.");
         return true;
     };
     EventDelegate giveFoo = () => {
         Inventory playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
         if (playerInventory.inventory["appleCrop"].GetQuantity() < 2)
         {
-            PrintResult("You do not have enough apples.");
+            GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
+                .PrintResult("You do not have enough apples.");
             return false;
         }
 
         playerInventory.RemoveItem("appleCrop", 2);
-        PrintResult("You gave 2 apples.");
+        GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
+            .PrintResult("You gave 2 apples.");
         UpdateEventPossibility("Angry Goblin Soldier: Human Soldier", 1);
         UpdateEventPossibility("human soldier", 0);
         return true;
@@ -122,7 +130,8 @@ public class EventManager : MonoBehaviour
     EventDelegate reportHumanSoldier = () => {
         Inventory playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
         playerInventory.AddItem("gold", 2);
-        PrintResult("You got 2 gold.");
+        GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
+            .PrintResult("You got 2 gold.");
         return true;
     };
     EventDelegate GoblinSoldier_GiveUp = () => {
@@ -131,21 +140,24 @@ public class EventManager : MonoBehaviour
             playerInventory.inventory["carrotCrop"].GetQuantity() < 3 ||
             playerInventory.inventory["gold"].GetQuantity() < 5)
         {
-            PrintResult("You do not have enough resources to give.");
+            GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
+                .PrintResult("You do not have enough resources to give.");
             return false;
         }
 
         playerInventory.RemoveItem("appleCrop", 3);
         playerInventory.RemoveItem("carrotCrop", 3);
         playerInventory.RemoveItem("gold", 5);
-        PrintResult("Lost 3 apples, 3 carrots, and 5 gold.");
+        GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
+            .PrintResult("Lost 3 apples, 3 carrots, and 5 gold.");
         UpdateEventPossibility("Angry Goblin Soldier: Human Soldier", 0);
         UpdateEventPossibility("human soldier", 1);
         return true;
     };
     EventDelegate GoblinSoldier_FightBack = () => {
         GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>().ChangeAp(-3);
-        PrintResult("Lost 3 AP.");
+        GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
+            .PrintResult("Lost 3 AP.");
         UpdateEventPossibility("Angry Goblin Soldier: Human Soldier", 0);
         UpdateEventPossibility("human soldier", 1);
         return true;
