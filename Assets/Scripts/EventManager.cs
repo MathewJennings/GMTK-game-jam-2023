@@ -117,7 +117,7 @@ public class EventManager : MonoBehaviour
         UpdateEventPossibility("Angry Goblin Solider: Human Soldier", 0);
     };
     EventDelegate GoblinSoldier_FightBack = () => {
-        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerManager>().ChangeAp(-3);
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>().ChangeAp(-3);
         UpdateEventPossibility("Angry Goblin Solider: Human Soldier", 0);
     };
 
