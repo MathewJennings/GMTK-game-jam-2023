@@ -29,10 +29,10 @@ public class EventManager : MonoBehaviour
     //maximum time that needs to pass since the last event for the next event to occur
     private float maxEventGap = 10f;
 
+    private static GameObject npc;
+
 
     private static List<EventTemplate> eventTemplates;
-
-    private static GameObject npc;
 
 
 
@@ -135,7 +135,7 @@ public class EventManager : MonoBehaviour
 
     EventDelegate openShopMenu = () =>
     {
-        npc.GetComponent<InventoryUI>().OpenInventory();
+        npc.GetComponent<InventoryUI>().OpenInventory(); //TODO
     };
 
 
@@ -223,7 +223,7 @@ public class EventManager : MonoBehaviour
 
             }
             nextEvent.eventStarted = true;
-            GameObject npc = Instantiate(nextEvent.template.npcPrefab);
+            npc = Instantiate(nextEvent.template.npcPrefab);
             DialogDelegate dialogDelegate = () =>
             {
                 dialogBox.SetActive(true);
@@ -247,6 +247,8 @@ public class EventManager : MonoBehaviour
                     });
                 }
                 nextEvent = events.Count > 0 ? events.Dequeue() : null;
+            };
+
             npc.GetComponent<Npc>().SetFields(dialogDelegate);
         }
     }
