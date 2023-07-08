@@ -25,7 +25,7 @@ public class Npc : MonoBehaviour
         }
         waypointIndex = 0;
         dayTimeController = FindAnyObjectByType<DayTimeController>();
-        transform.position = waypoints[0].transform.position;
+        transform.position = worldSpaceWaypoints[0].transform.position;
     }
 
     public void SetFields(DialogDelegate dialogDelegate)

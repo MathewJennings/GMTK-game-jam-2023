@@ -10745,6 +10745,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1494323930}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1501979743 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1337556105351859235, guid: aa2292d6d5083244d88a9a0035904307,
+    type: 3}
+  m_PrefabInstance: {fileID: 5980493494236986338}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1547889849
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11872,35 +11878,20 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1404973091818599975, guid: aa2292d6d5083244d88a9a0035904307,
+        type: 3}
+      propertyPath: npcManager
+      value: 
+      objectReference: {fileID: 1501979743}
     - target: {fileID: 2614463780112110927, guid: aa2292d6d5083244d88a9a0035904307,
         type: 3}
       propertyPath: m_Name
       value: Merchant Waypoint 1
       objectReference: {fileID: 0}
-    - target: {fileID: 3279765256064195290, guid: aa2292d6d5083244d88a9a0035904307,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 20.69
-      objectReference: {fileID: 0}
-    - target: {fileID: 3279765256064195290, guid: aa2292d6d5083244d88a9a0035904307,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.33
-      objectReference: {fileID: 0}
     - target: {fileID: 3572910094679576943, guid: aa2292d6d5083244d88a9a0035904307,
         type: 3}
       propertyPath: m_Color.a
       value: 0.78431374
-      objectReference: {fileID: 0}
-    - target: {fileID: 4499003117539304550, guid: aa2292d6d5083244d88a9a0035904307,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 750
-      objectReference: {fileID: 0}
-    - target: {fileID: 4499003117539304550, guid: aa2292d6d5083244d88a9a0035904307,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -23
       objectReference: {fileID: 0}
     - target: {fileID: 6339555457619556112, guid: aa2292d6d5083244d88a9a0035904307,
         type: 3}
