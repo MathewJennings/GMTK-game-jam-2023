@@ -55,7 +55,6 @@ public class Inventory : MonoBehaviour
     public List<Item> GetCrops()
     {
         List<Item> crops = new List<Item>();
-
         foreach (Item item in inventory.Values)
         {
             if (item.GetItemType() == Item.ItemType.Crop)
