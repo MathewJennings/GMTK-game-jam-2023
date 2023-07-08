@@ -44,28 +44,28 @@ public class EventManager : MonoBehaviour
                 "You hear a knock at your gate. \"Would you like to make a trade?",
                 new List<string> { "Browse", "Ignore" },
                 new List<EventDelegate> { openShopMenu, closeDialog },
-                allNpcPrefabsList[0],1
+                allNpcPrefabsList[0],1,0
             ),
             new EventTemplate(
                 "old lady", 
                 "You hear a knock at your gate. \"Would you help me? I'm a poor defenseless grandma and my child is sick. I need 5 gold to buy some medicine\". You ponder your options", 
                 new List<string> { "Give gold!", "Rob her!" }, 
                 new List<EventDelegate> { giveGrandma, robGrandma },
-                allNpcPrefabsList[0],1
+                allNpcPrefabsList[0],1,0
             ),
             new EventTemplate(
                 "human soldier",
                 "You hear a voice coming from your gate. It's a human soldier. He seems tired and injured. Maybe some foo will help him.",
                 new List<string> { "Give Foo", "Report to Goblin soliders" },
                 new List<EventDelegate> { giveFoo, reportHumanSoldier },
-                allNpcPrefabsList[0],0.5f
+                allNpcPrefabsList[0],0.5f,0
             ),
             new EventTemplate(
                 "Angry Goblin Solider: Human Soldier",
                 "You hear a knock at your gate. It's goblin soldiers. \"Someone saw you helping the human soldiers!\" you betrayed us!",
                 new List<string> { "Give up", "fight back" },
                 new List<EventDelegate> { GoblinSoldier_GiveUp, GoblinSoldier_FightBack },
-                allNpcPrefabsList[0],1
+                allNpcPrefabsList[0],1,10
             ),
         };
 
@@ -135,7 +135,7 @@ public class EventManager : MonoBehaviour
        int randomIndex = UnityEngine.Random.Range(0, eventTemplates.Count - 1);
         int testing = 0;
         //If the event that we are thinking about does not occur based on the possibility, we try to look for another event. This is repeated.
-        while (currentPossibility >= eventTemplates[randomIndex].possibility)
+        while (currentPossibility >= eventTemplates[randomIndex].possibility || eventTemplates[randomIndex].minTime<dayTimeController.getCurrentTimeSeconds())
         {
             currentPossibility = UnityEngine.Random.Range(0f, 1f);
             randomIndex = UnityEngine.Random.Range(0, eventTemplates.Count - 1);
@@ -246,7 +246,11 @@ public class EventTemplate
     //When all events are at possibility of 1, they will all occur with same possibility
     //Can be used when events are conditional of other events
     public float possibility;
-    public EventTemplate(string name, string dialogText, List<string> choices, List<EventDelegate> consequences, GameObject npcPrefab, float possibility)
+
+    //Earliest when this event can occur.
+    public float minTime;
+
+    public EventTemplate(string name, string dialogText, List<string> choices, List<EventDelegate> consequences, GameObject npcPrefab, float possibility, float minTime)
     {
         this.name = name;
         this.dialogText = dialogText;
@@ -254,6 +258,7 @@ public class EventTemplate
         this.consequences = consequences;
         this.npcPrefab = npcPrefab;
         this.possibility = possibility;
+        this.minTime = minTime;
     }
 
     public void executeOption(int option)
