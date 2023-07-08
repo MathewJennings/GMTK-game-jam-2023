@@ -10,6 +10,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -192941532611814194, guid: e125e33635f104c42b8d83445da4e719,
         type: 3}
+      propertyPath: yield
+      value: 
+      objectReference: {fileID: 3859690282092915132, guid: d9826c1f8e2b8d449b0d3f7b9df8f82b,
+        type: 3}
+    - target: {fileID: -192941532611814194, guid: e125e33635f104c42b8d83445da4e719,
+        type: 3}
       propertyPath: dryHours
       value: 3
       objectReference: {fileID: 0}
@@ -20,8 +26,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -192941532611814194, guid: e125e33635f104c42b8d83445da4e719,
         type: 3}
+      propertyPath: sproutSprite
+      value: 
+      objectReference: {fileID: -510589635, guid: 22fd5b8d12d56854ba07c8b8c1ab9947,
+        type: 3}
+    - target: {fileID: -192941532611814194, guid: e125e33635f104c42b8d83445da4e719,
+        type: 3}
+      propertyPath: yieldQuantity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -192941532611814194, guid: e125e33635f104c42b8d83445da4e719,
+        type: 3}
       propertyPath: maturationHours
-      value: 8
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3228856449878463659, guid: e125e33635f104c42b8d83445da4e719,
         type: 3}
@@ -31,28 +48,28 @@ PrefabInstance:
     - target: {fileID: 3228856449878463659, guid: e125e33635f104c42b8d83445da4e719,
         type: 3}
       propertyPath: itemId
-      value: carrotSeed
+      value: appleSeed
       objectReference: {fileID: 0}
     - target: {fileID: 3228856449878463659, guid: e125e33635f104c42b8d83445da4e719,
         type: 3}
       propertyPath: description
-      value: Grows into a bar. Takes 3 days to grow
+      value: Grows into a foo. What is a foo anyway?
       objectReference: {fileID: 0}
     - target: {fileID: 3228856449878463659, guid: e125e33635f104c42b8d83445da4e719,
         type: 3}
       propertyPath: inventoryIcon
       value: 
-      objectReference: {fileID: 1230900986, guid: 22fd5b8d12d56854ba07c8b8c1ab9947,
+      objectReference: {fileID: 1862331356, guid: 22fd5b8d12d56854ba07c8b8c1ab9947,
         type: 3}
     - target: {fileID: 3228856449878463659, guid: e125e33635f104c42b8d83445da4e719,
         type: 3}
       propertyPath: correspondingId
-      value: carrotCrop
+      value: appleCrop
       objectReference: {fileID: 0}
     - target: {fileID: 7506501371266054801, guid: e125e33635f104c42b8d83445da4e719,
         type: 3}
       propertyPath: m_Name
-      value: Carrot Seed v2
+      value: Apple Seed v2
       objectReference: {fileID: 0}
     - target: {fileID: 9158138433708770533, guid: e125e33635f104c42b8d83445da4e719,
         type: 3}

@@ -8,6 +8,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3467385716305010558, guid: 0bae09c30bd1c31479a0e4c33260aade,
+        type: 3}
+      propertyPath: seed
+      value: 
+      objectReference: {fileID: -192941532611814194}
     - target: {fileID: 7190468801923895088, guid: 0bae09c30bd1c31479a0e4c33260aade,
         type: 3}
       propertyPath: m_RootOrder
@@ -98,4 +103,6 @@ MonoBehaviour:
   maturationHours: 0
   waterHours: 0
   dryHours: 0
+  yieldQuantity: 0
   yield: {fileID: 0}
+  sproutSprite: {fileID: 0}

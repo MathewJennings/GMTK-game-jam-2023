@@ -1,0 +1,34 @@
+{
+    "name": "UIActions",
+    "maps": [
+        {
+            "name": "UIInteractions",
+            "id": "a6d57c2a-48a3-4571-90e0-aa8361dee7c0",
+            "actions": [
+                {
+                    "name": "Click",
+                    "type": "Button",
+                    "id": "1398f57e-d9d2-454c-b67a-a1ae65953171",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "4951bb34-3d8d-4e59-80ca-6765375651dd",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

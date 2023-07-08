@@ -17,11 +17,28 @@ public class EventManager : MonoBehaviour
     public List<GameObject> allNpcPrefabsList;
     public GameObject npcManager;
 
+    //when the last event that was added to the queue is
+    private float lastEventTime;
+
+    //when the next event that was added to the queue is
+    private float nextEventTime;
+
+    //minimum time that needs to pass since the last event for the next event to occur
+    private float minEventGap = 5f;
+
+    //maximum time that needs to pass since the last event for the next event to occur
+    private float maxEventGap = 10f;
+
+
+    private List<EventTemplate> eventTemplates;
+
+
+
     // Start is called before the first frame update
     void Start()
     {
         // TODO: Gray out options that you are unable to do.
-        List<EventTemplate> eventTemplates = new List<EventTemplate> {
+        eventTemplates = new List<EventTemplate> {
             new EventTemplate(
                 "merchant",
                 "You hear a knock at your gate. \"Would you like to make a trade?",
@@ -36,14 +53,27 @@ public class EventManager : MonoBehaviour
                 new List<EventDelegate> { giveGrandma, robGrandma },
                 allNpcPrefabsList[0]
             ),
+            new EventTemplate(
+                "human soldier",
+                "You hear a voice coming from your gate. It's a human soldier. He seems tired and injured. Maybe some foo will help him.",
+                new List<string> { "Give Foo", "Report to Goblin soliders" },
+                new List<EventDelegate> { giveFoo, reportHumanSoldier },
+                allNpcPrefabsList[0]
+            ),
         };
 
         // Next event needs to have timestamp less than everything in events, and all events in
         // the queue must be in order.
-        nextEvent = new Event(2f, eventTemplates[1]);
+        nextEventTime = UnityEngine.Random.Range(minEventGap, maxEventGap);
+        nextEvent = new Event(nextEventTime, eventTemplates[1]);
         events = new Queue<Event>();
-        events.Enqueue(new Event(4f, eventTemplates[1]));
-        events.Enqueue(new Event(6f, eventTemplates[1]));
+        lastEventTime = nextEventTime;
+        AddRandomEvent();
+        AddRandomEvent();
+        AddRandomEvent();
+        AddRandomEvent();
+
+
     }
 
     EventDelegate closeDialog = () =>
@@ -62,11 +92,46 @@ public class EventManager : MonoBehaviour
         playerInventory.AddItem("gold", 10);
         Debug.Log(playerInventory.inventory["gold"].GetQuantity());
     };
+    EventDelegate giveFoo = () => {
+        Inventory playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
+        playerInventory.RemoveItem("appleCrop", 2);
+        Debug.Log(playerInventory.inventory["appleCrop"].GetQuantity());
+    };
+    EventDelegate reportHumanSoldier = () => {
+        Inventory playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
+        playerInventory.AddItem("gold", 2);
+        Debug.Log(playerInventory.inventory["gold"].GetQuantity());
+    };
 
     EventDelegate openShopMenu = () =>
     {
         // Open shop UI.
     };
+
+
+    //Add a random event to the queue
+    public void AddRandomEvent()
+    {
+       nextEventTime = lastEventTime + UnityEngine.Random.Range(minEventGap, maxEventGap);
+        events.Enqueue(new Event(nextEventTime, eventTemplates[UnityEngine.Random.Range(0, eventTemplates.Count-1)]));
+        lastEventTime = nextEventTime;
+    }
+    //Add an event of name "name"
+    public void AddEvent(string name)
+    {
+        nextEventTime = lastEventTime + UnityEngine.Random.Range(minEventGap, maxEventGap);
+        foreach(EventTemplate template in  eventTemplates) 
+        {
+            if(template.name == name)
+            {
+                events.Enqueue(new Event(nextEventTime, template));
+                lastEventTime = nextEventTime;
+                return;
+            }
+        }
+
+    }
+
 
     // Clear listeners on all buttons.
     private void ResetChoiceButtons()
