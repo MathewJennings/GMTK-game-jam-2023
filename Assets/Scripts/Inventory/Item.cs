@@ -16,14 +16,16 @@ public class Item
     private string itemId;
     private ItemType itemType;
     private int quantity;
+    private int price;
     private string correspondingId;
 
     public Item(string itemId, ItemType itemType, int quantity,
-                string correspondingId = "")
+                int price, string correspondingId = "")
     {
         this.itemId = itemId;
         this.itemType = itemType;
         this.quantity = quantity;
+        this.price = price;
         this.correspondingId = correspondingId;
     }
 
@@ -32,6 +34,7 @@ public class Item
         this.itemId = item.itemId;
         this.itemType = item.itemType;
         this.quantity = item.quantity;
+        this.price = item.price;
         this.correspondingId = item.correspondingId;
     }
 
@@ -73,6 +76,11 @@ public class Item
         {
             quantity = 0;
         }
+    }
+
+    public int GetPrice()
+    {
+        return price;
     }
 
     public string GetCorrespondingId()
