@@ -21,9 +21,10 @@ public class Item :MonoBehaviour
     [SerializeField] string description;
     [SerializeField] string correspondingId;
     [SerializeField] Sprite inventoryIcon;
+    [SerializeField] Seed seed;
 
     public Item(string itemId, ItemType itemType, int quantity,
-                int price, string description, Sprite inventoryIcon, string correspondingId = "")
+                int price, string description, Sprite inventoryIcon, string correspondingId = "", Seed seed = null)
     {
         this.itemId = itemId;
         this.itemType = itemType;
@@ -32,6 +33,7 @@ public class Item :MonoBehaviour
         this.description = description;
         this.inventoryIcon = inventoryIcon;
         this.correspondingId = correspondingId;
+        this.seed = seed;
     }
 
     public Item(Item item)
@@ -43,6 +45,7 @@ public class Item :MonoBehaviour
         this.description = item.description;
         this.inventoryIcon = item.inventoryIcon;
         this.correspondingId = item.correspondingId;
+        this.seed = item.seed;
     }
 
     public override string ToString()
@@ -115,6 +118,11 @@ public class Item :MonoBehaviour
     public Sprite GetInventoryIcon()
     {
         return inventoryIcon;
+    }
+
+    public Seed GetSeed()
+    {
+        return seed;
     }
 
 }

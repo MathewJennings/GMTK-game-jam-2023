@@ -9,7 +9,6 @@ public class UIInputManager : MonoBehaviour
 
     public void OnClick()
     {
-        Debug.Log("CLICK");
         UpdateClickedGameObjectsStack();
     }
 
