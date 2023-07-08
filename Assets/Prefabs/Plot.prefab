@@ -74,7 +74,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_Sprite: {fileID: 449031696, guid: 43637c696ef63da40838c03ca3699744, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -146,3 +146,8 @@ MonoBehaviour:
   seed: {fileID: 0}
   isWatered: 0
   timePlanted: 0
+  spriteRenderer: {fileID: 8114517396543361322}
+  barren: {fileID: 449031696, guid: 43637c696ef63da40838c03ca3699744, type: 3}
+  seeded: {fileID: 232320093, guid: 43637c696ef63da40838c03ca3699744, type: 3}
+  watered: {fileID: -223978427, guid: 43637c696ef63da40838c03ca3699744, type: 3}
+  seededAndWatered: {fileID: 21300018, guid: 2700e06d970d112489ff23cfb58c3f78, type: 3}

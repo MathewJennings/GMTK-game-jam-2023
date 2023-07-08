@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 public class PlayerCropInteraction : MonoBehaviour
 {
     public Plot plot;
+    public Seed seed;
 
     // Start is called before the first frame update
     void Start()
@@ -24,7 +25,32 @@ public class PlayerCropInteraction : MonoBehaviour
     {
         if (context.performed)
         {
-            Debug.Log(plot);
+            serviceCrop();
+        }
+
+        
+    }
+
+    private void serviceCrop()
+    {
+        if (plot == null)
+        {
+            return;
+        }
+
+        if (plot.isEmpty())
+        {
+            //WE SHOULD GET THE SEED FROM UI!!!!
+            plot.plantSeed(seed);
+        }
+        else if (plot.needsWatering())
+        {
+            plot.waterPlot();
+        }
+        else if (plot.isMature())
+        {
+            Yield yield = plot.harvest();
+            //STICK IT IN THE INVENTORY!!!!!
         }
     }
 
