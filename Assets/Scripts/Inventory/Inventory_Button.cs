@@ -23,13 +23,13 @@ public class Inventory_Button : MonoBehaviour, IPointerEnterHandler, IPointerExi
         inventory_UI.UpdateItemDescription(itemID);
         inventory_UI.itemName.gameObject.SetActive(true);
         inventory_UI.itemQuantity.gameObject.SetActive(true);
-        inventory_UI.itemQuantity.gameObject.SetActive(true);
+        inventory_UI.itemDescription.gameObject.SetActive(true);
     }
     public void OnPointerExit(PointerEventData eventData)
     {
         inventory_UI.itemName.gameObject.SetActive(false);
         inventory_UI.itemQuantity.gameObject.SetActive(false);
-        inventory_UI.itemQuantity.gameObject.SetActive(false);
+        inventory_UI.itemDescription.gameObject.SetActive(false);
     }
 
 }
