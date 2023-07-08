@@ -32,6 +32,8 @@ public class EventManager : MonoBehaviour
 
     private static List<EventTemplate> eventTemplates;
 
+    private static GameObject npc;
+
 
 
     // Start is called before the first frame update
@@ -42,7 +44,7 @@ public class EventManager : MonoBehaviour
             new EventTemplate(
                 "merchant",
                 "You hear a knock at your gate. \"Would you like to make a trade?",
-                new List<string> { "Browse", "Ignore" },
+                new List<string> { "Let's Trade", "Ignore" },
                 new List<EventDelegate> { openShopMenu, closeDialog },
                 allNpcPrefabsList[0],1,0
             ),
@@ -125,7 +127,7 @@ public class EventManager : MonoBehaviour
 
     EventDelegate openShopMenu = () =>
     {
-        // Open shop UI.
+        npc.GetComponent<InventoryUI>().OpenInventory();
     };
 
 
@@ -223,7 +225,7 @@ public class EventManager : MonoBehaviour
                 nextEvent = events.Count > 0 ? events.Dequeue() : null;
             };
 
-            GameObject npc = Instantiate(nextEvent.template.npcPrefab);
+            npc = Instantiate(nextEvent.template.npcPrefab);
             npc.GetComponent<Npc>().SetFields(dialogDelegate);
         }
     }

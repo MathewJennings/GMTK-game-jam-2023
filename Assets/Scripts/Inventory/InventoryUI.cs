@@ -8,22 +8,15 @@ using System.Globalization;
 
 public class InventoryUI : MonoBehaviour
 {
-    [SerializeField] Inventory player_inventory;
-    [SerializeField] Image inventoryItemPrefab;
+    [SerializeField] Inventory inventory;
+    [SerializeField] GameObject inventoryItemPrefab;
     [SerializeField] GameObject inventoryBackground;
     [SerializeField] public TMP_Text itemName;
     [SerializeField] public TMP_Text itemDescription;
-    [SerializeField] Transform inventoryParentTrasform;
 
     private bool isOpen;
-
-    //collection of all the displays
-    private List<Image> currentInventoryImages;
-
-    //collection of sprites for all the items
-    public Sprite[] item_images;
-    //how big the inventory is
-    private float inventory_width=100; 
+    private List<GameObject> currentInventoryItems;
+    private float inventoryImageWidth=100; 
 
 
     public bool isInventoryOpen()
@@ -38,44 +31,47 @@ public class InventoryUI : MonoBehaviour
             return;
         }
         inventoryBackground.SetActive(true);
-        currentInventoryImages = new List<Image>();
-        instantiateImages();
+        currentInventoryItems = new List<GameObject>();
+        instantiateInventoryItems();
         ArrangeImagesHorizontally();
         isOpen = true;
     }
 
-    private void instantiateImages()
+    private void instantiateInventoryItems()
     {
-        foreach (Item item in player_inventory.inventory.Values)
+        foreach (Item item in inventory.inventory.Values)
         {
             if (item.GetQuantity() != 0)
             {
-                Image image = Instantiate(inventoryItemPrefab);
-                image.GetComponent<Inventory_Item>().setItem(item);
+                GameObject inventoryItem = Instantiate(inventoryItemPrefab);
+                inventoryItem.transform.SetParent(inventoryBackground.transform, false);
+                inventoryItem.transform.position = new Vector3(Screen.width * 0.5f, 105, 0);
+                currentInventoryItems.Add(inventoryItem);
+                Inventory_Item inventoryItemScript = inventoryItem.GetComponent<Inventory_Item>();
+                inventoryItemScript.setInventoryUI(this);
+                inventoryItemScript.setItem(item);
+                Image image = inventoryItem.GetComponent<Image>();
                 image.sprite = item.GetInventoryIcon();
-                image.transform.SetParent(inventoryParentTrasform, false);
-                image.transform.position = new Vector3(Screen.width * 0.5f, 105, 0); ;
-                currentInventoryImages.Add(image);
             }
         }
     }
 
     private void ArrangeImagesHorizontally()
     {
-        int totalImageWidth = 100 * currentInventoryImages.Count;
-        for (int i = 0; i < currentInventoryImages.Count; i++)
+        int totalImageWidth = 100 * currentInventoryItems.Count;
+        for (int i = 0; i < currentInventoryItems.Count; i++)
         {
-            currentInventoryImages[i].transform.Translate(-1 * totalImageWidth / 2 + 100 * i + 50, 0, 0);
+            currentInventoryItems[i].transform.Translate(-1 * totalImageWidth / 2 + inventoryImageWidth * i + 50, 0, 0);
         }
     }
     public void CloseInventory()
     {
         inventoryBackground.SetActive(false);
-        foreach (Image image in currentInventoryImages)
+        foreach (GameObject inventoryItem in currentInventoryItems)
         {
-            Destroy(image.gameObject);
+            Destroy(inventoryItem);
         }
-        currentInventoryImages.Clear();
+        currentInventoryItems.Clear();
         isOpen = false;
     }
 
