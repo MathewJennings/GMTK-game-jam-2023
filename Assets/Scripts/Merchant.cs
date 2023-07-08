@@ -10,7 +10,7 @@ public class Merchant : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        playerInventory = GameObject.Find("/Player").GetComponent<Inventory>();
+        playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
         merchantInventory = gameObject.GetComponent<Inventory>();
     }
 
@@ -68,35 +68,35 @@ public class Merchant : MonoBehaviour
         playerItem.DecreaseQuantity(1);
     }
 
-    [ContextMenu("BuyFooSeed")]
-    public void BuyFooSeed()
+    [ContextMenu("BuyAppleSeed")]
+    public void BuyAppleSeed()
     {
-        PurchaseItem("fooSeed");
+        PurchaseItem("appleSeed");
         Debug.Log("gold " + playerInventory.inventory["gold"].GetQuantity());
-        Debug.Log("fooSeed " + playerInventory.inventory["fooSeed"].GetQuantity());
+        Debug.Log("appleSeed " + playerInventory.inventory["appleSeed"].GetQuantity());
     }
 
-    [ContextMenu("BuyFooCrop")]
-    public void BuyFooCrop()
+    [ContextMenu("BuyAppleCrop")]
+    public void BuyAppleCrop()
     {
-        PurchaseItem("fooCrop");
+        PurchaseItem("appleCrop");
         Debug.Log("gold " + playerInventory.inventory["gold"].GetQuantity());
-        Debug.Log("fooCrop " + playerInventory.inventory["fooCrop"].GetQuantity());
+        Debug.Log("appleCrop " + playerInventory.inventory["appleCrop"].GetQuantity());
     }
 
-    [ContextMenu("SellFooSeed")]
-    public void SellFooSeed()
+    [ContextMenu("SellAppleSeed")]
+    public void SellAppleSeed()
     {
-       SellItem("fooSeed");
+        SellItem("appleSeed");
         Debug.Log("gold " + playerInventory.inventory["gold"].GetQuantity());
-        Debug.Log("fooSeed " + playerInventory.inventory["fooSeed"].GetQuantity());
+        Debug.Log("appleSeed " + playerInventory.inventory["appleSeed"].GetQuantity());
     }
 
-    [ContextMenu("SellFooCrop")]
-    public void SellFooCrop()
+    [ContextMenu("SellAppleCrop")]
+    public void SellAppleCrop()
     {
-        SellItem("fooCrop");
+        SellItem("appleCrop");
         Debug.Log("gold " + playerInventory.inventory["gold"].GetQuantity());
-        Debug.Log("fooCrop " + playerInventory.inventory["fooCrop"].GetQuantity());
+        Debug.Log("appleCrop " + playerInventory.inventory["appleCrop"].GetQuantity());
     }
 }

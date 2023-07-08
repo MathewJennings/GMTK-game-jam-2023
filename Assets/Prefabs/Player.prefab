@@ -17,9 +17,10 @@ GameObject:
   - component: {fileID: 7770908607439096381}
   - component: {fileID: 229923360912203666}
   - component: {fileID: 5435077983625184426}
+  - component: {fileID: 7846411221716759685}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -273,3 +274,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxAp: 10
   maxHunger: 10
+--- !u!114 &7846411221716759685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3885562788245913499}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6806cf9773fd1b4bad637c32af12731, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startGold: 20
+  startAppleSeed: 3
+  startAppleCrop: 0
+  startCarrotSeed: 3
+  startCarrotCrop: 0

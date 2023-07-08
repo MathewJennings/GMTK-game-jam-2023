@@ -9,10 +9,10 @@ public class Inventory : MonoBehaviour
     public Dictionary<string, Item> inventory;
 
     public int startGold;
-    public int startFooSeed;
-    public int startFooCrop;
-    public int startBarSeed;
-    public int startBarCrop;
+    public int startAppleSeed;
+    public int startAppleCrop;
+    public int startCarrotSeed;
+    public int startCarrotCrop;
 
     // Start is called before the first frame update
     void Start()
@@ -20,10 +20,10 @@ public class Inventory : MonoBehaviour
         InitEmptyInventory();
 
         inventory["gold"].SetQuantity(startGold);
-        inventory["fooSeed"].SetQuantity(startFooSeed);
-        inventory["fooCrop"].SetQuantity(startFooCrop);
-        inventory["barSeed"].SetQuantity(startBarSeed);
-        inventory["barCrop"].SetQuantity(startBarCrop);
+        inventory["appleSeed"].SetQuantity(startAppleSeed);
+        inventory["appleCrop"].SetQuantity(startAppleCrop);
+        inventory["carrotSeed"].SetQuantity(startCarrotSeed);
+        inventory["carrotCrop"].SetQuantity(startCarrotCrop);
     }
 
     public void InitEmptyInventory()
