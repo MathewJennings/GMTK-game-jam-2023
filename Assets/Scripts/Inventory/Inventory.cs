@@ -22,9 +22,9 @@ public class Inventory : MonoBehaviour
         {
             inventory[item.GetItemId()] = new Item(item);
         }
+        // LATER: Items added only for testing, remove later!
         inventory["fooSeed"].SetQuantity(5);
         inventory["barSeed"].SetQuantity(3);
-
     }
 
     public void AddItem(string itemId, int quantity)

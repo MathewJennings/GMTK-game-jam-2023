@@ -3,30 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using System.Diagnostics.Contracts;
-//using UnityEngine.UIElements;
 
 public class Inventory_UI : MonoBehaviour
 {
     [SerializeField] Inventory player_inventory;
-  
-    private AllItems allItems;
-    private List<Item> allItemList;
+    [SerializeField] Image inventoryItemPrefab;
+    [SerializeField] public TMP_Text itemName;
+    [SerializeField] public TMP_Text itemQuantity;
+    [SerializeField] public TMP_Text itemDescription;
+
     private bool isOpen;
 
-    //item description
-    public TMP_Text itemName;
-    public TMP_Text itemQuantity;
-    public TMP_Text itemDescription;
-
-
-    //index for keeping current items
-    private int totalItems;
-
-    //actual display (one item)
-    public Image inventory_image;
     //collection of all the displays
-    private Image[] current_inventory_images;
+    private List<Image> currentInventoryImages;
 
     //collection of sprites for all the items
     public Sprite[] item_images;
@@ -38,16 +27,6 @@ public class Inventory_UI : MonoBehaviour
 
     public Canvas inventory_canvas;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        allItems = GameObject.FindGameObjectWithTag("ItemManager").GetComponent<AllItems>();
-        allItemList = allItems.GetAllItems();
-
-
-    }
-
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Q)) {
@@ -69,52 +48,39 @@ public class Inventory_UI : MonoBehaviour
 
     public void OpenInventory()
     {
-        Debug.Log("OPEN");
+        currentInventoryImages = new List<Image>();
+        instantiateImages();
+        ArrangeImagesHorizontally();
+    }
+
+    private void instantiateImages()
+    {
         foreach (Item item in player_inventory.inventory.Values)
         {
-            foreach(Item item2 in allItemList)
-            { 
-                if(item.GetItemId() == item2.GetItemId())
-                {
-                    if (item.GetQuantity() == 0)
-                    {
-                        //items[int.Parse(item.GetItemId())].interactable = false;
-                    }
-                    else
-                    {
-                        totalItems++;
-                    }
-                }
-            }
-
-        }
-        current_inventory_images=new Image[totalItems];
-        int totalItems_temp = 0;
-        foreach (Item item in player_inventory.inventory.Values)
-        {
-
-            foreach (Item item2 in allItemList)
+            if (item.GetQuantity() != 0)
             {
-                if (item.GetItemId() == item2.GetItemId())
-                {
-                    if (item.GetQuantity() == 0)
-                    {
-                    }
-                    else
-                    {
-                        Debug.Log(totalItems_temp);
-                        current_inventory_images[totalItems_temp] = Instantiate(inventory_image, gameObject.transform);
-                        current_inventory_images[totalItems_temp].transform.GetComponentInChildren<Inventory_Button>().inventory_UI = GetComponent<Inventory_UI>();
-                        current_inventory_images[totalItems_temp].transform.GetComponentInChildren<Inventory_Button>().itemID = item.GetItemId();
-                        
-                        //current_inventory_images[totalItems_temp].transform.GetComponentInChildren<Button>().targetGraphic = item_images[];
-                        // Need to update the calculation for this transform position
-                        current_inventory_images[totalItems_temp].transform.position = inventory_transform.position + new Vector3(200 + (totalItems - 1 + totalItems_temp)*(inventory_width - 0.5f), 200, 0);
-                        current_inventory_images[totalItems_temp].transform.parent = inventory_canvas.transform;
-                        totalItems_temp++;
-                    }
-                }
+                Image image = Instantiate(inventoryItemPrefab);
+                image.transform.SetParent(inventory_canvas.transform, false);
+                image.transform.position = new Vector3(Screen.width * 0.5f, Screen.height * 0.25f, 0); ;
+                image.gameObject.GetComponentInChildren<Inventory_Item>().itemID = item.GetItemId();
+                currentInventoryImages.Add(image);
             }
+        }
+    }
+
+    private void ArrangeImagesHorizontally()
+    {
+        int totalImageWidth = 100 * currentInventoryImages.Count;
+        for (int i = 0; i < currentInventoryImages.Count; i++)
+        {
+            currentInventoryImages[i].transform.Translate(-1 * totalImageWidth / 2 + 100 * i + 50, 0, 0);
+        }
+    }
+    public void CloseInventory()
+    {
+        foreach (Image image in currentInventoryImages)
+        {
+            Destroy(image.gameObject);
         }
     }
 
@@ -124,18 +90,4 @@ public class Inventory_UI : MonoBehaviour
         itemQuantity.text = player_inventory.inventory[itemID].GetQuantity()+"";
         itemDescription.text = player_inventory.inventory[itemID].GetDescription();
     }
-    public void CloseInventory()
-    {
-        foreach (Image image in current_inventory_images)
-        {
-            if (image != null)
-            {
-                Destroy(image.gameObject);
-            }
-        }
-        current_inventory_images = null;
-    }
-
-
-
 }
