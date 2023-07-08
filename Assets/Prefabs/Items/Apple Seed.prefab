@@ -33,7 +33,7 @@ PrefabInstance:
     - target: {fileID: -192941532611814194, guid: e125e33635f104c42b8d83445da4e719,
         type: 3}
       propertyPath: yieldQuantity
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: -192941532611814194, guid: e125e33635f104c42b8d83445da4e719,
         type: 3}
@@ -69,7 +69,7 @@ PrefabInstance:
     - target: {fileID: 7506501371266054801, guid: e125e33635f104c42b8d83445da4e719,
         type: 3}
       propertyPath: m_Name
-      value: Apple Seed v2
+      value: Apple Seed
       objectReference: {fileID: 0}
     - target: {fileID: 9158138433708770533, guid: e125e33635f104c42b8d83445da4e719,
         type: 3}

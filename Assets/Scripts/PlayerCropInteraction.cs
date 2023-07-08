@@ -90,6 +90,11 @@ public class PlayerCropInteraction : MonoBehaviour
         }
     }
 
+    public void eatCrop(Item item, Crop crop) {
+        playerManager.ChangeHunger(crop.sustenance);
+        playerInventory.RemoveItem(item.GetItemId(), 1);
+    }
+
     private void OnTriggerStay2D(Collider2D collision)
     {
         Plot collidedPlot = collision.gameObject.GetComponent<Plot>();
