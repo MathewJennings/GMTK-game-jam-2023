@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Inventory_Button : MonoBehaviour, IPointerEnterHandler
+public class Inventory_Button : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public Inventory_UI inventory_UI;
     public string itemID;
@@ -21,6 +21,15 @@ public class Inventory_Button : MonoBehaviour, IPointerEnterHandler
     public void OnPointerEnter(PointerEventData eventData)
     {
         inventory_UI.UpdateItemDescription(itemID);
+        inventory_UI.itemName.gameObject.SetActive(true);
+        inventory_UI.itemQuantity.gameObject.SetActive(true);
+        inventory_UI.itemQuantity.gameObject.SetActive(true);
+    }
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        inventory_UI.itemName.gameObject.SetActive(false);
+        inventory_UI.itemQuantity.gameObject.SetActive(false);
+        inventory_UI.itemQuantity.gameObject.SetActive(false);
     }
 
 }
