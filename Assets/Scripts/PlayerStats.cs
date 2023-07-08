@@ -10,12 +10,11 @@ public class PlayerStats : MonoBehaviour
     public int maxHunger;
     public float hungerTickIntervalSeconds;
     public int hungerLostPerTick;
-
+    public int hunger { set; get; }
+    public int ap { set; get; }
     public GameObject hungerEmptyBar;
     public GameObject apEmptyBar;
 
-    int ap;
-    int hunger;
     float nextHungerTick;
     DayTimeController dayTimeController;
 

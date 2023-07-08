@@ -10,7 +10,7 @@ public class Inventory_Item : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
     [SerializeField] TextMeshProUGUI quantityText;
 
-    private Inventory_UI inventory_UI;
+    private InventoryUI inventory_UI;
     private UIInputManager uiInputManager;
     private PlayerCropInteraction playerCropInteraction;
 
@@ -18,7 +18,7 @@ public class Inventory_Item : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
     private void Start()
     {
-        inventory_UI = GameObject.FindGameObjectWithTag("InventoryUI").GetComponent<Inventory_UI>();
+        inventory_UI = GameObject.FindGameObjectWithTag("InventoryUI").GetComponent<InventoryUI>();
         uiInputManager = GameObject.FindGameObjectWithTag("UIInputManager").GetComponent<UIInputManager>();
         playerCropInteraction = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCropInteraction>();
     }
