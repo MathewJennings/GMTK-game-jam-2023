@@ -14,6 +14,11 @@ public class Inventory : MonoBehaviour
     public int startCarrotSeed;
     public int startCarrotCrop;
 
+    public int priceAppleSeed;
+    public int priceAppleCrop;
+    public int priceCarrotSeed;
+    public int priceCarrotCrop;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,9 +26,13 @@ public class Inventory : MonoBehaviour
 
         inventory["gold"].SetQuantity(startGold);
         inventory["appleSeed"].SetQuantity(startAppleSeed);
+        inventory["appleSeed"].SetPrice(priceAppleSeed);
         inventory["appleCrop"].SetQuantity(startAppleCrop);
+        inventory["appleCrop"].SetPrice(priceAppleCrop);
         inventory["carrotSeed"].SetQuantity(startCarrotSeed);
+        inventory["carrotSeed"].SetPrice(priceCarrotSeed);
         inventory["carrotCrop"].SetQuantity(startCarrotCrop);
+        inventory["carrotCrop"].SetPrice(priceCarrotCrop);
     }
 
     public void InitEmptyInventory()

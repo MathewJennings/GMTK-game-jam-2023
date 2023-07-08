@@ -291,3 +291,7 @@ MonoBehaviour:
   startAppleCrop: 0
   startCarrotSeed: 3
   startCarrotCrop: 0
+  priceAppleSeed: 2
+  priceAppleCrop: 10
+  priceCarrotSeed: 2
+  priceCarrotCrop: 10
