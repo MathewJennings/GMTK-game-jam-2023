@@ -6,7 +6,6 @@ using UnityEngine.InputSystem;
 public class PlayerCropInteraction : MonoBehaviour
 {
     public Plot plot;
-    public Seed seed;
     public PlayerManager playerManager;
 
     private Inventory_UI inventoryUI;
@@ -40,15 +39,7 @@ public class PlayerCropInteraction : MonoBehaviour
         {
             if (!inventoryUI.isInventoryOpen())
             {
-                inventoryUI.OpenInventory();
-            }
-            //WE SHOULD GET THE SEED FROM UI!!!!
-            if (playerManager.canAffordAction(2)) {
-                playerManager.ChangeAp(-2);
-                plot.plantSeed(seed);
-            } else
-            {
-                Debug.Log("You are out of energy and can not perform that action!");
+                inventoryUI.OpenInventory(); // So that we can trigger plantSeed() from Inventory_Item.OnClick()
             }
         }
         else if (plot.needsWatering())
@@ -62,13 +53,34 @@ public class PlayerCropInteraction : MonoBehaviour
                 Debug.Log("You are out of energy and can not perform that action!");
             }
 
-        }
-        else if (plot.isMature())
+        } else if (plot.isMature())
         {
-            if (playerManager.canAffordAction(3)) { 
+            if (playerManager.canAffordAction(3))
+            {
                 playerManager.ChangeAp(-3);
                 Item yield = plot.harvest();
                 //STICK IT IN THE INVENTORY!!!!!
+            } else
+            {
+                Debug.Log("You are out of energy and can not perform that action!");
+            }
+        }
+    }
+
+    public void plantSeed(Item item, Seed seed)
+    {
+        if (plot == null)
+        {
+            return;
+        }
+        if (plot.isEmpty())
+        {
+            if (playerManager.canAffordAction(2))
+            {
+                playerManager.ChangeAp(-2);
+                plot.plantSeed(seed);
+                Inventory playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
+                playerInventory.RemoveItem(item.GetItemId(), 1);
             } else
             {
                 Debug.Log("You are out of energy and can not perform that action!");

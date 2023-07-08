@@ -11,31 +11,19 @@ public class Seed : MonoBehaviour
     public int yieldQuantity;
     public Item yield;
     public Sprite sproutSprite;
-    private DayTimeController dayTimeController;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        dayTimeController = GameObject.FindObjectOfType<DayTimeController>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-    }
 
     public float getMaturationTime()
     {
-        return maturationHours * dayTimeController.secondsInAnHour;
+        return maturationHours * DayTimeController.secondsInAnHour;
     }
 
     public float getWaterDurationTime()
     {
-        return waterHours * dayTimeController.secondsInAnHour;
+        return waterHours * DayTimeController.secondsInAnHour;
     }
 
     public float getDryToleranceTime()
     {
-        return dryHours * dayTimeController.secondsInAnHour;
+        return dryHours * DayTimeController.secondsInAnHour;
     }
 }
