@@ -87,14 +87,14 @@ public class EventManager : MonoBehaviour
             {
                 //needed because if you use i directly, i will update between when the listener is set vs when the listener is evaluated
                 int temp = i;
+                Event tempEvent = nextEvent;
                 choiceButtons[i].GetComponentInChildren<TMP_Text>().text = nextEvent.template.choices[i];
                 choiceButtons[i].onClick.AddListener(()=> {
-                    nextEvent.template.executeOption(temp);
+                    tempEvent.template.executeOption(temp);
                     dayTimeController.SetPausedTime(false);
                     dialogBox.SetActive(false);
                 });
             }
-
             nextEvent = events.Count > 0 ? events.Dequeue() : null;
         }
     }
