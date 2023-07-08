@@ -8,12 +8,11 @@ using System.Diagnostics.Contracts;
 
 public class Inventory_UI : MonoBehaviour
 {
-    private Inventory current_inventory;
-
-
+    [SerializeField] Inventory player_inventory;
   
-    public AllItems allItems;
+    private AllItems allItems;
     private List<Item> allItemList;
+    private bool isOpen;
 
     //item description
     public TMP_Text itemName;
@@ -42,6 +41,7 @@ public class Inventory_UI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        allItems = GameObject.FindGameObjectWithTag("ItemManager").GetComponent<AllItems>();
         allItemList = allItems.GetAllItems();
 
 
@@ -50,12 +50,27 @@ public class Inventory_UI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Q)) {
+            toggleInventory();
+        }
+    }
 
+    private void toggleInventory()
+    {
+        if (isOpen)
+        {
+            CloseInventory();
+        } else
+        {
+            OpenInventory();
+        }
+        isOpen = !isOpen;
     }
 
     public void OpenInventory()
     {
-        foreach (Item item in current_inventory.inventory.Values)
+        Debug.Log("OPEN");
+        foreach (Item item in player_inventory.inventory.Values)
         {
             foreach(Item item2 in allItemList)
             { 
@@ -75,7 +90,7 @@ public class Inventory_UI : MonoBehaviour
         }
         current_inventory_images=new Image[totalItems];
         int totalItems_temp = 0;
-        foreach (Item item in current_inventory.inventory.Values)
+        foreach (Item item in player_inventory.inventory.Values)
         {
 
             foreach (Item item2 in allItemList)
@@ -87,14 +102,16 @@ public class Inventory_UI : MonoBehaviour
                     }
                     else
                     {
+                        Debug.Log(totalItems_temp);
                         current_inventory_images[totalItems_temp] = Instantiate(inventory_image, gameObject.transform);
                         current_inventory_images[totalItems_temp].transform.GetComponentInChildren<Inventory_Button>().inventory_UI = GetComponent<Inventory_UI>();
                         current_inventory_images[totalItems_temp].transform.GetComponentInChildren<Inventory_Button>().itemID = item.GetItemId();
                         
                         //current_inventory_images[totalItems_temp].transform.GetComponentInChildren<Button>().targetGraphic = item_images[];
-
-                        current_inventory_images[totalItems_temp].transform.position = inventory_transform.position + new Vector3((totalItems - 1 + totalItems_temp)*(inventory_width*-0.5f), 0, 0);
+                        // Need to update the calculation for this transform position
+                        current_inventory_images[totalItems_temp].transform.position = inventory_transform.position + new Vector3(200 + (totalItems - 1 + totalItems_temp)*(inventory_width - 0.5f), 200, 0);
                         current_inventory_images[totalItems_temp].transform.parent = inventory_canvas.transform;
+                        totalItems_temp++;
                     }
                 }
             }
@@ -103,9 +120,9 @@ public class Inventory_UI : MonoBehaviour
 
     public void UpdateItemDescription(string itemID)
     {
-        itemName.text = current_inventory.inventory[itemID].GetItemId();
-        itemQuantity.text = current_inventory.inventory[itemID].GetQuantity()+"";
-        itemDescription.text = current_inventory.inventory[itemID].GetDescription();
+        itemName.text = player_inventory.inventory[itemID].GetItemId();
+        itemQuantity.text = player_inventory.inventory[itemID].GetQuantity()+"";
+        itemDescription.text = player_inventory.inventory[itemID].GetDescription();
     }
     public void CloseInventory()
     {
@@ -113,7 +130,7 @@ public class Inventory_UI : MonoBehaviour
         {
             if (image != null)
             {
-                Destroy(image);
+                Destroy(image.gameObject);
             }
         }
         current_inventory_images = null;

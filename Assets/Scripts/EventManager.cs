@@ -12,6 +12,7 @@ public class EventManager : MonoBehaviour
     public DayTimeController dayTimeController;
     public TMP_Text dialogText;
     public List<Button> choiceButtons;
+    public GameObject dialogBox;
 
     // Start is called before the first frame update
     void Start()
@@ -53,13 +54,19 @@ public class EventManager : MonoBehaviour
         {
             if(!e.completed && e.time < dayTimeController.getCurrentTimeSeconds())
             {
+                dialogBox.SetActive(true);
+                dayTimeController.togglePausedTime();
                 dialogText.text = e.template.dialogText;
                 for(int i = 0; i < choiceButtons.Count; i++)
                 {
                     //needed because if you use i directly, i will update between when the listener is set vs when the listener is evaluated
                     int temp = i;
                     choiceButtons[i].GetComponentInChildren<TMP_Text>().text = e.template.choices[i];
-                    choiceButtons[i].onClick.AddListener(()=> { e.template.executeOption(temp); });
+                    choiceButtons[i].onClick.AddListener(()=> {
+                        e.template.executeOption(temp);
+                        dayTimeController.togglePausedTime();
+                        dialogBox.SetActive(false);
+                    });
                 }
                 e.completed = true;
             }

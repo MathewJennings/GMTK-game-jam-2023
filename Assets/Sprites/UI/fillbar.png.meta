@@ -1,66 +1,12 @@
 fileFormatVersion: 2
-guid: 548079c1be946ba439b4d76b2085ea31
+guid: 40d757c9f0a348a4d9fe395b365d8b78
 TextureImporter:
-  internalIDToNameTable:
-  - first:
-      213: 21300000
-    second: farming-water_0
-  - first:
-      213: 21300002
-    second: farming-water_1
-  - first:
-      213: 21300004
-    second: farming-water_2
-  - first:
-      213: 21300006
-    second: farming-water_3
-  - first:
-      213: 21300008
-    second: farming-water_4
-  - first:
-      213: 21300010
-    second: farming-water_5
-  - first:
-      213: 21300012
-    second: farming-water_6
-  - first:
-      213: 21300014
-    second: farming-water_7
-  - first:
-      213: 21300016
-    second: farming-water_8
-  - first:
-      213: 21300018
-    second: farming-water_9
-  - first:
-      213: 21300020
-    second: farming-water_10
-  - first:
-      213: 21300022
-    second: farming-water_11
-  - first:
-      213: 21300024
-    second: farming-water_12
-  - first:
-      213: 21300026
-    second: farming-water_13
-  - first:
-      213: 21300028
-    second: farming-water_14
-  - first:
-      213: 21300030
-    second: farming-water_15
-  - first:
-      213: 21300032
-    second: farming-water_16
-  - first:
-      213: 21300034
-    second: farming-water_17
+  internalIDToNameTable: []
   externalObjects: {}
   serializedVersion: 12
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 1
+    enableMipMap: 0
     sRGBTexture: 1
     linearTexture: 0
     fadeOut: 0
@@ -84,12 +30,12 @@ TextureImporter:
   generateCubemap: 6
   cubemapConvolution: 0
   seamlessCubemap: 0
-  textureFormat: -1
+  textureFormat: 1
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
-    aniso: 16
+    filterMode: 0
+    aniso: 1
     mipBias: 0
     wrapU: 1
     wrapV: 1
@@ -117,9 +63,9 @@ TextureImporter:
   compressionQualitySet: 0
   textureFormatSet: 0
   ignorePngGamma: 0
-  applyGammaDecoding: 1
+  applyGammaDecoding: 0
   swizzle: 50462976
-  cookieLightType: 1
+  cookieLightType: 0
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -190,379 +136,274 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: farming-water_0
+      name: fillbar_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 160
-        width: 32
-        height: 32
+        y: 49
+        width: 10
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 02305410000000000800000000000000
-      internalID: 21300000
+      spriteID: a43359ea9120b524e89ed1bb0a009314
+      internalID: 401222141
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: farming-water_1
+      name: fillbar_empty
       rect:
         serializedVersion: 2
-        x: 32
-        y: 160
-        width: 32
-        height: 32
+        x: 11
+        y: 49
+        width: 8
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 22305410000000000800000000000000
-      internalID: 21300002
+      spriteID: af00b94b1c629b143a5d6e959ec8fc71
+      internalID: 1329235085
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: farming-water_2
+      name: fillbar_red_end
       rect:
         serializedVersion: 2
-        x: 64
-        y: 160
+        x: 20
+        y: 47
         width: 32
-        height: 32
+        height: 20
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 42305410000000000800000000000000
-      internalID: 21300004
+      spriteID: 1a4aeb4b25e2a674cbb93dbf998041cd
+      internalID: -1171603814
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: farming-water_3
+      name: fillbar_red
       rect:
         serializedVersion: 2
-        x: 0
-        y: 128
-        width: 32
-        height: 32
+        x: 61
+        y: 51
+        width: 8
+        height: 12
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 62305410000000000800000000000000
-      internalID: 21300006
+      spriteID: 429cedde0dd160142b3e80adcf88b7a5
+      internalID: -867834062
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: farming-water_4
+      name: fillbar_red2
       rect:
         serializedVersion: 2
-        x: 32
-        y: 128
-        width: 32
-        height: 32
+        x: 70
+        y: 51
+        width: 8
+        height: 12
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 82305410000000000800000000000000
-      internalID: 21300008
+      spriteID: e2aa278601d6dde4094f64b4b0c14762
+      internalID: 2103438989
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: farming-water_5
+      name: fillbar_emp
       rect:
         serializedVersion: 2
-        x: 64
-        y: 128
-        width: 32
-        height: 32
+        x: 11
+        y: 29
+        width: 8
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: a2305410000000000800000000000000
-      internalID: 21300010
+      spriteID: a816b9145c1ffeb4abc719140fb64246
+      internalID: 1821501149
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: farming-water_6
+      name: fillbar_blue_end
       rect:
         serializedVersion: 2
-        x: 0
-        y: 96
+        x: 20
+        y: 27
         width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        height: 20
+      alignment: 9
+      pivot: {x: 1.3325975, y: 0.5067146}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: c2305410000000000800000000000000
-      internalID: 21300012
+      spriteID: e3acbc134628ed542b9418b14b46d71e
+      internalID: -383414660
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: farming-water_7
+      name: fillbar_blue
       rect:
         serializedVersion: 2
-        x: 32
-        y: 96
-        width: 32
-        height: 32
+        x: 61
+        y: 31
+        width: 8
+        height: 12
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: e2305410000000000800000000000000
-      internalID: 21300014
+      spriteID: eb35351a50949d84fabc163b15424e8a
+      internalID: 1150997529
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: farming-water_8
+      name: fillbar_blue_2
       rect:
         serializedVersion: 2
-        x: 64
-        y: 96
-        width: 32
-        height: 32
+        x: 70
+        y: 31
+        width: 8
+        height: 12
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 03305410000000000800000000000000
-      internalID: 21300016
+      spriteID: 8c72b52e3b57b8145b593546f63166bd
+      internalID: 1438561421
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: farming-water_9
+      name: fillbar_empt
       rect:
         serializedVersion: 2
-        x: 0
-        y: 64
-        width: 32
-        height: 32
+        x: 11
+        y: 9
+        width: 8
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 23305410000000000800000000000000
-      internalID: 21300018
+      spriteID: 6d0077c7570d4c44c987c16237d6e96c
+      internalID: -1429960476
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: farming-water_10
+      name: fillbar_green-end
       rect:
         serializedVersion: 2
-        x: 32
-        y: 64
+        x: 20
+        y: 7
         width: 32
-        height: 32
+        height: 20
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 43305410000000000800000000000000
-      internalID: 21300020
+      spriteID: ac48d7ab1f343194dbf1cee285b63ff5
+      internalID: -238891398
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: farming-water_11
+      name: fillbar_green
       rect:
         serializedVersion: 2
-        x: 64
-        y: 64
-        width: 32
-        height: 32
+        x: 61
+        y: 11
+        width: 8
+        height: 12
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 63305410000000000800000000000000
-      internalID: 21300022
+      spriteID: 0dd6420d0a1f71c4bad525656197d136
+      internalID: -230409847
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: farming-water_12
+      name: fillbar_green2
       rect:
         serializedVersion: 2
-        x: 0
-        y: 32
-        width: 32
-        height: 32
+        x: 70
+        y: 11
+        width: 8
+        height: 12
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 83305410000000000800000000000000
-      internalID: 21300024
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: farming-water_13
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: a3305410000000000800000000000000
-      internalID: 21300026
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: farming-water_14
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: c3305410000000000800000000000000
-      internalID: 21300028
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: farming-water_15
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: e3305410000000000800000000000000
-      internalID: 21300030
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: farming-water_16
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 04305410000000000800000000000000
-      internalID: 21300032
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: farming-water_17
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 24305410000000000800000000000000
-      internalID: 21300034
+      spriteID: 27d5afaa157de2c4f8f4b16f9a1cc0af
+      internalID: 1553303097
       vertices: []
       indices: 
       edges: []
@@ -570,7 +411,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -578,24 +419,19 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      farming-water_0: 21300000
-      farming-water_1: 21300002
-      farming-water_10: 21300020
-      farming-water_11: 21300022
-      farming-water_12: 21300024
-      farming-water_13: 21300026
-      farming-water_14: 21300028
-      farming-water_15: 21300030
-      farming-water_16: 21300032
-      farming-water_17: 21300034
-      farming-water_2: 21300004
-      farming-water_3: 21300006
-      farming-water_4: 21300008
-      farming-water_5: 21300010
-      farming-water_6: 21300012
-      farming-water_7: 21300014
-      farming-water_8: 21300016
-      farming-water_9: 21300018
+      fillbar_0: 401222141
+      fillbar_blue: 1150997529
+      fillbar_blue_2: 1438561421
+      fillbar_blue_end: -383414660
+      fillbar_emp: 1821501149
+      fillbar_empt: -1429960476
+      fillbar_empty: 1329235085
+      fillbar_green: -230409847
+      fillbar_green-end: -238891398
+      fillbar_green2: 1553303097
+      fillbar_red: -867834062
+      fillbar_red2: 2103438989
+      fillbar_red_end: -1171603814
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
