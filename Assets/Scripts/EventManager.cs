@@ -24,6 +24,7 @@ public class EventManager : MonoBehaviour
     private float eventCurrentDay;
 
     private static GameObject npc;
+    private static BarterManager barterManager;
 
 
     private static List<EventTemplate> eventTemplates;
@@ -33,6 +34,7 @@ public class EventManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        barterManager = GameObject.FindGameObjectWithTag("BarterManager").GetComponent<BarterManager>();
         eventTemplates = new List<EventTemplate> {
             new EventTemplate(
                 "merchant",
@@ -72,8 +74,14 @@ public class EventManager : MonoBehaviour
 
         events = new Queue<Event>();
         AddRandomEvent();
-        AddRandomEvent();
-        AddRandomEvent();
+        //AddRandomEvent();
+        //AddRandomEvent();
+
+
+
+
+
+
     }
 
     EventDelegate closeDialog = () =>
@@ -123,7 +131,7 @@ public class EventManager : MonoBehaviour
 
     EventDelegate openShopMenu = () =>
     {
-        npc.GetComponent<InventoryUI>().OpenInventory(); //TODO
+        barterManager.startTrading(npc.gameObject);
     };
 
 
@@ -247,7 +255,7 @@ public class EventManager : MonoBehaviour
                         tempEvent.template.executeOption(temp);
                         dayTimeController.SetPausedTime(false);
                         dialogBox.SetActive(false);
-                        npc.GetComponent<Animator>().SetBool("walkRight", true);
+                        //npc.GetComponent<Animator>().SetBool("walkRight", true);
                     });
                 }
                 nextEvent = null;

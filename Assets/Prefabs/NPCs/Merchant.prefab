@@ -101,6 +101,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: -6824414537385972048}
+    - targetCorrespondingSourceObject: {fileID: 3888881661625125385, guid: c798d6131e1c3394db6bc89416b2de22,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6448105151530103207}
   m_SourcePrefab: {fileID: 100100000, guid: c798d6131e1c3394db6bc89416b2de22, type: 3}
 --- !u!1 &3209922489711309120 stripped
 GameObject:
@@ -147,3 +151,16 @@ MonoBehaviour:
   inventoryBackground: {fileID: 0}
   itemName: {fileID: 0}
   itemDescription: {fileID: 0}
+  goldInventoryItem: {fileID: 0}
+--- !u!114 &6448105151530103207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3209922489711309120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74f405649143b8b469f305eddd114846, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
