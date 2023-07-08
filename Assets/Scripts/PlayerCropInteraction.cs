@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class PlayerCropInteraction : MonoBehaviour
 {
     public Plot plot;
-    public PlayerManager playerManager;
+    public PlayerStats playerManager;
 
     private Inventory_UI inventoryUI;
 

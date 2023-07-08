@@ -28,13 +28,6 @@ public class Inventory_UI : MonoBehaviour
     //where the inventory should be.
     public Transform inventory_transform;
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Q)) {
-            toggleInventory();
-        }
-    }
-
     private void toggleInventory()
     {
         if (isOpen)

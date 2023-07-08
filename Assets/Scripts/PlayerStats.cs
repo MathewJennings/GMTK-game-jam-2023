@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerManager : MonoBehaviour
+public class PlayerStats : MonoBehaviour
 {
 
     public int maxAp;
