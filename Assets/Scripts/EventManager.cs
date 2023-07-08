@@ -24,10 +24,10 @@ public class EventManager : MonoBehaviour
     private float nextEventTime;
 
     //minimum time that needs to pass since the last event for the next event to occur
-    private float minEventGap = 5f;
+    private float minEventGap = 2f;
 
     //maximum time that needs to pass since the last event for the next event to occur
-    private float maxEventGap = 10f;
+    private float maxEventGap = 3f;
 
 
     private static List<EventTemplate> eventTemplates;
@@ -58,21 +58,21 @@ public class EventManager : MonoBehaviour
                 "You hear a voice coming from your gate. It's a human soldier. He seems tired and injured. Maybe some foo will help him.",
                 new List<string> { "Give Foo", "Report to Goblin soliders" },
                 new List<EventDelegate> { giveFoo, reportHumanSoldier },
-                allNpcPrefabsList[0],0.5f,0
+                allNpcPrefabsList[0],1,0
             ),
             new EventTemplate(
                 "Angry Goblin Solider: Human Soldier",
                 "You hear a knock at your gate. It's goblin soldiers. \"Someone saw you helping the human soldiers!\" you betrayed us!",
                 new List<string> { "Give up", "fight back" },
                 new List<EventDelegate> { GoblinSoldier_GiveUp, GoblinSoldier_FightBack },
-                allNpcPrefabsList[0],1,10
+                allNpcPrefabsList[0],0,0
             ),
         };
 
         // Next event needs to have timestamp less than everything in events, and all events in
         // the queue must be in order.
         nextEventTime = UnityEngine.Random.Range(minEventGap, maxEventGap);
-        nextEvent = new Event(nextEventTime, eventTemplates[1]);
+        nextEvent = new Event(nextEventTime, eventTemplates[0]);
         events = new Queue<Event>();
         lastEventTime = nextEventTime;
         AddRandomEvent();
@@ -103,6 +103,8 @@ public class EventManager : MonoBehaviour
         Inventory playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
         playerInventory.RemoveItem("appleCrop", 2);
         Debug.Log(playerInventory.inventory["appleCrop"].GetQuantity());
+        UpdateEventPossibility("Angry Goblin Solider: Human Soldier", 1);
+
     };
     EventDelegate reportHumanSoldier = () => {
         Inventory playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
@@ -134,9 +136,12 @@ public class EventManager : MonoBehaviour
         float currentPossibility = UnityEngine.Random.Range(0f, 1f);
        int randomIndex = UnityEngine.Random.Range(0, eventTemplates.Count - 1);
         int testing = 0;
+        Debug.Log(randomIndex);
+    
         //If the event that we are thinking about does not occur based on the possibility, we try to look for another event. This is repeated.
         while (currentPossibility >= eventTemplates[randomIndex].possibility || eventTemplates[randomIndex].minTime<dayTimeController.getCurrentTimeSeconds())
         {
+            Debug.Log(randomIndex);
             currentPossibility = UnityEngine.Random.Range(0f, 1f);
             randomIndex = UnityEngine.Random.Range(0, eventTemplates.Count - 1);
             testing++;
@@ -166,11 +171,14 @@ public class EventManager : MonoBehaviour
     }
     private static void UpdateEventPossibility(string name, float possibility)
     {
-        foreach(EventTemplate template in eventTemplates)
+        Debug.Log("Event: " + name + "Updating with possibility: " + possibility);
+
+        foreach (EventTemplate template in eventTemplates)
         {
             if(template.name == name) 
             {
-            template.possibility = possibility;
+                template.possibility = possibility;
+                Debug.Log("Event: " + name + "Updated with possibility: " + possibility);
                 return;
             }
         }
