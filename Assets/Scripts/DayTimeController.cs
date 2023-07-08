@@ -13,7 +13,7 @@ public class DayTimeController : MonoBehaviour
     public Color nightLightColor;
     public AnimationCurve nightTimeCurve;
     public Color dayLightColor = Color.white;
-    public GameObject dayTransitionOverlay;
+    public OverlayManager overlayManager;
 
     private InventoryUI playerInventoryUi;
 
@@ -25,8 +25,11 @@ public class DayTimeController : MonoBehaviour
     public TMP_Text currTime;
     //TODO can plug in lighting here
 
-    private void Start()
+    public void Start()
     {
+        time = 0;
+        isTimePaused = false;
+        currentDay = 0;
         playerInventoryUi = GameObject.FindGameObjectWithTag("Player").GetComponent<InventoryUI>();
     }
     void Update()
@@ -39,53 +42,13 @@ public class DayTimeController : MonoBehaviour
         if( numDays > currentDay)
         {
             currentDay = numDays;
-            StartCoroutine(DayTransition());
+            overlayManager.DayTransition(currentDay);
         }
         float numSecRemaining = time % secondsInADay;
         int numHours = (int)(numSecRemaining / secondsInAnHour);
         currTime.text = "Day: " + (numDays+1).ToString() + "\nTime: " + numHours.ToString() + ":00\n" + "elapsedTime: " + time.ToString();
     }
 
-    private IEnumerator DayTransition()
-    {
-        togglePausedTime();
-        float fadeTime = 3f;
-        float waitTime = 3f;
-        float elapsedTime = 0f;
-        playerInventoryUi.CloseInventory();
-        dayTransitionOverlay.SetActive(true);
-
-        PlayerStats playerStats= GameObject.FindGameObjectsWithTag("Player")[0].GetComponent<PlayerStats>();
-        int hunger = playerStats.hunger;
-
-        var textFields = dayTransitionOverlay.GetComponentsInChildren<TMP_Text>();
-        int dayNumberTextIndex = 0;
-        int apGainedText = 1;
-        textFields[dayNumberTextIndex].text = "Day " + (currentDay + 1).ToString();
-        textFields[apGainedText].text = "Hunger was " + hunger.ToString() + "\nAp gained is " + hunger.ToString();
-
-        playerStats.ChangeAp(hunger);
-
-        //fade in
-        while (elapsedTime < fadeTime)
-        {
-            elapsedTime += Time.deltaTime;
-            dayTransitionOverlay.GetComponent<CanvasGroup>().alpha = Mathf.Lerp(0, 1, elapsedTime / fadeTime);
-            yield return null;
-        }
-        elapsedTime = 0f;
-        yield return new WaitForSeconds(waitTime);
-
-        while (elapsedTime < fadeTime)
-        {
-            elapsedTime += Time.deltaTime;
-            dayTransitionOverlay.GetComponent<CanvasGroup>().alpha = Mathf.Lerp( 1, 0, elapsedTime / fadeTime);
-            yield return null;
-        }
-        //yield return new WaitForSeconds(waitTime);
-        dayTransitionOverlay.SetActive(false);
-        togglePausedTime();
-    }
 
     public void togglePausedTime()
     {
