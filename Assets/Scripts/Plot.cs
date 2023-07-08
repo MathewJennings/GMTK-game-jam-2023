@@ -45,7 +45,7 @@ public class Plot : MonoBehaviour
 
     private bool outOfWater()
     {
-        return timeWatered + seed.waterDurationTime <= dayTimeController.getCurrentTimeSeconds();
+        return timeWatered + seed.getWaterDurationTime() <= dayTimeController.getCurrentTimeSeconds();
     }
 
     private void checkDead()
@@ -58,7 +58,7 @@ public class Plot : MonoBehaviour
 
     private bool outOfTime()
     {
-        return timeOutOfWater + seed.dryToleranceTime <= dayTimeController.getCurrentTimeSeconds();
+        return timeOutOfWater + seed.getDryToleranceTime() <= dayTimeController.getCurrentTimeSeconds();
     }
 
     private void checkMature()
@@ -121,6 +121,6 @@ public class Plot : MonoBehaviour
     public bool isMature()
     {
         Debug.Log(seed);
-        return timePlanted + seed.maturationTime <= dayTimeController.getCurrentTimeSeconds();
+        return timePlanted + seed.getMaturationTime() <= dayTimeController.getCurrentTimeSeconds();
     }
 }
