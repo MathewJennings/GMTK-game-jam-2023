@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 1963908179591693561}
   - component: {fileID: 7770908607439096381}
   - component: {fileID: 229923360912203666}
+  - component: {fileID: 5435077983625184426}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -36,7 +37,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &-5959350627749875866
 MonoBehaviour:
@@ -256,3 +257,17 @@ MonoBehaviour:
   m_DefaultActionMap: Player Interactions
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &5435077983625184426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3885562788245913499}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 301412385f786874aae7125f11da663f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxAp: 10
+  maxHunger: 10
