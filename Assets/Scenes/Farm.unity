@@ -10740,6 +10740,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1494323930}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1501979743 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1337556105351859235, guid: aa2292d6d5083244d88a9a0035904307,
+    type: 3}
+  m_PrefabInstance: {fileID: 5980493494236986338}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1547889849
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11397,11 +11403,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 635cff0b51987974189d2fff8fd755f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maturationTime: 0
-  waterDurationTime: 0
-  dryToleranceTime: 0
+  maturationHours: 0
+  waterHours: 0
+  dryHours: 0
   yield: {fileID: 0}
-  dayTimeController: {fileID: 0}
 --- !u!4 &1907840420
 Transform:
   m_ObjectHideFlags: 0
@@ -11868,20 +11873,15 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1404973091818599975, guid: aa2292d6d5083244d88a9a0035904307,
+        type: 3}
+      propertyPath: npcManager
+      value: 
+      objectReference: {fileID: 1501979743}
     - target: {fileID: 2614463780112110927, guid: aa2292d6d5083244d88a9a0035904307,
         type: 3}
       propertyPath: m_Name
       value: Merchant Waypoint 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3279765256064195290, guid: aa2292d6d5083244d88a9a0035904307,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 20.69
-      objectReference: {fileID: 0}
-    - target: {fileID: 3279765256064195290, guid: aa2292d6d5083244d88a9a0035904307,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.33
       objectReference: {fileID: 0}
     - target: {fileID: 3572910094679576943, guid: aa2292d6d5083244d88a9a0035904307,
         type: 3}

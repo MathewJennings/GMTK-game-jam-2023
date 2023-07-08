@@ -206,7 +206,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1337556105351859235}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 15.0676365, y: 3.2520134, z: -0.06297474}
+  m_LocalPosition: {x: 17.38, y: 0.33, z: -0.06297474}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1812,6 +1812,7 @@ MonoBehaviour:
   dialogBox: {fileID: 3366016638150623790}
   allNpcPrefabsList:
   - {fileID: 3209922489711309120, guid: 310267a07369f3246a1bef984bb268d4, type: 3}
+  npcManager: {fileID: 0}
 --- !u!1 &6740177115036083952
 GameObject:
   m_ObjectHideFlags: 0
