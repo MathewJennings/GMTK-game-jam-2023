@@ -103,8 +103,16 @@ public void Start()
     public void PrintResult(string message)
     {
         // TODO: Make this print to UI.
-        
+        consequenceBox.SetActive(true);
         consequenceText.text = message;
+
+        StartCoroutine(WaitAndDisableConsequence());
+    }
+
+    IEnumerator WaitAndDisableConsequence()
+    {
+        yield return new WaitForSeconds(2f);
+        consequenceBox.SetActive(false);
     }
 
     EventDelegate closeDialog = () =>
