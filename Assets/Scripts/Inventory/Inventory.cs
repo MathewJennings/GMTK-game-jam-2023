@@ -16,7 +16,7 @@ public class Inventory : MonoBehaviour
         // Get all items.
         GameObject itemManager = GameObject.Find("/ItemManager");
         List<Item> allItems = itemManager.GetComponent<AllItems>().GetAllItems();
-        
+
         // Populate items with 0 of each item.
         foreach(Item item in allItems)
         {
