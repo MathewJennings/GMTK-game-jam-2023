@@ -6,7 +6,7 @@ using TMPro;
 using System.Linq;
 using System.Globalization;
 
-public class Inventory_UI : MonoBehaviour
+public class InventoryUI : MonoBehaviour
 {
     [SerializeField] Inventory player_inventory;
     [SerializeField] Image inventoryItemPrefab;
@@ -25,8 +25,6 @@ public class Inventory_UI : MonoBehaviour
     //how big the inventory is
     private float inventory_width=100; 
 
-    //where the inventory should be.
-    public Transform inventory_transform;
 
     void Update()
     {
@@ -91,6 +89,7 @@ public class Inventory_UI : MonoBehaviour
         {
             Destroy(image.gameObject);
         }
+        currentInventoryImages.Clear();
     }
 
     public void UpdateItemDescription(Item item)

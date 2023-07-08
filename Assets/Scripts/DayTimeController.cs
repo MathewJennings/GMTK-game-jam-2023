@@ -7,13 +7,15 @@ using UnityEngine.UI;
 public class DayTimeController : MonoBehaviour
 {
 
-    public float secondsInADay;
-    public float secondsInAnHour;
+    public static float secondsInADay = 60;
+    public static float secondsInAnHour = 6;
 
     public Color nightLightColor;
     public AnimationCurve nightTimeCurve;
     public Color dayLightColor = Color.white;
     public GameObject dayTransitionOverlay;
+
+    InventoryUI inventoryUi;
 
 
     float time = 0;
@@ -23,6 +25,10 @@ public class DayTimeController : MonoBehaviour
     public TMP_Text currTime;
     //TODO can plug in lighting here
 
+    private void Start()
+    {
+        inventoryUi = GameObject.FindGameObjectWithTag("InventoryUI").GetComponent<InventoryUI>();
+    }
     void Update()
     {
         if(!isTimePaused)
@@ -46,11 +52,11 @@ public class DayTimeController : MonoBehaviour
         float fadeTime = 3f;
         float waitTime = 3f;
         float elapsedTime = 0f;
+        inventoryUi.CloseInventory();
         dayTransitionOverlay.SetActive(true);
 
         PlayerManager playerManager= GameObject.FindGameObjectsWithTag("Player")[0].GetComponent<PlayerManager>();
         int hunger = playerManager.hunger;
-        int ap = playerManager.ap;
 
         var textFields = dayTransitionOverlay.GetComponentsInChildren<TMP_Text>();
         int dayNumberTextIndex = 0;

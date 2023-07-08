@@ -8,12 +8,12 @@ public class PlayerCropInteraction : MonoBehaviour
     public Plot plot;
     public PlayerManager playerManager;
 
-    private Inventory_UI inventoryUI;
+    private InventoryUI inventoryUI;
 
     // Start is called before the first frame update
     void Start()
     {
-        inventoryUI = GameObject.FindGameObjectWithTag("InventoryUI").GetComponent<Inventory_UI>();
+        inventoryUI = GameObject.FindGameObjectWithTag("InventoryUI").GetComponent<InventoryUI>();
     }
 
     // Update is called once per frame
