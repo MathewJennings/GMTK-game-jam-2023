@@ -9,11 +9,13 @@ public class PlayerCropInteraction : MonoBehaviour
     public PlayerStats playerManager;
 
     private Inventory_UI inventoryUI;
+    private Inventory playerInventory;
 
     // Start is called before the first frame update
     void Start()
     {
         inventoryUI = GameObject.FindGameObjectWithTag("InventoryUI").GetComponent<Inventory_UI>();
+        playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
     }
 
     // Update is called once per frame
@@ -59,6 +61,7 @@ public class PlayerCropInteraction : MonoBehaviour
             {
                 playerManager.ChangeAp(-3);
                 Item yield = plot.harvest();
+                playerInventory.AddItem(yield.GetItemId(), yield.GetQuantity());
                 //STICK IT IN THE INVENTORY!!!!!
             } else
             {
@@ -79,7 +82,6 @@ public class PlayerCropInteraction : MonoBehaviour
             {
                 playerManager.ChangeAp(-2);
                 plot.plantSeed(seed);
-                Inventory playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
                 playerInventory.RemoveItem(item.GetItemId(), 1);
             } else
             {
