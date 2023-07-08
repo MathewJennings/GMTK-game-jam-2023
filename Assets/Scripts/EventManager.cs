@@ -85,7 +85,7 @@ public void Start()
                 "You hear yelling from your gate. You see goblin soldiers standing there. \"We have come today to collect your taxes! This will be crucial to win this war! Now behave and pay your taxes!\"",
                 new List<string> { "Pay", "Ignore" },
                 new List<EventDelegate> { PayTax, NotPayTax },
-                allNpcPrefabsList[3],0
+                allNpcPrefabsList[3],1
             ),
         };
 
@@ -96,13 +96,12 @@ public void Start()
         nextEvent = new Event(eventTemplates[0]);
 
         events = new Queue<Event>();
+        AddSpecificEvent("human soldier");
         AddSpecificEvent("tax Event");
-        
     }
 
     public void PrintResult(string message)
     {
-        // TODO: Make this print to UI.
         consequenceBox.SetActive(true);
         consequenceText.text = message;
 
