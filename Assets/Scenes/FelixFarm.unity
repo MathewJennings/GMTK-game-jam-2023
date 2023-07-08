@@ -7602,11 +7602,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player_inventory: {fileID: 1921511968}
+  inventoryItemPrefab: {fileID: 0}
   itemName: {fileID: 151615422}
   itemQuantity: {fileID: 1794209345}
   itemDescription: {fileID: 1223425809}
-  inventory_image: {fileID: 1587092746206717638, guid: be429873bb8a8f748953d7284ad63a82,
-    type: 3}
   item_images: []
   inventory_transform: {fileID: 1921511967}
   inventory_canvas: {fileID: 1787562104}
@@ -7947,6 +7946,79 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 16.97, y: 1}
   m_EdgeRadius: 0
+--- !u!1001 &625716940
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 154347519260222776, guid: 3a51adaba4e7cda4282999bff3630d6a,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 154347519260222776, guid: 3a51adaba4e7cda4282999bff3630d6a,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.7057521
+      objectReference: {fileID: 0}
+    - target: {fileID: 154347519260222776, guid: 3a51adaba4e7cda4282999bff3630d6a,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.4336283
+      objectReference: {fileID: 0}
+    - target: {fileID: 154347519260222776, guid: 3a51adaba4e7cda4282999bff3630d6a,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.42452013
+      objectReference: {fileID: 0}
+    - target: {fileID: 154347519260222776, guid: 3a51adaba4e7cda4282999bff3630d6a,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 154347519260222776, guid: 3a51adaba4e7cda4282999bff3630d6a,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 154347519260222776, guid: 3a51adaba4e7cda4282999bff3630d6a,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 154347519260222776, guid: 3a51adaba4e7cda4282999bff3630d6a,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 154347519260222776, guid: 3a51adaba4e7cda4282999bff3630d6a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 154347519260222776, guid: 3a51adaba4e7cda4282999bff3630d6a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 154347519260222776, guid: 3a51adaba4e7cda4282999bff3630d6a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2947990235617391490, guid: 3a51adaba4e7cda4282999bff3630d6a,
+        type: 3}
+      propertyPath: m_Name
+      value: Merchant
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3a51adaba4e7cda4282999bff3630d6a, type: 3}
 --- !u!1001 &687278186
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10776,6 +10848,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c69db73bc819b9142aa70af5f3a1aea3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemPrefabs:
+  - {fileID: 8174912039875725190, guid: 387e7b90827e3f446b17a9cc8099a461, type: 3}
+  - {fileID: 8174912039875725190, guid: ac8586b4701a1ba42a81973c80abf361, type: 3}
+  - {fileID: 8174912039875725190, guid: 5d27bef0a40645e44b45440aaba17509, type: 3}
+  - {fileID: 8174912039875725190, guid: eb0e28a24c8a93944b0515e4e6b66b11, type: 3}
+  - {fileID: 8174912039875725190, guid: d9826c1f8e2b8d449b0d3f7b9df8f82b, type: 3}
 --- !u!4 &1048816316
 Transform:
   m_ObjectHideFlags: 0
@@ -11914,7 +11992,7 @@ Transform:
   m_Children:
   - {fileID: 1787562105}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1494323930
 PrefabInstance:
@@ -13370,7 +13448,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maturationTime: 0
+  waterDurationTime: 0
+  dryToleranceTime: 0
   yield: {fileID: 0}
+  dayTimeController: {fileID: 0}
 --- !u!4 &1907840420
 Transform:
   m_ObjectHideFlags: 0
@@ -13494,6 +13575,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6806cf9773fd1b4bad637c32af12731, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startGold: 0
+  startAppleSeed: 0
+  startAppleCrop: 0
+  startCarrotSeed: 0
+  startCarrotCrop: 0
+  priceAppleSeed: 0
+  priceAppleCrop: 0
+  priceCarrotSeed: 0
+  priceCarrotCrop: 0
 --- !u!1001 &1964876143
 PrefabInstance:
   m_ObjectHideFlags: 0

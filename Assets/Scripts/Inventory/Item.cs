@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using static UnityEditor.Progress;
 
-public class Item
+public class Item :MonoBehaviour
 {
     public enum ItemType
     {
@@ -14,21 +14,23 @@ public class Item
         Crop,
     }
 
-    private string itemId;
-    private ItemType itemType;
-    private int quantity;
-    private int price;
-    private string description { get; set; }
-    private string correspondingId;
+    [SerializeField] string itemId;
+    [SerializeField] ItemType itemType;
+    [SerializeField] int quantity;
+    [SerializeField] int price;
+    [SerializeField] string description;
+    [SerializeField] string correspondingId;
+    [SerializeField] Sprite inventoryIcon;
 
     public Item(string itemId, ItemType itemType, int quantity,
-                int price, string description, string correspondingId = "")
+                int price, string description, Sprite inventoryIcon, string correspondingId = "")
     {
         this.itemId = itemId;
         this.itemType = itemType;
         this.quantity = quantity;
         this.price = price;
         this.description = description;
+        this.inventoryIcon = inventoryIcon;
         this.correspondingId = correspondingId;
     }
 
@@ -39,7 +41,13 @@ public class Item
         this.quantity = item.quantity;
         this.price = item.price;
         this.description = item.description;
+        this.inventoryIcon = item.inventoryIcon;
         this.correspondingId = item.correspondingId;
+    }
+
+    public override string ToString()
+    {
+        return itemId;
     }
 
     public string GetItemId()
@@ -102,6 +110,11 @@ public class Item
     public string GetDescription()
     {
         return description;
+    }
+
+    public Sprite GetInventoryIcon()
+    {
+        return inventoryIcon;
     }
 
 }

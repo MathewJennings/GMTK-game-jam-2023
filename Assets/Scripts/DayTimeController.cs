@@ -19,7 +19,7 @@ public class DayTimeController : MonoBehaviour
     public TMP_Text currTime;
     //TODO can plug in lighting here
 
-    // Update is called once per frame
+
     void Update()
     {
         if(!isTimePaused)
@@ -29,8 +29,7 @@ public class DayTimeController : MonoBehaviour
         int numDays = (int)(time / secondsInADay);
         float numSecRemaining = time % secondsInADay;
         int numHours = (int)(numSecRemaining / secondsInAnHour);
-        //currTime.text = "Day: " + numDays.ToString() + " Time: " + numHours.ToString();
-        currTime.text = "CurrTime: Day: " + numDays.ToString() + "\nHour: " + numHours.ToString() + "\n" + "numSeconds" + time.ToString();
+        currTime.text = "Day: " + numDays.ToString() + "\nTime: " + numHours.ToString() + ":00\n" + "elapsedTime: " + time.ToString();
     }
 
     public void togglePausedTime()
