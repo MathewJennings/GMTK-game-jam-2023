@@ -15,8 +15,8 @@ public class DayTimeController : MonoBehaviour
     public Color dayLightColor = Color.white;
     public OverlayManager overlayManager;
 
-    InventoryUI inventoryUi;
-    
+    private InventoryUI playerInventoryUi;
+
 
     float time = 0;
     public bool isTimePaused = false;
@@ -30,7 +30,7 @@ public class DayTimeController : MonoBehaviour
         time = 0;
         isTimePaused = false;
         currentDay = 0;
-        inventoryUi = GameObject.FindGameObjectWithTag("InventoryUI").GetComponent<InventoryUI>();
+        playerInventoryUi = GameObject.FindGameObjectWithTag("Player").GetComponent<InventoryUI>();
     }
     void Update()
     {
@@ -63,5 +63,10 @@ public class DayTimeController : MonoBehaviour
     public float getCurrentTimeSeconds()
     {
         return time;
+    }
+
+    public int getCurrentDay()
+    {
+        return currentDay;
     }
 }

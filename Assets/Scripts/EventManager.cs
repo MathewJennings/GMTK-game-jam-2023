@@ -24,10 +24,12 @@ public class EventManager : MonoBehaviour
     private float nextEventTime;
 
     //minimum time that needs to pass since the last event for the next event to occur
-    private float minEventGap = 2f;
+    private float minEventGap = 5f;
 
     //maximum time that needs to pass since the last event for the next event to occur
-    private float maxEventGap = 3f;
+    private float maxEventGap = 10f;
+
+    private static GameObject npc;
 
 
     private static List<EventTemplate> eventTemplates;
@@ -42,7 +44,7 @@ public class EventManager : MonoBehaviour
             new EventTemplate(
                 "merchant",
                 "You hear a knock at your gate. \"Would you like to make a trade?",
-                new List<string> { "Browse", "Ignore" },
+                new List<string> { "Let's Trade", "Ignore" },
                 new List<EventDelegate> { openShopMenu, closeDialog },
                 allNpcPrefabsList[0],1,0
             ),
@@ -78,7 +80,10 @@ public class EventManager : MonoBehaviour
         AddRandomEvent();
         AddRandomEvent();
         AddRandomEvent();
-        AddRandomEvent();
+
+
+
+
 
 
     }
@@ -92,6 +97,7 @@ public class EventManager : MonoBehaviour
         Inventory playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
         playerInventory.RemoveItem("gold", 5);
         Debug.Log(playerInventory.inventory["gold"].GetQuantity());
+
     };
 
     EventDelegate robGrandma = () => {
@@ -104,7 +110,7 @@ public class EventManager : MonoBehaviour
         playerInventory.RemoveItem("appleCrop", 2);
         Debug.Log(playerInventory.inventory["appleCrop"].GetQuantity());
         UpdateEventPossibility("Angry Goblin Solider: Human Soldier", 1);
-
+        UpdateEventPossibility("human soldier", 0);
     };
     EventDelegate reportHumanSoldier = () => {
         Inventory playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
@@ -117,15 +123,19 @@ public class EventManager : MonoBehaviour
         playerInventory.RemoveItem("carrotCrop", 3);
         playerInventory.RemoveItem("gold", 5);
         UpdateEventPossibility("Angry Goblin Solider: Human Soldier", 0);
+        UpdateEventPossibility("human soldier", 1);
+
     };
     EventDelegate GoblinSoldier_FightBack = () => {
         GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>().ChangeAp(-3);
         UpdateEventPossibility("Angry Goblin Solider: Human Soldier", 0);
+        UpdateEventPossibility("human soldier", 1);
+
     };
 
     EventDelegate openShopMenu = () =>
     {
-        // Open shop UI.
+        npc.GetComponent<InventoryUI>().OpenInventory(); //TODO
     };
 
 
@@ -136,20 +146,26 @@ public class EventManager : MonoBehaviour
         float currentPossibility = UnityEngine.Random.Range(0f, 1f);
         int randomIndex = UnityEngine.Random.Range(0, eventTemplates.Count - 1);
         int testing = 0;
-        Debug.Log(randomIndex);
+        Debug.Log("random index:" + randomIndex + "out of "+ (eventTemplates.Count - 1));
+        Debug.Log("last one"+eventTemplates[eventTemplates.Count - 1].name);
     
         //If the event that we are thinking about does not occur based on the possibility, we try to look for another event. This is repeated.
-        while (currentPossibility >= eventTemplates[randomIndex].possibility || eventTemplates[randomIndex].minTime<dayTimeController.getCurrentTimeSeconds())
+        while (currentPossibility >= eventTemplates[randomIndex].possibility || eventTemplates[randomIndex].minTime>dayTimeController.getCurrentTimeSeconds())
         {
+            Debug.Log("random index:" + randomIndex);
+
             Debug.Log(randomIndex);
             currentPossibility = UnityEngine.Random.Range(0f, 1f);
-            randomIndex = UnityEngine.Random.Range(0, eventTemplates.Count - 1);
+            randomIndex = UnityEngine.Random.Range(0, eventTemplates.Count);
             testing++;
             if(testing>=100)
             {
                 Debug.Log("possibily infinite while loop");
+                return;
             }
         }
+        Debug.Log(eventTemplates[randomIndex].name + "");
+
         events.Enqueue(new Event(nextEventTime, eventTemplates[randomIndex]));
         lastEventTime = nextEventTime;
 
@@ -171,14 +187,11 @@ public class EventManager : MonoBehaviour
     }
     private static void UpdateEventPossibility(string name, float possibility)
     {
-        Debug.Log("Event: " + name + "Updating with possibility: " + possibility);
-
         foreach (EventTemplate template in eventTemplates)
         {
             if(template.name == name) 
             {
                 template.possibility = possibility;
-                Debug.Log("Event: " + name + "Updated with possibility: " + possibility);
                 return;
             }
         }
@@ -196,9 +209,21 @@ public class EventManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(nextEvent != null && !nextEvent.eventStarted && nextEvent.time < dayTimeController.getCurrentTimeSeconds())
+        //if(events.Count<2)
+        //{
+        //    AddRandomEvent();
+        //}
+        if (nextEvent != null && !nextEvent.eventStarted && nextEvent.time < dayTimeController.getCurrentTimeSeconds())
         {
+            Debug.Log("length of event: "+ events.Count);
+            if (events.Count < 2)
+            {
+                AddRandomEvent();
+                Debug.Log("adding an event");
+
+            }
             nextEvent.eventStarted = true;
+            npc = Instantiate(nextEvent.template.npcPrefab);
             DialogDelegate dialogDelegate = () =>
             {
                 dialogBox.SetActive(true);
@@ -218,12 +243,12 @@ public class EventManager : MonoBehaviour
                         tempEvent.template.executeOption(temp);
                         dayTimeController.SetPausedTime(false);
                         dialogBox.SetActive(false);
+                        npc.GetComponent<Animator>().SetBool("walkRight", true);
                     });
                 }
                 nextEvent = events.Count > 0 ? events.Dequeue() : null;
             };
 
-            GameObject npc = Instantiate(nextEvent.template.npcPrefab);
             npc.GetComponent<Npc>().SetFields(dialogDelegate);
         }
     }

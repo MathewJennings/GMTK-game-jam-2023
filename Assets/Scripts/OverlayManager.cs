@@ -17,7 +17,7 @@ public class OverlayManager : MonoBehaviour
     {
 
         dayTimeController = FindAnyObjectByType<DayTimeController>();
-        inventoryUi = GameObject.FindGameObjectWithTag("InventoryUI").GetComponent<InventoryUI>();
+        inventoryUi = GameObject.FindGameObjectWithTag("Player").GetComponent<InventoryUI>();
     }
 
     // Update is called once per frame
@@ -49,7 +49,7 @@ public class OverlayManager : MonoBehaviour
 
     public IEnumerator DisplayOverlay(string mainText, string subText, bool showButton = false, string buttonText = "", ButtonDelegate buttonDelegate = null)
     {
-        dayTimeController.togglePausedTime();
+        dayTimeController.SetPausedTime(true);
         float fadeTime = 3f;
         float waitTime = 3f;
         float elapsedTime = 0f;
@@ -83,6 +83,8 @@ public class OverlayManager : MonoBehaviour
             b.onClick.RemoveAllListeners();
             b.onClick.AddListener(() => {
                 buttonDelegate.Invoke();
+                //resetting the daytimecontroller resumes time
+                dayTimeController.SetPausedTime(true);
                 b.gameObject.SetActive(false);
                 //fade out
                 StartCoroutine(FadeOut());
@@ -106,7 +108,7 @@ public class OverlayManager : MonoBehaviour
         }
         //yield return new WaitForSeconds(waitTime);
         dayTransitionOverlay.SetActive(false);
-        dayTimeController.togglePausedTime();
+        dayTimeController.SetPausedTime(false);
 
     }
     public delegate void ButtonDelegate();

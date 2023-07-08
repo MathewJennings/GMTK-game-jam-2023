@@ -11,6 +11,7 @@ public class Npc : MonoBehaviour
     public DialogDelegate dialogDelegate { set; get; }
     int waypointIndex;
     DayTimeController dayTimeController;
+    private Animator animator;
 
     void Awake()
     {
@@ -26,6 +27,7 @@ public class Npc : MonoBehaviour
         waypointIndex = 0;
         dayTimeController = FindAnyObjectByType<DayTimeController>();
         transform.position = worldSpaceWaypoints[0].transform.position;
+        animator = gameObject.GetComponent<Animator>();
     }
 
     public void SetFields(DialogDelegate dialogDelegate)
@@ -44,15 +46,24 @@ public class Npc : MonoBehaviour
         transform.position = Vector2.MoveTowards(transform.position, nextWaypoint.transform.position, dayTimeController.isTimePaused ? 0 : moveSpeed * Time.deltaTime);
         if (transform.position == nextWaypoint.transform.position)
         {
-            //arrived at the dialogIndex
-            if (dialogIndex == waypointIndex)
+            // walking left
+            if (waypointIndex < dialogIndex)
             {
-                dialogDelegate.Invoke();
-            }
+                animator.SetBool("walkLeft", true);
 
+            }
+            //arrived at the dialogIndex
+            else if (waypointIndex == dialogIndex)
+            {
+                animator.SetBool("walkLeft", false);
+                animator.SetBool("walkRight", false);
+                dialogDelegate.Invoke();
+
+            }
             waypointIndex++;
             if (waypointIndex >= worldSpaceWaypoints.Count)
             {
+
                 Destroy(this.gameObject);
             }
         }

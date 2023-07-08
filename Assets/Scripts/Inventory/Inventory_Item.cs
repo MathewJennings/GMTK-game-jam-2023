@@ -10,29 +10,33 @@ public class Inventory_Item : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
     [SerializeField] TextMeshProUGUI quantityText;
 
-    private InventoryUI inventory_UI;
+    private InventoryUI inventoryUI;
     private UIInputManager uiInputManager;
     private PlayerCropInteraction playerCropInteraction;
 
-    public Item item;
+    private Item item;
 
     private void Start()
     {
-        inventory_UI = GameObject.FindGameObjectWithTag("InventoryUI").GetComponent<InventoryUI>();
         uiInputManager = GameObject.FindGameObjectWithTag("UIInputManager").GetComponent<UIInputManager>();
         playerCropInteraction = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCropInteraction>();
     }
 
+    public void setInventoryUI(InventoryUI inventoryUI)
+    {
+        this.inventoryUI = inventoryUI;
+    }
+
     public void OnPointerEnter(PointerEventData eventData)
     {
-        inventory_UI.UpdateItemDescription(item);
-        inventory_UI.itemName.gameObject.SetActive(true);
-        inventory_UI.itemDescription.gameObject.SetActive(true);
+        inventoryUI.UpdateItemDescription(item);
+        inventoryUI.itemName.gameObject.SetActive(true);
+        inventoryUI.itemDescription.gameObject.SetActive(true);
     }
     public void OnPointerExit(PointerEventData eventData)
     {
-        inventory_UI.itemName.gameObject.SetActive(false);
-        inventory_UI.itemDescription.gameObject.SetActive(false);
+        inventoryUI.itemName.gameObject.SetActive(false);
+        inventoryUI.itemDescription.gameObject.SetActive(false);
     }
 
     public void setItem(Item item) {
@@ -48,7 +52,7 @@ public class Inventory_Item : MonoBehaviour, IPointerEnterHandler, IPointerExitH
             if (seed != null)
             {
                 playerCropInteraction.plantSeed(item, seed);
-                inventory_UI.CloseInventory();
+                inventoryUI.CloseInventory();
             }
         }
     }

@@ -18,16 +18,22 @@ public class PlayerStats : MonoBehaviour
 
     float nextHungerTick;
     DayTimeController dayTimeController;
+    Vector2 originalStartPosition;
 
     // Start is called before the first frame update
     public void Start()
     {
+        if(originalStartPosition == null)
+        {
+            originalStartPosition = transform.position;
+        }
         ap = maxAp; 
         hunger = maxHunger;
         SetBar(BarType.Hunger, maxHunger);
         SetBar(BarType.AP, maxAp);
         nextHungerTick = hungerTickIntervalSeconds;
         dayTimeController = FindAnyObjectByType<DayTimeController>();
+        gameObject.transform.position = originalStartPosition;
     }
 
     // Update is called once per frame

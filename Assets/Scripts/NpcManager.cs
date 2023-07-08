@@ -35,6 +35,7 @@ public class NpcManager : MonoBehaviour
     public enum NpcType
     {
         MERCHANT,
-        ROBBER
+        ROBBER,
+        VILLAGER
     }
 }
