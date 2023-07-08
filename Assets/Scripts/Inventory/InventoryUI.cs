@@ -65,7 +65,10 @@ public class InventoryUI : MonoBehaviour
     }
     public void CloseInventory()
     {
-        if (!isOpen) return;
+        if(!isOpen)
+        {
+            return;
+        }
         inventoryBackground.SetActive(false);
         foreach (GameObject inventoryItem in currentInventoryItems)
         {

@@ -19,9 +19,16 @@ public class Plot : MonoBehaviour
     public SpriteRenderer sproutRenderer;
     public DayTimeController dayTimeController;
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
         dayTimeController = GameObject.FindObjectOfType<DayTimeController>();
+        seed = null;
+        isWatered = false;
+        timePlanted = 0f;
+        timeOutOfWater = 0f;
+        timeWatered = 0f;
+        updateSprite(barren);
+        removePlant();
     }
 
     private void FixedUpdate()

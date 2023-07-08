@@ -29,7 +29,7 @@ public class EventManager : MonoBehaviour
     private static List<EventTemplate> eventTemplates;
 
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
         eventTemplates = new List<EventTemplate> {
             new EventTemplate(
@@ -162,7 +162,7 @@ public class EventManager : MonoBehaviour
     public void AddRandomEvent()
     {
         float currentPossibility = UnityEngine.Random.Range(0f, 1f);
-        int randomIndex = UnityEngine.Random.Range(0, eventTemplates.Count);
+        int randomIndex = UnityEngine.Random.Range(0, eventTemplates.Count - 1);
         int testing = 0;
         Debug.Log("random index:" + randomIndex + "out of "+ (eventTemplates.Count - 1));
         Debug.Log("last one"+eventTemplates[eventTemplates.Count - 1].name);
