@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 97211978376952516}
   - component: {fileID: 8114517396543361322}
   - component: {fileID: 1710474135898407691}
-  - component: {fileID: 8960414608567849136}
+  - component: {fileID: -6387112014638117522}
   m_Layer: 0
   m_Name: Plot
   m_TagString: Untagged
@@ -131,7 +131,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &8960414608567849136
+--- !u!114 &-6387112014638117522
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -140,7 +140,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8881233056004744319}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a9dfcf24fcccfd469ae5b3e515871a6, type: 3}
+  m_Script: {fileID: 11500000, guid: 145b435e19848e4428222b70a55a83e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   seed: {fileID: 0}
