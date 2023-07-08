@@ -29,8 +29,25 @@ public class EventManager : MonoBehaviour
 
     private static List<EventTemplate> eventTemplates;
 
-    // Start is called before the first frame update
-    public void Start()
+
+
+
+    public static int human_loyalty =0 ;
+    public static int goblin_loyalty = 0;
+    public static int philanthropic = 0;
+    public static int business = 0;
+
+    public static int human_loyalty_guests_threshold = 3;
+    public static int goblin_loyalty_guests_threshold = 3;
+    public static int goblin_loyalty_kick_threshold = -3;
+
+    public bool human_guests_occurred;
+    public bool goblin_guests_occurred;
+    public bool goblin_kick_occured;
+  
+
+// Start is called before the first frame update
+public void Start()
     {
         eventTemplates = new List<EventTemplate> {
             new EventTemplate(
@@ -66,7 +83,7 @@ public class EventManager : MonoBehaviour
                 "You hear yelling from your gate. You see goblin soldiers standing there. \"We have come today to collect your taxes! This will be crucial to win this war! Now behave and pay your taxes!\"",
                 new List<string> { "Pay", "Ignore" },
                 new List<EventDelegate> { PayTax, NotPayTax },
-                allNpcPrefabsList[0],0,65
+                allNpcPrefabsList[0],0
             ),
         };
 
@@ -100,6 +117,7 @@ public class EventManager : MonoBehaviour
 
         playerInventory.RemoveItem("gold", 5);
         PrintResult("You gave 5 gold.");
+        philanthropic++;
         return true;
     };
 
@@ -107,6 +125,8 @@ public class EventManager : MonoBehaviour
         Inventory playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
         playerInventory.AddItem("gold", 10);
         Debug.Log(playerInventory.inventory["gold"].GetQuantity());
+        business--;
+        return true;
     };
     EventDelegate giveFoo = () => {
         Inventory playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
@@ -120,11 +140,16 @@ public class EventManager : MonoBehaviour
         Debug.Log(playerInventory.inventory["appleCrop"].GetQuantity());
         UpdateEventPossibility("Angry Goblin Solider: Human Soldier", 1);
         UpdateEventPossibility("human soldier", 0);
+        philanthropic++;
+        human_loyalty++;
+        return true;
     };
     EventDelegate reportHumanSoldier = () => {
         Inventory playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
         playerInventory.AddItem("gold", 2);
         Debug.Log(playerInventory.inventory["gold"].GetQuantity());
+        goblin_loyalty++;
+        return true;
     };
     EventDelegate GoblinSoldier_GiveUp = () => {
         Inventory playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
@@ -142,6 +167,8 @@ public class EventManager : MonoBehaviour
         PrintResult("Lost 3 apples, 3 carrots, and 5 gold.");
         UpdateEventPossibility("Angry Goblin Soldier: Human Soldier", 0);
         UpdateEventPossibility("human soldier", 1);
+        return true;
+
 
     };
     EventDelegate GoblinSoldier_FightBack = () => {
@@ -149,6 +176,30 @@ public class EventManager : MonoBehaviour
         PrintResult("Lost 3 AP.");
         UpdateEventPossibility("Angry Goblin Soldier: Human Soldier", 0);
         UpdateEventPossibility("human soldier", 1);
+        goblin_loyalty--;
+        return true;
+    };
+    EventDelegate PayTax = () => {
+        Inventory playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
+        if (playerInventory.inventory["gold"].GetQuantity() < 5)
+        {
+            PrintResult("You do not have enough resources to give.");
+            return false;
+        }
+
+        playerInventory.RemoveItem("gold", 5);
+        PrintResult("Lost 5 gold.");
+        goblin_loyalty++;
+        return true;
+
+
+    };
+    EventDelegate NotPayTax = () => {
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>().ChangeAp(-3);
+        PrintResult("Lost 3 AP.");
+        goblin_loyalty--;
+        return true;
+
 
     };
 
@@ -281,7 +332,7 @@ public class EventManager : MonoBehaviour
     {
         Debug.Log("event current day " + eventCurrentDay);
         Debug.Log("next event time " + nextEventTime);
-        if (eventCurrentDay < dayTimeController.getCurrentDay())
+        if (eventCurrentDay <= dayTimeController.getCurrentDay() && nextEvent==null)
         {
             // We hit the next day. Pull out an event from the queue.
             Debug.Log("We started a new day");
@@ -290,6 +341,10 @@ public class EventManager : MonoBehaviour
             {
                 nextEventTime = RandomNextEventTime();
                 nextEvent = events.Dequeue();
+            }
+            else
+            {
+                AddEvent();
             }
         }
 
