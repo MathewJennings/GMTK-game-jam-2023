@@ -58,32 +58,32 @@ public void Start()
                 allNpcPrefabsList[0],1
             ),
             new EventTemplate(
-                "old lady", 
-                "You hear a knock at your gate. \"Would you help me? I'm a poor defenseless grandma and my child is sick. I need 5 gold to buy some medicine\". You ponder your options", 
+                "lady", 
+                "You hear a knock at your gate. \"Would you help me? I'm a poor defenseless villager and my child is sick. I need 5 gold to buy some medicine\". You ponder your options", 
                 new List<string> { "Give gold!", "Rob her!" }, 
                 new List<EventDelegate> { giveGrandma, robGrandma },
-                allNpcPrefabsList[0],1
+                allNpcPrefabsList[2],1
             ),
             new EventTemplate(
                 "human soldier",
                 "You hear a voice coming from your gate. It's a human soldier. He seems tired and injured. Maybe some foo will help him.",
                 new List<string> { "Give Foo", "Report to Goblin soliders" },
                 new List<EventDelegate> { giveFoo, reportHumanSoldier },
-                allNpcPrefabsList[0],1
+                allNpcPrefabsList[1],1
             ),
             new EventTemplate(
                 "Angry Goblin Soldier: Human Soldier",
                 "You hear a knock at your gate. It's goblin soldiers. \"Someone saw you helping the human soldiers!\" you betrayed us!",
                 new List<string> { "Give up", "fight back" },
                 new List<EventDelegate> { GoblinSoldier_GiveUp, GoblinSoldier_FightBack },
-                allNpcPrefabsList[0],0
+                allNpcPrefabsList[4],0
             ),
               new EventTemplate(
                 "tax Event",
                 "You hear yelling from your gate. You see goblin soldiers standing there. \"We have come today to collect your taxes! This will be crucial to win this war! Now behave and pay your taxes!\"",
                 new List<string> { "Pay", "Ignore" },
                 new List<EventDelegate> { PayTax, NotPayTax },
-                allNpcPrefabsList[0],0
+                allNpcPrefabsList[3],0
             ),
         };
 
