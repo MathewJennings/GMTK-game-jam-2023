@@ -199,6 +199,7 @@ public class EventManager : MonoBehaviour
         if(nextEvent != null && !nextEvent.eventStarted && nextEvent.time < dayTimeController.getCurrentTimeSeconds())
         {
             nextEvent.eventStarted = true;
+            GameObject npc = Instantiate(nextEvent.template.npcPrefab);
             DialogDelegate dialogDelegate = () =>
             {
                 dialogBox.SetActive(true);
@@ -218,12 +219,12 @@ public class EventManager : MonoBehaviour
                         tempEvent.template.executeOption(temp);
                         dayTimeController.SetPausedTime(false);
                         dialogBox.SetActive(false);
+                        npc.GetComponent<Animator>().SetBool("walkRight", true);
                     });
                 }
                 nextEvent = events.Count > 0 ? events.Dequeue() : null;
             };
 
-            GameObject npc = Instantiate(nextEvent.template.npcPrefab);
             npc.GetComponent<Npc>().SetFields(dialogDelegate);
         }
     }
