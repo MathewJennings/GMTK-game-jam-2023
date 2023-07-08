@@ -25,20 +25,6 @@ public class Inventory : MonoBehaviour
 
     }
 
-    [ContextMenu("IncreaseTenGold")]
-    public void AddTenGold()
-    {
-        AddItem("gold", 10);
-        Debug.Log(inventory["gold"].GetQuantity());
-    }
-
-    [ContextMenu("RemoveSevenGold")]
-    public void RemoveSevenGold()
-    {
-        RemoveItem("gold", 7);
-        Debug.Log(inventory["gold"].GetQuantity());
-    }
-
     public void AddItem(string itemId, int quantity)
     {
         Item item = inventory[itemId];
@@ -49,5 +35,35 @@ public class Inventory : MonoBehaviour
     {
         Item item = inventory[itemId];
         item.DecreaseQuantity(quantity);
+    }
+
+    public List<Item> GetSeeds()
+    {
+        List<Item> seeds = new List<Item>();
+
+        foreach(Item item in inventory.Values)
+        {
+            if (item.GetItemType() == Item.ItemType.Seed)
+            {
+                seeds.Add(item);
+            }
+        }
+
+        return seeds;
+    }
+
+    public List<Item> GetCrops()
+    {
+        List<Item> crops = new List<Item>();
+
+        foreach (Item item in inventory.Values)
+        {
+            if (item.GetItemType() == Item.ItemType.Crop)
+            {
+                crops.Add(item);
+            }
+        }
+
+        return crops;
     }
 }

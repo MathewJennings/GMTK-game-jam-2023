@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 using static UnityEditor.Progress;
 
 public class Item
@@ -47,6 +48,14 @@ public class Item
     public int GetQuantity()
     {
         return quantity;
+    }
+
+    public void SetQuantity(int i)
+    {
+        if (i >= 0)
+        {
+            quantity = i;
+        }
     }
 
     public void IncreaseQuantity(int i)
