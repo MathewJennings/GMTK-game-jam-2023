@@ -363,6 +363,8 @@ public void Start()
             DialogDelegate dialogDelegate = () =>
             {
                 dialogBox.SetActive(true);
+                // TODO
+                npc.transform.GetChild(3).gameObject.SetActive(true);
                 // Clear out all listeners on buttons to make sure we're not accumulating multiple
                 // listeners on a single button.
                 ResetChoiceButtons();
@@ -382,7 +384,10 @@ public void Start()
                         {
                             dayTimeController.SetPausedTime(false);
                             dialogBox.SetActive(false);
+                            // TODO
+                            npc.transform.GetChild(3).gameObject.SetActive(false);
                             npc.GetComponent<Animator>().SetBool("walkRight", true);
+                npc.GetComponentInChildren<SpriteRenderer>().enabled = true;
                         }
                         // else keep dialog open and wait for a different choice.
                     });

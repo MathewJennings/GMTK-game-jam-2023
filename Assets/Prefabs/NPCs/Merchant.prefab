@@ -83,6 +83,12 @@ PrefabInstance:
       propertyPath: dialogIndex
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5596473273028023291, guid: c798d6131e1c3394db6bc89416b2de22,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: ccd7dac61c8d8014eb481b878a49e2d7,
+        type: 3}
     - target: {fileID: 8777041752715548236, guid: c798d6131e1c3394db6bc89416b2de22,
         type: 3}
       propertyPath: m_Sprite
