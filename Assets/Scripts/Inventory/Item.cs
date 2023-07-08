@@ -87,6 +87,14 @@ public class Item
         return price;
     }
 
+    public void SetPrice(int p)
+    {
+        if (price > 0)
+        {
+            price = p;
+        }
+    }
+
     public string GetCorrespondingId()
     {
         return correspondingId;
