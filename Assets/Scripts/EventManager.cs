@@ -7,7 +7,8 @@ using UnityEngine.UI;
 
 public class EventManager : MonoBehaviour
 {
-    List<Event> events;
+    Queue<Event> events;
+    Event nextEvent;
     public DayTimeController dayTimeController;
     public TMP_Text dialogText;
     public List<Button> choiceButtons;
@@ -19,52 +20,82 @@ public class EventManager : MonoBehaviour
         // TODO: Gray out options that you are unable to do.
         List<EventTemplate> eventTemplates = new List<EventTemplate> {
             new EventTemplate(
+                "merchant",
+                "You hear a knock at your gate. \"Would you like to make a trade?",
+                new List<string> { "Browse", "Ignore" },
+                new List<EventDelegate> { openShopMenu, closeDialog }
+            ),
+            new EventTemplate(
                 "old lady", 
-                "You hear a knock at your gate. \'Would you help me? I'm a poor defenseless grandma and my child is sick. I need 5 gold to buy some medicine\". You ponder your options", 
+                "You hear a knock at your gate. \"Would you help me? I'm a poor defenseless grandma and my child is sick. I need 5 gold to buy some medicine\". You ponder your options", 
                 new List<string> { "Give gold!", "Rob her!" }, 
                 new List<EventDelegate> { giveGrandma, robGrandma }
-            )
+            ),
         };
 
-        events = new List<Event>
-        {
-            new Event(2f, eventTemplates[0]),
-        };
+        // Next event needs to have timestamp less than everything in events, and all events in
+        // the queue must be in order.
+        nextEvent = new Event(2f, eventTemplates[1]);
+        events = new Queue<Event>();
+        events.Enqueue(new Event(4f, eventTemplates[1]));
+        events.Enqueue(new Event(6f, eventTemplates[1]));
     }
+
+    EventDelegate closeDialog = () =>
+    {
+        // Do nothing.
+    };
 
     EventDelegate giveGrandma = () => {
         Inventory playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
         playerInventory.RemoveItem("gold", 5);
+        Debug.Log(playerInventory.inventory["gold"].GetQuantity());
     };
 
     EventDelegate robGrandma = () => {
         Inventory playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
         playerInventory.AddItem("gold", 10);
+        Debug.Log(playerInventory.inventory["gold"].GetQuantity());
     };
+
+    EventDelegate openShopMenu = () =>
+    {
+        // Open shop UI.
+    };
+
+    // Clear listeners on all buttons.
+    private void ResetChoiceButtons()
+    {
+        for (int i = 0; i < choiceButtons.Count; i++)
+        {
+            choiceButtons[i].onClick.RemoveAllListeners();
+        }
+    }
 
     // Update is called once per frame
     void Update()
     {
-        foreach(Event e in events)
+        if(nextEvent != null && nextEvent.time < dayTimeController.getCurrentTimeSeconds())
         {
-            if(!e.completed && e.time < dayTimeController.getCurrentTimeSeconds())
+            dialogBox.SetActive(true);
+            // Clear out all listeners on buttons to make sure we're not accumulating multiple
+            // listeners on a single button.
+            ResetChoiceButtons();
+            dayTimeController.SetPausedTime(true);
+            dialogText.text = nextEvent.template.dialogText;
+            for(int i = 0; i < choiceButtons.Count; i++)
             {
-                dialogBox.SetActive(true);
-                dayTimeController.togglePausedTime();
-                dialogText.text = e.template.dialogText;
-                for(int i = 0; i < choiceButtons.Count; i++)
-                {
-                    //needed because if you use i directly, i will update between when the listener is set vs when the listener is evaluated
-                    int temp = i;
-                    choiceButtons[i].GetComponentInChildren<TMP_Text>().text = e.template.choices[i];
-                    choiceButtons[i].onClick.AddListener(()=> {
-                        e.template.executeOption(temp);
-                        dayTimeController.togglePausedTime();
-                        dialogBox.SetActive(false);
-                    });
-                }
-                e.completed = true;
+                //needed because if you use i directly, i will update between when the listener is set vs when the listener is evaluated
+                int temp = i;
+                choiceButtons[i].GetComponentInChildren<TMP_Text>().text = nextEvent.template.choices[i];
+                choiceButtons[i].onClick.AddListener(()=> {
+                    nextEvent.template.executeOption(temp);
+                    dayTimeController.SetPausedTime(false);
+                    dialogBox.SetActive(false);
+                });
             }
+
+            nextEvent = events.Count > 0 ? events.Dequeue() : null;
         }
     }
 }
@@ -73,13 +104,11 @@ public class Event
 {
     public float time { get; }
     public EventTemplate template { get; }
-    public bool completed { get; set; }
 
     public Event(float time, EventTemplate template)
     {
         this.time = time;
         this.template = template;
-        completed = false;
     }
 }
 

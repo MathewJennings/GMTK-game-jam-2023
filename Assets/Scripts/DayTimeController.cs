@@ -38,6 +38,11 @@ public class DayTimeController : MonoBehaviour
         isTimePaused = !isTimePaused;
     }
 
+    public void SetPausedTime(bool paused)
+    {
+        isTimePaused = paused;
+    }
+
     public float getCurrentTimeSeconds()
     {
         return time;
