@@ -29,6 +29,7 @@ public class DayTimeController : MonoBehaviour
         int numDays = (int)(time / secondsInADay);
         float numSecRemaining = time % secondsInADay;
         int numHours = (int)(numSecRemaining / secondsInAnHour);
+        //currTime.text = "Day: " + numDays.ToString() + " Time: " + numHours.ToString();
         currTime.text = "CurrTime: Day: " + numDays.ToString() + "\nHour: " + numHours.ToString() + "\n" + "numSeconds" + time.ToString();
     }
 
