@@ -198,12 +198,14 @@ public void Start()
         Inventory playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
         if (playerInventory.inventory["gold"].GetQuantity() < 5)
         {
-            PrintResult("You do not have enough resources to give.");
+            GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
+                .PrintResult("You do not have enough resources to give.");
             return false;
         }
 
         playerInventory.RemoveItem("gold", 5);
-        PrintResult("Lost 5 gold.");
+        GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
+            .PrintResult("Lost 5 gold.");
         goblin_loyalty++;
         return true;
 
@@ -211,7 +213,8 @@ public void Start()
     };
     EventDelegate NotPayTax = () => {
         GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>().ChangeAp(-3);
-        PrintResult("Lost 3 AP.");
+        GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
+            .PrintResult("Lost 3 AP.");
         goblin_loyalty--;
         return true;
 
