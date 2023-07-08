@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &1834084604671556425
+--- !u!1001 &8367069638821902771
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -63,32 +63,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2687478305636269686, guid: c798d6131e1c3394db6bc89416b2de22,
-        type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 223c94400385bfc4593f65b80d474223, type: 2}
     - target: {fileID: 3888881661625125385, guid: c798d6131e1c3394db6bc89416b2de22,
         type: 3}
       propertyPath: m_Name
-      value: Merchant
+      value: Villager
       objectReference: {fileID: 0}
     - target: {fileID: 5189488540934649361, guid: c798d6131e1c3394db6bc89416b2de22,
         type: 3}
       propertyPath: moveSpeed
       value: 9
       objectReference: {fileID: 0}
-    - target: {fileID: 5189488540934649361, guid: c798d6131e1c3394db6bc89416b2de22,
-        type: 3}
-      propertyPath: dialogIndex
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8777041752715548236, guid: c798d6131e1c3394db6bc89416b2de22,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 741770075, guid: f247f7b4e348cee4889e49f23cd58cad,
-        type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
