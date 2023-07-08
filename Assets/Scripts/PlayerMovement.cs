@@ -3,14 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
 
     [SerializeField] float speed;
 
     private Rigidbody2D rigidbody;
     private Animator animator;
-    public Plot crop;
 
     // Start is called before the first frame update
     void Start()
@@ -23,7 +22,6 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         float h = Input.GetAxisRaw("Horizontal");
-        Debug.Log(h);
         float v = Input.GetAxisRaw("Vertical");
         if (h > 0)
         {
@@ -53,18 +51,4 @@ public class PlayerController : MonoBehaviour
         rigidbody.velocity = new Vector2(h * speed, v * speed);
     }
 
-    [ContextMenu("cropStuff")]
-    public void interactWithCrop()
-    {
-        Debug.Log("button pressed");
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        Plot collidedCrop = collision.gameObject.GetComponent<Plot>();
-        if (collidedCrop != null)
-        {
-            crop = collidedCrop;
-        }
-    }
 }
