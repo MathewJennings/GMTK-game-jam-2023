@@ -14,7 +14,7 @@ public class Inventory : MonoBehaviour
         inventory = new Dictionary<string, Item>();
         
         // Get all items.
-        GameObject itemManager = GameObject.Find("/ItemManager");
+        GameObject itemManager = GameObject.FindGameObjectWithTag("ItemManager");
         List<Item> allItems = itemManager.GetComponent<AllItems>().GetAllItems();
 
         // Populate items with 0 of each item.
@@ -22,6 +22,8 @@ public class Inventory : MonoBehaviour
         {
             inventory[item.GetItemId()] = new Item(item);
         }
+        inventory["fooSeed"].SetQuantity(5);
+        inventory["barSeed"].SetQuantity(3);
 
     }
 
