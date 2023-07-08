@@ -7,7 +7,6 @@ using UnityEngine.UI;
 
 public class EventManager : MonoBehaviour
 {
-
     List<Event> events;
     public DayTimeController dayTimeController;
     public TMP_Text dialogText;
@@ -17,34 +16,30 @@ public class EventManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Dictionary<string, object> lose5GoldContext = new Dictionary<string, object>()
-        {
-            { "gained", false},
-            { "amount", 5 }
-        };
-        Dictionary<string, object> gain10GoldContext = new Dictionary<string, object>()
-        {
-            { "gained", true},
-            { "amount", 10 }
-        };
+        // TODO: Gray out options that you are unable to do.
         List<EventTemplate> eventTemplates = new List<EventTemplate> {
             new EventTemplate(
                 "old lady", 
                 "You hear a knock at your gate. \'Would you help me? I'm a poor defenseless grandma and my child is sick. I need 5 gold to buy some medicine\". You ponder your options", 
                 new List<string> { "Give gold!", "Rob her!" }, 
-                new List<EventDelegate> { changeGold, changeGold },
-                new List<Dictionary<string, object>> { lose5GoldContext, gain10GoldContext }
+                new List<EventDelegate> { giveGrandma, robGrandma }
             )
         };
 
         events = new List<Event>
         {
-            new Event(2f, eventTemplates[0])
+            new Event(2f, eventTemplates[0]),
         };
     }
 
-    EventDelegate changeGold = (Dictionary<string, object> context) => {
-        Debug.Log("gold " + ((bool)context["gained"] ? "gained" : "lost") + ": " + context["amount"]);
+    EventDelegate giveGrandma = () => {
+        Inventory playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
+        playerInventory.RemoveItem("gold", 5);
+    };
+
+    EventDelegate robGrandma = () => {
+        Inventory playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
+        playerInventory.AddItem("gold", 10);
     };
 
     // Update is called once per frame
@@ -93,21 +88,19 @@ public class EventTemplate
     public string name;
     public string dialogText;
     public List<string> choices = new List<string>();
-    public List<EventDelegate> concequences{ get; set; }
-    public List<Dictionary<string, System.Object>> contexts { get; set; }
-    public EventTemplate(string name, string dialogText, List<string> choices, List<EventDelegate> concequences, List<Dictionary<string, object>> contexts)
+    public List<EventDelegate> consequences{ get; set; }
+    public EventTemplate(string name, string dialogText, List<string> choices, List<EventDelegate> consequences)
     {
         this.name = name;
         this.dialogText = dialogText;
         this.choices = choices;
-        this.concequences = concequences;
-        this.contexts = contexts;
+        this.consequences = consequences;
     }
 
     public void executeOption(int option)
     {
-        concequences[option].Invoke(contexts[option]);
+        consequences[option].Invoke();
     }
 }
 
-public delegate void EventDelegate(Dictionary<string, System.Object> context);
+public delegate void EventDelegate();
