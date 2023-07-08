@@ -2375,6 +2375,8 @@ MonoBehaviour:
   dialogBox: {fileID: 3366016638150623790}
   allNpcPrefabsList:
   - {fileID: 751819997846158342}
+  - {fileID: 7679250398987020880}
+  - {fileID: 3043122879586317570}
   npcManager: {fileID: 1337556105351859235}
 --- !u!1 &6740177115036083952
 GameObject:
@@ -3435,6 +3437,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 00b3f53df2c0b614b99a11a8b9ad85a2, type: 3}
+--- !u!1 &7679250398987020880 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3588013036717021545, guid: 00b3f53df2c0b614b99a11a8b9ad85a2,
+    type: 3}
+  m_PrefabInstance: {fileID: 6582295997913297721}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8949594210059052807 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2840183471243957310, guid: 00b3f53df2c0b614b99a11a8b9ad85a2,
@@ -3653,6 +3661,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6a7a5a3f86530f844a3517bfb080dd58, type: 3}
+--- !u!1 &3043122879586317570 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4748439726482863034, guid: 6a7a5a3f86530f844a3517bfb080dd58,
+    type: 3}
+  m_PrefabInstance: {fileID: 7772791736979818168}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4366852454466762837 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6288342074300219117, guid: 6a7a5a3f86530f844a3517bfb080dd58,
