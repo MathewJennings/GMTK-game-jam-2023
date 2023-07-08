@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerCropInteraction : MonoBehaviour
 {
@@ -19,18 +20,29 @@ public class PlayerCropInteraction : MonoBehaviour
     }
 
     [ContextMenu("cropStuff")]
-    public void interactWithCrop()
+    public void interactWithCrop(InputAction.CallbackContext context)
     {
-        Debug.Log("button pressed");
+        if (context.performed)
+        {
+            Debug.Log(plot);
+        }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
-        Plot collidedCrop = collision.gameObject.GetComponent<Plot>();
-        if (collidedCrop != null)
+        Plot collidedPlot = collision.gameObject.GetComponent<Plot>();
+        if (collidedPlot != null)
         {
-            plot = collidedCrop;
-            Debug.Log(plot);
+            plot = collidedPlot;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        Plot collidedPlot = collision.gameObject.GetComponent<Plot>();
+        if (collidedPlot == plot)
+        {
+            plot = null;
         }
     }
 }
