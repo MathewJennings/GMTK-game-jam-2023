@@ -7,27 +7,38 @@ using TMPro;
 
 public class Inventory_UI : MonoBehaviour
 {
-    public int temp;
-    public Inventory current_inventory;
-    //public Button[] items;
+    private Inventory current_inventory;
+
+
+  
     public AllItems allItems;
-    public List<Item> allItemList;
+    private List<Item> allItemList;
 
-
+    //item description
     public TMP_Text itemName;
     public TMP_Text itemQuantity;
     public TMP_Text itemDescription;
 
-    public int totalItems;
-    public Image inventory_image;
-    public Image[] current_inventory_images;
 
-    public Transform inventory_position;
+    //index for keeping current items
+    private int totalItems;
+
+    //actual display (one item)
+    public Image inventory_image;
+    //collection of all the displays
+    private Image[] current_inventory_images;
+
+    //collection of sprites for all the items
+    public Sprite[] item_images;
+    //how big the inventory is
+    private float inventory_width=100; 
+
+    //where the inventory should be.
+    public Transform inventory_transform;
 
     // Start is called before the first frame update
     void Start()
     {
-        UpdateItemQuantity();
         allItemList = allItems.GetAllItems();
 
 
@@ -37,10 +48,9 @@ public class Inventory_UI : MonoBehaviour
     void Update()
     {
 
-        UpdateItemQuantity();
     }
 
-    public void UpdateItemQuantity()
+    public void OpenInventory()
     {
         foreach (Item item in current_inventory.inventory.Values)
         {
@@ -71,19 +81,19 @@ public class Inventory_UI : MonoBehaviour
                 {
                     if (item.GetQuantity() == 0)
                     {
-                        //items[int.Parse(item.GetItemId())].interactable = false;
                     }
                     else
                     {
-                        
                         current_inventory_images[totalItems_temp] = Instantiate(inventory_image, gameObject.transform);
                         current_inventory_images[totalItems_temp].transform.GetComponentInChildren<Inventory_Button>().inventory_UI = GetComponent<Inventory_UI>();
                         current_inventory_images[totalItems_temp].transform.GetComponentInChildren<Inventory_Button>().itemID = item.GetItemId();
-                        current_inventory_images[totalItems_temp].transform.position = gameObject.transform.position + new Vector3(totalItems - 1 + (totalItems_temp*(-50)), 0, 0);
+                        
+                        //current_inventory_images[totalItems_temp].transform.GetComponentInChildren<Button>().targetGraphic = item_images[];
+
+                        current_inventory_images[totalItems_temp].transform.position = inventory_transform.position + new Vector3((totalItems - 1 + totalItems_temp)*(inventory_width*-0.5f), 0, 0);
                     }
                 }
             }
-
         }
     }
 
@@ -92,8 +102,17 @@ public class Inventory_UI : MonoBehaviour
         itemName.text = current_inventory.inventory[itemID].GetItemId();
         itemQuantity.text = current_inventory.inventory[itemID].GetQuantity()+"";
         itemDescription.text = current_inventory.inventory[itemID].GetDescription();
-
-        
+    }
+    public void CloseInventory()
+    {
+        foreach (Image image in current_inventory_images)
+        {
+            if (image != null)
+            {
+                Destroy(image);
+            }
+        }
+        current_inventory_images = null;
     }
 
 
