@@ -15,7 +15,7 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] public TMP_Text itemDescription;
 
     private bool isOpen;
-    private List<GameObject> currentInventoryItems;
+    private List<GameObject> currentInventoryItems = new List<GameObject>();
     private float inventoryImageWidth=100; 
 
 
@@ -31,7 +31,6 @@ public class InventoryUI : MonoBehaviour
             return;
         }
         inventoryBackground.SetActive(true);
-        currentInventoryItems = new List<GameObject>();
         instantiateInventoryItems();
         ArrangeImagesHorizontally();
         isOpen = true;

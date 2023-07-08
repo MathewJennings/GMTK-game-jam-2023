@@ -17,17 +17,11 @@ public class EventManager : MonoBehaviour
     public List<GameObject> allNpcPrefabsList;
     public GameObject npcManager;
 
-    //when the last event that was added to the queue is
-    private float lastEventTime;
-
     //when the next event that was added to the queue is
     private float nextEventTime;
 
-    //minimum time that needs to pass since the last event for the next event to occur
-    private float minEventGap = 5f;
-
-    //maximum time that needs to pass since the last event for the next event to occur
-    private float maxEventGap = 10f;
+    // What day the EventManager thinks it currently is
+    private float eventCurrentDay;
 
     private static GameObject npc;
 
@@ -39,7 +33,6 @@ public class EventManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // TODO: Gray out options that you are unable to do.
         eventTemplates = new List<EventTemplate> {
             new EventTemplate(
                 "merchant",
@@ -71,21 +64,16 @@ public class EventManager : MonoBehaviour
             ),
         };
 
-        // Next event needs to have timestamp less than everything in events, and all events in
-        // the queue must be in order.
-        nextEventTime = UnityEngine.Random.Range(minEventGap, maxEventGap);
-        nextEvent = new Event(nextEventTime, eventTemplates[0]);
+        eventCurrentDay = 1;
+
+        // Hard code first event to be merchant appearing 2 seconds in.
+        nextEventTime = 2f;
+        nextEvent = new Event(eventTemplates[0]);
+
         events = new Queue<Event>();
-        lastEventTime = nextEventTime;
         AddRandomEvent();
         AddRandomEvent();
         AddRandomEvent();
-
-
-
-
-
-
     }
 
     EventDelegate closeDialog = () =>
@@ -142,7 +130,6 @@ public class EventManager : MonoBehaviour
     //Add a random event to the queue
     public void AddRandomEvent()
     {
-       nextEventTime = lastEventTime + UnityEngine.Random.Range(minEventGap, maxEventGap);
         float currentPossibility = UnityEngine.Random.Range(0f, 1f);
        int randomIndex = UnityEngine.Random.Range(0, eventTemplates.Count);
         int testing = 0;
@@ -166,25 +153,33 @@ public class EventManager : MonoBehaviour
         }
         Debug.Log(eventTemplates[randomIndex].name + "");
 
-        events.Enqueue(new Event(nextEventTime, eventTemplates[randomIndex]));
-        lastEventTime = nextEventTime;
+        events.Enqueue(new Event(eventTemplates[randomIndex]));
 
     }
     //Add an event of name "name"
     public void AddEvent(string name)
     {
-        nextEventTime = lastEventTime + UnityEngine.Random.Range(minEventGap, maxEventGap);
-        foreach(EventTemplate template in  eventTemplates) 
+        foreach(EventTemplate template in eventTemplates) 
         {
             if(template.name == name)
             {
-                events.Enqueue(new Event(nextEventTime, template));
-                lastEventTime = nextEventTime;
+                events.Enqueue(new Event(template));
                 return;
             }
         }
 
     }
+
+    public float RandomNextEventTime()
+    {
+        // Earliest time is 5 seconds into the day.
+        float earliestTime = ((eventCurrentDay - 1) * DayTimeController.secondsInAnHour) + 5f;
+        // Latest time is 5 seconds before end of day.
+        float latestTime = (eventCurrentDay * DayTimeController.secondsInAnHour) - 5f;
+
+        return UnityEngine.Random.Range(earliestTime, latestTime);
+    }
+
     private static void UpdateEventPossibility(string name, float possibility)
     {
         foreach (EventTemplate template in eventTemplates)
@@ -209,11 +204,20 @@ public class EventManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if(events.Count<2)
-        //{
-        //    AddRandomEvent();
-        //}
-        if (nextEvent != null && !nextEvent.eventStarted && nextEvent.time < dayTimeController.getCurrentTimeSeconds())
+        Debug.Log("event current day " + eventCurrentDay);
+        Debug.Log("next event time " + nextEventTime);
+        if (eventCurrentDay < dayTimeController.getCurrentDay())
+        {
+            // We hit the next day. Pull out an event from the queue.
+            eventCurrentDay = dayTimeController.getCurrentDay();
+            if (events.Count > 0)
+            {
+                nextEventTime = RandomNextEventTime();
+                nextEvent = events.Dequeue();
+            }
+        }
+
+        if (nextEvent != null && !nextEvent.eventStarted && nextEventTime < dayTimeController.getCurrentTimeSeconds())
         {
             Debug.Log("length of event: "+ events.Count);
             if (events.Count < 2)
@@ -246,7 +250,7 @@ public class EventManager : MonoBehaviour
                         npc.GetComponent<Animator>().SetBool("walkRight", true);
                     });
                 }
-                nextEvent = events.Count > 0 ? events.Dequeue() : null;
+                nextEvent = null;
             };
 
             npc.GetComponent<Npc>().SetFields(dialogDelegate);
@@ -256,13 +260,11 @@ public class EventManager : MonoBehaviour
 
 public class Event
 {
-    public float time { get; }
     public EventTemplate template { get; }
     public bool eventStarted { get; set; }
 
-    public Event(float time, EventTemplate template)
+    public Event(EventTemplate template)
     {
-        this.time = time;
         this.template = template;
         eventStarted = false;
     }
