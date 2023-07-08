@@ -17,15 +17,17 @@ public class Item
     private ItemType itemType;
     private int quantity;
     private int price;
+    private string description { get; set; };
     private string correspondingId;
 
     public Item(string itemId, ItemType itemType, int quantity,
-                int price, string correspondingId = "")
+                int price, string description, string correspondingId = "")
     {
         this.itemId = itemId;
         this.itemType = itemType;
         this.quantity = quantity;
         this.price = price;
+        this.description = description;
         this.correspondingId = correspondingId;
     }
 
@@ -35,6 +37,7 @@ public class Item
         this.itemType = item.itemType;
         this.quantity = item.quantity;
         this.price = item.price;
+        this.description = item.description;
         this.correspondingId = item.correspondingId;
     }
 
