@@ -42,16 +42,36 @@ public class PlayerCropInteraction : MonoBehaviour
         if (plot.isEmpty())
         {
             //WE SHOULD GET THE SEED FROM UI!!!!
-            plot.plantSeed(seed);
+            if (playerManager.canAffordAction(2)) {
+                playerManager.ChangeAp(-2);
+                plot.plantSeed(seed);
+            } else
+            {
+                Debug.Log("You are out of energy and can not perform that action!");
+            }
         }
         else if (plot.needsWatering())
         {
-            plot.waterPlot();
+            if (playerManager.canAffordAction(1))
+            {
+                playerManager.ChangeAp(-1);
+                plot.waterPlot();
+            } else
+            {
+                Debug.Log("You are out of energy and can not perform that action!");
+            }
+
         }
         else if (plot.isMature())
         {
-            Yield yield = plot.harvest();
-            //STICK IT IN THE INVENTORY!!!!!
+            if (playerManager.canAffordAction(3)) { 
+                playerManager.ChangeAp(-3);
+                Yield yield = plot.harvest();
+                //STICK IT IN THE INVENTORY!!!!!
+            } else
+            {
+                Debug.Log("You are out of energy and can not perform that action!");
+            }
         }
     }
 
