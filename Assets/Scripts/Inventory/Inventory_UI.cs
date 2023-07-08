@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using Unity.VisualScripting;
 
 public class Inventory_UI : MonoBehaviour
 {
@@ -12,6 +11,8 @@ public class Inventory_UI : MonoBehaviour
     public Button[] items;
     public AllItems allItems;
     public List<Item> allItemList;
+
+
     public TMP_Text itemName;
     public TMP_Text itemQuantity;
     public TMP_Text itemDescription;
@@ -22,11 +23,14 @@ public class Inventory_UI : MonoBehaviour
         UpdateItemQuantity();
         allItemList = allItems.GetAllItems();
 
+
     }
 
     // Update is called once per frame
     void Update()
     {
+
+        UpdateItemQuantity();
     }
 
     public void UpdateItemQuantity()
@@ -56,6 +60,10 @@ public class Inventory_UI : MonoBehaviour
         itemName.text = current_inventory.inventory[itemID].GetItemId();
         itemQuantity.text = current_inventory.inventory[itemID].GetQuantity()+"";
         itemDescription.text = current_inventory.inventory[itemID].GetDescription();
+
+        
     }
+
+
 
 }
