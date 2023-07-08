@@ -10,15 +10,17 @@ public class Inventory_Item : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
     [SerializeField] TextMeshProUGUI quantityText;
 
-    private Inventory_UI inventory_UI;
+    private InventoryUI inventory_UI;
     private UIInputManager uiInputManager;
+    private PlayerCropInteraction playerCropInteraction;
 
     public Item item;
 
     private void Start()
     {
-        inventory_UI = GameObject.FindGameObjectWithTag("InventoryUI").GetComponent<Inventory_UI>();
+        inventory_UI = GameObject.FindGameObjectWithTag("InventoryUI").GetComponent<InventoryUI>();
         uiInputManager = GameObject.FindGameObjectWithTag("UIInputManager").GetComponent<UIInputManager>();
+        playerCropInteraction = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCropInteraction>();
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -42,7 +44,12 @@ public class Inventory_Item : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     {
         if (uiInputManager.GetClickedGameObjects().Contains(this.gameObject))
         {
-            Debug.Log("CLICKED " + this.gameObject);
+            Seed seed = item.GetSeed();
+            if (seed != null)
+            {
+                playerCropInteraction.plantSeed(item, seed);
+                inventory_UI.CloseInventory();
+            }
         }
     }
 

@@ -6,15 +6,16 @@ using UnityEngine.InputSystem;
 public class PlayerCropInteraction : MonoBehaviour
 {
     public Plot plot;
-    public Seed seed;
-    public PlayerManager playerManager;
+    public PlayerStats playerManager;
 
-    private Inventory_UI inventoryUI;
+    private InventoryUI inventoryUI;
+    private Inventory playerInventory;
 
     // Start is called before the first frame update
     void Start()
     {
-        inventoryUI = GameObject.FindGameObjectWithTag("InventoryUI").GetComponent<Inventory_UI>();
+        inventoryUI = GameObject.FindGameObjectWithTag("InventoryUI").GetComponent<InventoryUI>();
+        playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
     }
 
     // Update is called once per frame
@@ -40,15 +41,7 @@ public class PlayerCropInteraction : MonoBehaviour
         {
             if (!inventoryUI.isInventoryOpen())
             {
-                inventoryUI.OpenInventory();
-            }
-            //WE SHOULD GET THE SEED FROM UI!!!!
-            if (playerManager.canAffordAction(2)) {
-                playerManager.ChangeAp(-2);
-                plot.plantSeed(seed);
-            } else
-            {
-                Debug.Log("You are out of energy and can not perform that action!");
+                inventoryUI.OpenInventory(); // So that we can trigger plantSeed() from Inventory_Item.OnClick()
             }
         }
         else if (plot.needsWatering())
@@ -62,13 +55,34 @@ public class PlayerCropInteraction : MonoBehaviour
                 Debug.Log("You are out of energy and can not perform that action!");
             }
 
-        }
-        else if (plot.isMature())
+        } else if (plot.isMature())
         {
-            if (playerManager.canAffordAction(3)) { 
+            if (playerManager.canAffordAction(3))
+            {
                 playerManager.ChangeAp(-3);
                 Item yield = plot.harvest();
+                playerInventory.AddItem(yield.GetItemId(), yield.GetQuantity());
                 //STICK IT IN THE INVENTORY!!!!!
+            } else
+            {
+                Debug.Log("You are out of energy and can not perform that action!");
+            }
+        }
+    }
+
+    public void plantSeed(Item item, Seed seed)
+    {
+        if (plot == null)
+        {
+            return;
+        }
+        if (plot.isEmpty())
+        {
+            if (playerManager.canAffordAction(2))
+            {
+                playerManager.ChangeAp(-2);
+                plot.plantSeed(seed);
+                playerInventory.RemoveItem(item.GetItemId(), 1);
             } else
             {
                 Debug.Log("You are out of energy and can not perform that action!");
@@ -81,15 +95,27 @@ public class PlayerCropInteraction : MonoBehaviour
         Plot collidedPlot = collision.gameObject.GetComponent<Plot>();
         if (collidedPlot != null)
         {
+            selectPlot(collidedPlot);
             plot = collidedPlot;
+        }
+    }
+
+    private void selectPlot(Plot selectedPlot)
+    {
+        if (plot != null && selectedPlot != plot)
+        {
+            plot.unhilight();
+            selectedPlot.highlight();
+            plot = selectedPlot;
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         Plot collidedPlot = collision.gameObject.GetComponent<Plot>();
-        if (collidedPlot == plot)
+        if (collidedPlot == plot && plot != null)
         {
+            plot.unhilight();
             plot = null;
         }
     }
