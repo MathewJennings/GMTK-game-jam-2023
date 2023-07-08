@@ -44,6 +44,11 @@ public class PlayerManager : MonoBehaviour
         ChangeHunger(-5);
     }
 
+    public bool canAffordAction(int ap)
+    {
+        return this.ap > ap;
+    }
+
     public void ChangeHunger(int delta)
     {
         hunger += delta;

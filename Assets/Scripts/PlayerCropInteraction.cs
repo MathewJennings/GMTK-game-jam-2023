@@ -7,6 +7,7 @@ public class PlayerCropInteraction : MonoBehaviour
 {
     public Plot plot;
     public Seed seed;
+    public PlayerManager playerManager;
 
     // Start is called before the first frame update
     void Start()
