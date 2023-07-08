@@ -115,7 +115,7 @@ public class EventManager : MonoBehaviour
 
         playerInventory.RemoveItem("appleCrop", 2);
         PrintResult("You gave 2 apples.");
-        UpdateEventPossibility("Angry Goblin Solider: Human Soldier", 1);
+        UpdateEventPossibility("Angry Goblin Soldier: Human Soldier", 1);
         UpdateEventPossibility("human soldier", 0);
         return true;
     };
@@ -139,7 +139,7 @@ public class EventManager : MonoBehaviour
         playerInventory.RemoveItem("carrotCrop", 3);
         playerInventory.RemoveItem("gold", 5);
         PrintResult("Lost 3 apples, 3 carrots, and 5 gold.");
-        UpdateEventPossibility("Angry Goblin Solider: Human Soldier", 0);
+        UpdateEventPossibility("Angry Goblin Soldier: Human Soldier", 0);
         UpdateEventPossibility("human soldier", 1);
         return true;
     };
@@ -273,10 +273,15 @@ public class EventManager : MonoBehaviour
                     choiceButtons[i].GetComponentInChildren<TMP_Text>().text = nextEvent.template.choices[i];
                     choiceButtons[i].onClick.AddListener(() =>
                     {
-                        tempEvent.template.executeOption(temp);
-                        dayTimeController.SetPausedTime(false);
-                        dialogBox.SetActive(false);
-                        npc.GetComponent<Animator>().SetBool("walkRight", true);
+                        bool success = tempEvent.template.executeOption(temp);
+
+                        if (success)
+                        {
+                            dayTimeController.SetPausedTime(false);
+                            dialogBox.SetActive(false);
+                            npc.GetComponent<Animator>().SetBool("walkRight", true);
+                        }
+                        // else keep dialog open and wait for a different choice.
                     });
                 }
                 nextEvent = null;
@@ -321,9 +326,9 @@ public class EventTemplate
         this.possibility = possibility;
     }
 
-    public void executeOption(int option)
+    public bool executeOption(int option)
     {
-        consequences[option].Invoke();
+        return consequences[option].Invoke();
     }
 }
 
