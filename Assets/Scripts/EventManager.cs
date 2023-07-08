@@ -35,7 +35,7 @@ public class EventManager : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
         // TODO: Gray out options that you are unable to do.
         eventTemplates = new List<EventTemplate> {
@@ -134,7 +134,7 @@ public class EventManager : MonoBehaviour
     {
        nextEventTime = lastEventTime + UnityEngine.Random.Range(minEventGap, maxEventGap);
         float currentPossibility = UnityEngine.Random.Range(0f, 1f);
-       int randomIndex = UnityEngine.Random.Range(0, eventTemplates.Count - 1);
+        int randomIndex = UnityEngine.Random.Range(0, eventTemplates.Count - 1);
         int testing = 0;
         Debug.Log(randomIndex);
     

@@ -70,6 +70,10 @@ public class InventoryUI : MonoBehaviour
     }
     public void CloseInventory()
     {
+        if(isOpen == false)
+        {
+            return;
+        }
         inventoryBackground.SetActive(false);
         foreach (Image image in currentInventoryImages)
         {
