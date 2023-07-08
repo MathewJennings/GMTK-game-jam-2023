@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Crop : MonoBehaviour
+public class Plot : MonoBehaviour
 {
 
     public Seed seed;
@@ -26,15 +26,16 @@ public class Crop : MonoBehaviour
     {
         // Update Sprite on planting
         this.seed = seed;
+        this.timePlanted = 0f;
     }
 
-    public void waterCrop()
+    public void waterPlot()
     {
         // Update Sprite on watering
         this.isWatered = true;
     }
 
-    public void killCrop()
+    public void killPlot()
     {
         // Update Sprite when killed
         this.isWatered = false;
