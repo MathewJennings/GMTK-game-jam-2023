@@ -101,4 +101,9 @@ public class DayTimeController : MonoBehaviour
     {
         return time;
     }
+
+    public int getCurrentDay()
+    {
+        return currentDay;
+    }
 }
