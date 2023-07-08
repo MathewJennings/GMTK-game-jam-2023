@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody2D rigidbody;
     private Animator animator;
+    public Plot crop;
 
     // Start is called before the first frame update
     void Start()
@@ -50,5 +51,20 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("walkDown", false);
         }
         rigidbody.velocity = new Vector2(h * speed, v * speed);
+    }
+
+    [ContextMenu("cropStuff")]
+    public void interactWithCrop()
+    {
+        Debug.Log("button pressed");
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Plot collidedCrop = collision.gameObject.GetComponent<Plot>();
+        if (collidedCrop != null)
+        {
+            crop = collidedCrop;
+        }
     }
 }
