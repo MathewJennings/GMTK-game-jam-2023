@@ -8,21 +8,37 @@ public class Inventory : MonoBehaviour
 {
     public Dictionary<string, Item> inventory;
 
+    public int startGold;
+    public int startFooSeed;
+    public int startFooCrop;
+    public int startBarSeed;
+    public int startBarCrop;
+
     // Start is called before the first frame update
     void Start()
     {
+        InitEmptyInventory();
+
+        inventory["gold"].SetQuantity(startGold);
+        inventory["fooSeed"].SetQuantity(startFooSeed);
+        inventory["fooCrop"].SetQuantity(startFooCrop);
+        inventory["barSeed"].SetQuantity(startBarSeed);
+        inventory["barCrop"].SetQuantity(startBarCrop);
+    }
+
+    public void InitEmptyInventory()
+    {
         inventory = new Dictionary<string, Item>();
-        
+
         // Get all items.
         GameObject itemManager = GameObject.Find("/ItemManager");
         List<Item> allItems = itemManager.GetComponent<AllItems>().GetAllItems();
 
         // Populate items with 0 of each item.
-        foreach(Item item in allItems)
+        foreach (Item item in allItems)
         {
             inventory[item.GetItemId()] = new Item(item);
         }
-
     }
 
     public void AddItem(string itemId, int quantity)
