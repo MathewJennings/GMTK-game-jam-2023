@@ -2891,6 +2891,7 @@ MonoBehaviour:
   - {fileID: 4339721621117521161}
   - {fileID: 3764387463192704311}
   - {fileID: 3096063395725074480}
+  - {fileID: 7316562553136030080, guid: 7e79144e189a1304caa63767d3298dca, type: 3}
   npcManager: {fileID: 1337556105351859235}
   playerPortrait: {fileID: 8896923330972972025}
   robber_occurred: 0
