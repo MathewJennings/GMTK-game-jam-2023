@@ -438,3 +438,7 @@ MonoBehaviour:
   openInventory: {fileID: 8300000, guid: 135a27b8ce8fd85438a1e8b240e2087e, type: 3}
   closeInventory: {fileID: 8300000, guid: c17c4d7dfb8fd2941a27a8dae8d4e757, type: 3}
   buySell: {fileID: 8300000, guid: 0aa0297727990da4b9bce212ae6cba7b, type: 3}
+  waterPlant: {fileID: 8300000, guid: f7b973478d2e8724d9d860203ec30d1c, type: 3}
+  plantSeed: {fileID: 8300000, guid: e5b1b932f4fba9344af05628d0b6ff33, type: 3}
+  harvestPlant: {fileID: 8300000, guid: 98597350119548d49a310abe20f859b4, type: 3}
+  eatFood: {fileID: 8300000, guid: cb2da99dae29d214bbe1560c4b8be462, type: 3}
