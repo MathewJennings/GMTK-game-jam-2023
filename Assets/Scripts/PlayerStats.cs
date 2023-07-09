@@ -39,7 +39,7 @@ public class PlayerStats : MonoBehaviour
         gameObject.transform.position = originalStartPosition.transform.position;
 
         eventManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>();
-        eventManager.PrintResultAfterDelay(1.5f, "You feel hungry, check your inventory for something to eat.");
+        eventManager.PrintResultAfterDelay(1f, "You feel hungry, check your inventory (I) for something to eat.");
     }
 
     // Update is called once per frame

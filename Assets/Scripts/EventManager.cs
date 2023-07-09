@@ -6,14 +6,14 @@ using UnityEngine;
 using UnityEngine.Android;
 using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
+using Button = UnityEngine.UIElements.Button;
 
 public class EventManager : MonoBehaviour
 {
     LinkedList<Event> events;
     Event nextEvent;
     public DayTimeController dayTimeController;
-    public TMP_Text dialogText;
-    public List<Button> choiceButtons;
     public GameObject dialogBox;
     public GameObject consequenceBox;
     public TMP_Text consequenceText;
@@ -30,6 +30,8 @@ public class EventManager : MonoBehaviour
     private static BarterManager barterManager;
 
     private static List<EventTemplate> eventTemplates;
+    private UIDocument uidoc;
+    private List<Button> choiceButtons;
 
     public static int human_loyalty = 0 ;
     public static int goblin_loyalty = 0;
@@ -49,12 +51,15 @@ public class EventManager : MonoBehaviour
 // Start is called before the first frame update
 public void Start()
     {
+        uidoc = dialogBox.GetComponent<UIDocument>();
+        choiceButtons = new List<Button>();
+
         barterManager = GameObject.FindGameObjectWithTag("BarterManager").GetComponent<BarterManager>();
         eventTemplates = new List<EventTemplate> {
             new EventTemplate(
                 "merchant",
-                "You hear a knock at your gate. \"Would you like to make a trade?",
-                new List<string> { "Let's Trade", "Ignore" },
+                "You hear a knock at your gate. \"Would you like to make a trade?\"",
+                new List<string> { "Let's Trade", "Not today" },
                 new List<EventDelegate> { openShopMenu, closeDialog },
                 allNpcPrefabsList[0],1
             ),
@@ -91,7 +96,7 @@ public void Start()
                 "A disheveled goblin crashes through your gate. \"Oye! I heard you've been robbing passerbys in these parts. There's only enough room for one robber here!\"",
                 new List<string> { "Hand over money", "Fight" },
                 new List<EventDelegate> { PayRobber, FightRobber },
-                allNpcPrefabsList[3],0
+                allNpcPrefabsList[4],0
             ),
         };
 
@@ -386,10 +391,11 @@ EventDelegate openShopMenu = () =>
     // Clear listeners on all buttons.
     private void ResetChoiceButtons()
     {
-        for (int i = 0; i < choiceButtons.Count; i++)
-        {
-            choiceButtons[i].onClick.RemoveAllListeners();
-        }
+        choiceButtons.Clear();
+        //for (int i = 0; i < choiceButtons.Count; i++)
+        //{
+        //    choiceButtons[i].onClick.RemoveAllListeners();
+        //}
     }
 
     // Update is called once per frame
@@ -423,14 +429,16 @@ EventDelegate openShopMenu = () =>
                 // listeners on a single button.
                 ResetChoiceButtons();
                 dayTimeController.SetPausedTime(true);
-                dialogText.text = nextEvent.template.dialogText;
+                VisualElement root = uidoc.rootVisualElement;
+                root.Q<Label>("Label").text = nextEvent.template.dialogText;
+                choiceButtons.Add(root.Q<Button>("acceptButton"));
+                choiceButtons.Add(root.Q<Button>("declineButton"));
                 for (int i = 0; i < choiceButtons.Count; i++)
                 {
                     //needed because if you use i directly, i will update between when the listener is set vs when the listener is evaluated
                     int temp = i;
                     Event tempEvent = nextEvent;
-                    choiceButtons[i].GetComponentInChildren<TMP_Text>().text = nextEvent.template.choices[i];
-                    choiceButtons[i].onClick.AddListener(() =>
+                    choiceButtons[i].clicked += () =>
                     {
                         bool success = tempEvent.template.executeOption(temp);
 
@@ -442,7 +450,7 @@ EventDelegate openShopMenu = () =>
                             //npc.GetComponent<Animator>().SetBool("walkRight", true);
                         }
                         // else keep dialog open and wait for a different choice.
-                    });
+                    };
                 }
                 nextEvent = null;
             };
