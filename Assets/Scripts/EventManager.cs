@@ -371,7 +371,14 @@ public void Start()
             if (eventCurrentDay >= dayTimeController.numDaysToWin - 1)
             {
                 nextEventTime = RandomNextEventTime();
-                nextEvent = GetSpecificEvent("final_event");
+                if (human_loyalty > goblin_loyalty)
+                {
+                    nextEvent = GetSpecificEvent("final_event_human");
+                }
+                else
+                {
+                    nextEvent = GetSpecificEvent("final_event_goblin");
+                }
             }
             else
             {
