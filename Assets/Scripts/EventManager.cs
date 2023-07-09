@@ -112,7 +112,7 @@ public void Start()
                 "A treasure chest walks up to your front door...",
                 new List<string> { "Open Chest", "Ignore" },
                 new List<EventDelegate> { EventConsequences.OpenChest, EventConsequences.closeDialog },
-                allNpcPrefabsList[5],0
+                allNpcPrefabsList[8],0
             ),
             new EventTemplate(
                 "treasure_owner",
@@ -126,7 +126,7 @@ public void Start()
                 "A treasure chest walks up to your front door...",
                 new List<string> { "Open Chest", "Ignore" },
                 new List<EventDelegate> { EventConsequences.OpenMimicChest, EventConsequences.closeDialog },
-                allNpcPrefabsList[5],0
+                allNpcPrefabsList[8],0
             ),
             new EventTemplate(
                 "rain",
@@ -144,7 +144,7 @@ public void Start()
         nextEvent = new Event(eventTemplates[0]);
 
         events = new LinkedList<Event>();
-        AddSpecificEvent("rain", true);
+        AddSpecificEvent("treasure", true);
         AddSpecificEvent("lady", true);
         AddSpecificEvent("human soldier", true);
         AddSpecificEvent("tax Event", true);
