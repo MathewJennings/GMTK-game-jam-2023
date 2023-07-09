@@ -82,7 +82,7 @@ public class EventConsequences
     public static EventDelegate GoblinSoldier_FightBack = () => {
         GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>().ChangeAp(-3);
         GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
-            .PrintResult("Lost 3 AP.");
+            .PrintResult("Lost 3 energy.");
         EventManager.goblin_loyalty--;
         return true;
     };
@@ -104,7 +104,7 @@ public class EventConsequences
     public static EventDelegate NotPayTax = () => {
         GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>().ChangeAp(-3);
         GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
-            .PrintResult("Lost 3 AP.");
+            .PrintResult("Lost 3 energy.");
         EventManager.goblin_loyalty--;
         return true;
     };
@@ -127,7 +127,7 @@ public class EventConsequences
     public static EventDelegate FightRobber = () => {
         GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>().ChangeAp(-10);
         GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
-            .PrintResult("Lost 10 AP.");
+            .PrintResult("Lost 10 energy.");
         return true;
     };
 
@@ -138,6 +138,13 @@ public class EventConsequences
         GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
             .PrintResult("You got 10 gold.");
         EventManager.treasure_count++;
+        return true;
+    };
+
+    public static EventDelegate OpenMimicChest = () => {
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>().ChangeAp(-3);
+        GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
+            .PrintResult("It was a Mimic! Lost 3 energy.");
         return true;
     };
 

@@ -121,16 +121,23 @@ public void Start()
                 new List<EventDelegate> { EventConsequences.TreasureOwnerReturnMoney, EventConsequences.TreasureOwnerSayNo },
                 allNpcPrefabsList[5],0
             ),
+            new EventTemplate(
+                "treasure_mimic",
+                "A treasure chest walks up to your front door...",
+                new List<string> { "Open Chest", "Ignore" },
+                new List<EventDelegate> { EventConsequences.OpenMimicChest, EventConsequences.closeDialog },
+                allNpcPrefabsList[5],0
+            ),
         };
 
         eventCurrentDay = 0;
 
         // Hard code first event to be merchant appearing 10 seconds in.
-        nextEventTime = 10f;
+        nextEventTime = 2f;
         nextEvent = new Event(eventTemplates[0]);
 
         events = new LinkedList<Event>();
-        AddSpecificEvent("treasure", true);
+        AddSpecificEvent("treasure_mimic", true);
         AddSpecificEvent("lady", true);
         AddSpecificEvent("human soldier", true);
         AddSpecificEvent("tax Event", true);
