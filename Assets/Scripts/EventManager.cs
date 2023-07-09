@@ -115,13 +115,18 @@ public void Start()
 
     public void PrintResultAfterDelay(float delay, string message)
     {
-        StartCoroutine(WaitAndPrintResult(delay, message));
+        StartCoroutine(WaitAndPrintResult(delay, message, 2f));
     }
 
-    IEnumerator WaitAndPrintResult(float delay, string message)
+    public void PrintResultAfterDelay(float delay, string message, float visibleTime)
+    {
+        StartCoroutine(WaitAndPrintResult(delay, message, visibleTime));
+    }
+
+    IEnumerator WaitAndPrintResult(float delay, string message, float visibleTime)
     {
         yield return new WaitForSeconds(delay);
-        PrintResult(message);
+        PrintResult(message, visibleTime);
     }
 
     public void PrintResult(string message)

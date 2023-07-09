@@ -20,7 +20,7 @@ public class PlayerStats : MonoBehaviour
     public GameObject overlayManager;
 
     float nextHungerTick;
-    float hungerTickIntervalSeconds = DayTimeController.secondsInAnHour * 2; // -1 hunger every 2 hours
+    float hungerTickIntervalSeconds = DayTimeController.secondsInAnHour * 3; // -1 hunger every 3 hours
     DayTimeController dayTimeController;
 
     [SerializeField] GameObject originalStartPosition;
