@@ -83,8 +83,23 @@ public void Start()
                 "You hear yelling from your gate. You see goblin soldiers standing there. \"We have come today to collect your taxes! This will be crucial to win this war! Now behave and pay your taxes!\"",
                 new List<string> { "Pay", "Ignore" },
                 new List<EventDelegate> { PayTax, NotPayTax },
-                allNpcPrefabsList[3],1
+                allNpcPrefabsList[3],0
             ),
+             new EventTemplate(
+                "Friendly Humans",
+                "You hear voices near your gate. You see multiple humans including the human soldier you gave food few days ago. They seem to want to thank you for what you have done.",
+                new List<string> { "Invite them", "Ignore" },
+                new List<EventDelegate> {HumanSoldiers_Invite, HumanSoldiers_Ignore },
+                allNpcPrefabsList[3],0
+                ),
+                          new EventTemplate(
+                "Friendly Goblins",
+                "You hear voices near your gate. You see multiple goblin soldiers. \"We thank you for being a great goblin!\"" ,
+                new List<string> { "Ask for gift", "Thank" },
+                new List<EventDelegate> {GoblinSoldiers_Gift, GoblinSoldiers_Thank },
+                allNpcPrefabsList[3],0
+                ),
+
         };
 
         eventCurrentDay = 0;
@@ -225,6 +240,40 @@ public void Start()
 
 
     };
+    EventDelegate HumanSoldiers_Invite = () => {
+        Inventory playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
+        playerInventory.AddItem("appleCrop", 2);
+        playerInventory.AddItem("carrotCrop", 2);
+        playerInventory.AddItem("gold", 3);
+
+        GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
+            .PrintResult("You received 2 apples 2 carrots and 3 gold.");
+        UpdateEventPossibility("Angry Goblin Soldier: Human Soldier", 1);
+        human_loyalty++;
+     
+        return true;
+    };
+    EventDelegate HumanSoldiers_Ignore = () => {
+
+        GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
+            .PrintResult("You ignored them.");
+        goblin_loyalty++;
+        return true;
+    };
+    EventDelegate GoblinSoldiers_Gift = () => {
+        GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
+            .PrintResult("The goblin soldiers seemed disappointed");
+        return true;
+    };
+    EventDelegate GoblinSoldiers_Thank = () => {
+        Inventory playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
+        playerInventory.AddItem("gold", 3);
+
+        GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
+            .PrintResult("You received 3 gold.");
+        goblin_loyalty++;
+        return true;
+    };
 
     EventDelegate openShopMenu = () =>
     {
@@ -238,6 +287,7 @@ public void Start()
         if (human_loyalty > human_loyalty_guests_threshold && !human_guests_occurred)
         {
             human_guests_occurred = true;
+            AddSpecificEvent("Friendly Humans",true);
             return true;
 
         }
