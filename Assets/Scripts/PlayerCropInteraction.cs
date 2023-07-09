@@ -19,6 +19,9 @@ public class PlayerCropInteraction : MonoBehaviour
     private Dictionary<string, int> cropSummary;
     //Summary in the format <cropName, countOfCropHarvested>
     private Dictionary<string, int> eatenSummary;
+    public GameObject hoePrefab;
+    public GameObject waterPrefab;
+    public GameObject sythePrefab;
 
     // Start is called before the first frame update
     void Start()
@@ -69,6 +72,7 @@ public class PlayerCropInteraction : MonoBehaviour
             if (playerStats.canAffordAction(cost))
             {
                 playerStats.ChangeAp(-1*cost);
+                Instantiate(waterPrefab, gameObject.transform, false);
                 playerSounds.playWaterPlant();
                 plot.waterPlot();
                 if (!wateredFirstCrop)
@@ -90,6 +94,7 @@ public class PlayerCropInteraction : MonoBehaviour
                 playerStats.ChangeAp(-1*cost);
                 playerSounds.playHarvestPlant();
                 Item yield = plot.harvest();
+                Instantiate(sythePrefab, gameObject.transform, false);
                 playerInventory.AddItem(yield.GetItemId(), yield.GetQuantity());
                 playerInventory.AddItem(yield.GetCorrespondingId(), 1); // yield 1 seed as well
 
@@ -149,6 +154,7 @@ public class PlayerCropInteraction : MonoBehaviour
                 playerStats.ChangeAp(-1*cost);
                 playerSounds.playPlantSeed();
                 plot.plantSeed(seed);
+                Instantiate(hoePrefab, gameObject.transform, false);
                 playerInventory.RemoveItem(item.GetItemId(), 1);
                 if (!plantedFirstSeed)
                 {

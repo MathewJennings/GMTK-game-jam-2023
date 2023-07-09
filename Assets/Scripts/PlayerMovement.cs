@@ -72,7 +72,7 @@ public class PlayerMovement : MonoBehaviour
         speed = IsCrippled() ? crippleSpeed : defaultSpeed;
         float h;
         float v;
-        if (!allowMovement)
+        if (!allowMovement || GetComponentInChildren<useFarmTool>() != null)
         {
             h = 0;
             v = 0;

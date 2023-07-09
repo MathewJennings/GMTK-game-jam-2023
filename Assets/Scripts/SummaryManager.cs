@@ -25,26 +25,38 @@ public class SummaryManager : MonoBehaviour
         // Dictionary <crop name, count>
         if (summary.ContainsKey(SummaryType.CROP))
         {
-            foreach(KeyValuePair<string, int> cropCount in (Dictionary<string, int>)summary[SummaryType.CROP])
+            stringBuilder.Append("Crops grown: ");
+            bool isFirstDone = false;
+            foreach (KeyValuePair<string, int> cropCount in (Dictionary<string, int>)summary[SummaryType.CROP])
             {
-                stringBuilder.AppendLine(cropCount.Key + ":" + cropCount.Value.ToString() + "\n");
+                stringBuilder.Append((isFirstDone ? ", " : "") + cropCount.Key + ":" + cropCount.Value.ToString());
+                isFirstDone = true;
             }
+            stringBuilder.AppendLine();
         }
         // Dictionary <eaten name, count>
         if (summary.ContainsKey(SummaryType.EATEN))
         {
+            stringBuilder.Append("Crops eaten: ");
+            bool isFirstDone = false;
             foreach (KeyValuePair<string, int> eatenCount in (Dictionary<string, int>)summary[SummaryType.EATEN])
             {
-                stringBuilder.AppendLine(eatenCount.Key + ":" + eatenCount.Value.ToString() + "\n");
+                stringBuilder.Append((isFirstDone ? ", " : "") + eatenCount.Key + ":" + eatenCount.Value.ToString());
+                isFirstDone = true;
             }
+            stringBuilder.AppendLine();
         }
         // List of tuples. List<List<eventName, eventChoice>>
         if (summary.ContainsKey(SummaryType.EVENT))
         {
+            stringBuilder.Append("Events");
+            bool isFirstDone = false;
             foreach(List<string> l in (List<List<string>>)summary[SummaryType.EVENT])
             {
-                stringBuilder.AppendLine(l[0] + ": " + l[1]);
+                stringBuilder.Append((isFirstDone ? ", " : "") + l[0] + ": " + l[1]);
+                isFirstDone = true;
             }
+            stringBuilder.AppendLine();
         }
         // faction loyalty
         int factionAllegience = EventManager.goblin_loyalty - EventManager.human_loyalty;
