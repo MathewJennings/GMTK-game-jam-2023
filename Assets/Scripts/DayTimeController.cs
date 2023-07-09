@@ -1,10 +1,12 @@
 
+using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
 using Button = UnityEngine.UIElements.Button;
+using Image = UnityEngine.UI.Image;
 
 public class DayTimeController : MonoBehaviour
 {
@@ -19,7 +21,9 @@ public class DayTimeController : MonoBehaviour
     public UnityEngine.UI.Image sun;
     public OverlayManager overlayManager;
     public PlayerMovement playerMovement;
-    public GameObject pauseButtonObject;
+    public Sprite playButtonSprite;
+    public Sprite pauseButtonSprite;
+    public GameObject pausePlayButton;
     public GameObject pauseOverlay;
     public int numDaysToWin;
 
@@ -27,14 +31,14 @@ public class DayTimeController : MonoBehaviour
     public bool isTimePaused = false;
     int currentDay = 0;
 
-    private Button pauseButtonElement;
+    //private Button pauseButtonElement;
 
     public TMP_Text currTime;
     //TODO can plug in lighting here
 
     public void Start()
     {
-        pauseButtonElement = pauseButtonObject.GetComponent<UIDocument>().rootVisualElement.Q<Button>("pauseButton");
+        //pauseButtonElement = pauseButtonObject.GetComponent<UIDocument>().rootVisualElement.Q<Button>("pauseButton");
         time = 0;
         isTimePaused = false;
         currentDay = 0;
@@ -56,7 +60,7 @@ public class DayTimeController : MonoBehaviour
         }
         if (currentDay >= numDaysToWin)
         {
-            pauseButtonObject.SetActive(false);
+            //pauseButtonObject.SetActive(false);
             overlayManager.GetComponent<OverlayManager>().GameOverTransition(
                 "You Did It.\nYou Survived",
                 "Despite all of the odds, you, a humble goblin farmer living between two warring factions have survived the war. Were you able to live proudly? Or did you need to do what it took to survive. Maybe for another goblin, the conditions would have been different.",
@@ -85,30 +89,53 @@ public class DayTimeController : MonoBehaviour
         Color c = Color.Lerp(nightLightColor, dayLightColor, curveValue);
         sun.color = c;
 
-        updatePauseButtonOnClick();
+        //updatePauseButtonOnClick();
     }
 
-    public void updatePauseButtonOnClick() {
-        pauseButtonElement.clicked += () =>
-        {
-            if (isTimePaused)
-            {
-                SetPausedTime(false);
-                pauseButtonElement.text = "Pause";
-            }
-            else
-            {
-                SetPausedTime(true);
-                pauseButtonElement.text = "Resume";
-            }
-        };
-    }
+    //public void updatePauseButtonOnClick() {
+    //    pauseButtonElement.clicked += () =>
+    //    {
+    //        if (isTimePaused)
+    //        {
+    //            SetPausedTime(false);
+    //            pauseButtonElement.text = "Pause";
+    //        }
+    //        else
+    //        {
+    //            SetPausedTime(true);
+    //            pauseButtonElement.text = "Resume";
+    //        }
+    //    };
+    //}
 
-    public void SetPausedTime(bool paused)
+    public void SetPausedTime()
     {
-        isTimePaused = paused;
-        pauseOverlay.SetActive(paused);
-        playerMovement.setAllowMovement(!paused);
+        isTimePaused = !isTimePaused;
+        pauseOverlay.SetActive(isTimePaused);
+        playerMovement.setAllowMovement(!isTimePaused);
+    }
+
+    public void onButtonClick()
+    {
+        Debug.Log("button clicked");
+        Sprite replacement;
+        if (isTimePaused)
+        {
+            replacement = pauseButtonSprite;
+        }
+        else
+        {
+            replacement = playButtonSprite;
+        }
+        pausePlayButton.transform.GetChild(0).GetComponent<Image>().sprite = replacement;
+        SetPausedTime();
+    }
+
+    public void SetPausedTime(bool pause)
+    {
+        isTimePaused = pause;
+        pauseOverlay.SetActive(pause);
+        playerMovement.setAllowMovement(!pause);
     }
 
     public float getCurrentTimeSeconds()
