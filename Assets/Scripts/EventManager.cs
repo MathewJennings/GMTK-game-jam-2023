@@ -128,15 +128,20 @@ public void Start()
 
     public void PrintResult(string message)
     {
+        PrintResult(message, 2f);
+    }
+
+    public void PrintResult(string message, float visibleTime)
+    {
         consequenceBox.SetActive(true);
         consequenceText.text = message;
 
-        StartCoroutine(WaitAndDisableConsequence());
+        StartCoroutine(WaitAndDisableConsequence(visibleTime));
     }
 
-    IEnumerator WaitAndDisableConsequence()
+    IEnumerator WaitAndDisableConsequence(float visibleTime)
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(visibleTime);
         consequenceBox.SetActive(false);
     }
 

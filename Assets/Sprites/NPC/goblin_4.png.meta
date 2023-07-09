@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 2ecec21ebba058c4dad7d45d65dac242
+guid: e5c628fba6856dc408dfc4f0c52a2fb7
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -72,7 +72,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 2
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -136,13 +136,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: human_female_1_0
+      name: goblin_4_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 96
-        width: 32
-        height: 32
+        y: 141.75
+        width: 40.333332
+        height: 47.25
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -150,20 +150,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0c6019f798a0b224193dda9a54dbfc47
-      internalID: -649396719
+      spriteID: 3bc9672de94dfb74597a44103fd85127
+      internalID: -1365036013
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: human_female_1_1
+      name: goblin_4_1
       rect:
         serializedVersion: 2
-        x: 32
-        y: 96
-        width: 32
-        height: 32
+        x: 40
+        y: 141.75
+        width: 40.333332
+        height: 47.25
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -171,20 +171,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c4c2ab1be838fcc44a1ec7e6d300db58
-      internalID: -1734958069
+      spriteID: 9f07b270fc0569d4c8ff8f7354ade6c1
+      internalID: 2000212947
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: human_female_1_2
+      name: goblin_4_2
       rect:
         serializedVersion: 2
-        x: 64
-        y: 96
-        width: 32
-        height: 32
+        x: 80
+        y: 141.75
+        width: 40.333332
+        height: 47.25
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -192,41 +192,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a098b53d13d80a148abfc95e22d85aa9
-      internalID: -72510575
+      spriteID: e9612832211871343a1e04b0d7b40ae1
+      internalID: 1245053318
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: human_female_1_3
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 96
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 66c4167cf69e3ba4890777ba5c6dbdb4
-      internalID: 1353835540
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: human_female_1_4
+      name: goblin_4_3
       rect:
         serializedVersion: 2
         x: 0
-        y: 64
-        width: 32
-        height: 32
+        y: 94.75
+        width: 40.333332
+        height: 47.25
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -234,20 +213,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 28456bad373609143b0a93da629bd624
-      internalID: -1816392056
+      spriteID: 2db90baa1d36cad4fa7028ff6bbdb629
+      internalID: 1251345766
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: human_female_1_5
+      name: goblin_4_4
       rect:
         serializedVersion: 2
-        x: 32
-        y: 64
-        width: 32
-        height: 32
+        x: 40
+        y: 94.75
+        width: 40.333332
+        height: 47.25
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -255,20 +234,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4356ab799f2fba34b901ed51ff7fd275
-      internalID: 356024773
+      spriteID: 334e65b4881bdc242a15243f973be085
+      internalID: -1474741372
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: human_female_1_6
+      name: goblin_4_5
       rect:
         serializedVersion: 2
-        x: 64
-        y: 64
-        width: 32
-        height: 32
+        x: 80
+        y: 94.75
+        width: 40.333332
+        height: 47.25
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -276,41 +255,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 899f159e0d852734793c582fada1bea1
-      internalID: -1308540663
+      spriteID: 6854be562764cbf4694c90096a325610
+      internalID: 48810740
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: human_female_1_7
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 64
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4b23218facfef2c4888d715826eebb27
-      internalID: -1056389532
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: human_female_1_8
+      name: goblin_4_6
       rect:
         serializedVersion: 2
         x: 0
-        y: 32
-        width: 32
-        height: 32
+        y: 47.75
+        width: 40.333332
+        height: 47.25
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -318,20 +276,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 27a1dd36f2bcec54d8f5d9d84c1b512a
-      internalID: -1172138888
+      spriteID: eb252925dbbc5a34fa619fd217b7c63e
+      internalID: -291780415
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: human_female_1_9
+      name: goblin_4_7
       rect:
         serializedVersion: 2
-        x: 32
-        y: 32
-        width: 32
-        height: 32
+        x: 40
+        y: 47.75
+        width: 40.333332
+        height: 47.25
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -339,20 +297,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5ac176c88a251744ca2d41945e69b835
-      internalID: 453687200
+      spriteID: 6d032d16b7de65841af8bd642a88064a
+      internalID: -1702591006
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: human_female_1_10
+      name: goblin_4_8
       rect:
         serializedVersion: 2
-        x: 64
-        y: 32
-        width: 32
-        height: 32
+        x: 80
+        y: 47.75
+        width: 40.333332
+        height: 47.25
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -360,41 +318,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6c4d69d4b3011e2478d3d03426c35a23
-      internalID: 1448228444
+      spriteID: d4e259396d9029141bb005a094585115
+      internalID: -2139164205
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: human_female_1_11
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 049a469c6ef26cf4ea2b68bb9c00fcc1
-      internalID: 772599561
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: human_female_1_12
+      name: goblin_4_9
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 32
-        height: 32
+        y: 0.75
+        width: 40.333332
+        height: 47.25
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -402,20 +339,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 973a092178a91ab429ecf4ae210422c1
-      internalID: -1800194022
+      spriteID: bced9dbf244a4fb48a8784758388dad8
+      internalID: 1704482741
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: human_female_1_13
+      name: goblin_4_10
       rect:
         serializedVersion: 2
-        x: 32
-        y: 0
-        width: 32
-        height: 32
+        x: 40
+        y: 0.75
+        width: 40.333332
+        height: 47.25
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -423,20 +360,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 950b6f47807df0f4b932050c89ff3abd
-      internalID: -1101822574
+      spriteID: 27bba96c473236448aee0c4c89326972
+      internalID: 287175214
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: human_female_1_14
+      name: goblin_4_11
       rect:
         serializedVersion: 2
-        x: 64
-        y: 0
-        width: 32
-        height: 32
+        x: 80
+        y: 0.75
+        width: 40.333332
+        height: 47.25
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -444,29 +381,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1486c49ec10034344b22b8f2f9a4575f
-      internalID: -1200649590
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: human_female_1_15
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 615372381bc939342952619e817ccaf5
-      internalID: 527435685
+      spriteID: 3392a7777c1dc3f4eba70e3fbdbcdd7a
+      internalID: -1670908019
       vertices: []
       indices: 
       edges: []
@@ -482,22 +398,18 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      human_female_1_0: -649396719
-      human_female_1_1: -1734958069
-      human_female_1_10: 1448228444
-      human_female_1_11: 772599561
-      human_female_1_12: -1800194022
-      human_female_1_13: -1101822574
-      human_female_1_14: -1200649590
-      human_female_1_15: 527435685
-      human_female_1_2: -72510575
-      human_female_1_3: 1353835540
-      human_female_1_4: -1816392056
-      human_female_1_5: 356024773
-      human_female_1_6: -1308540663
-      human_female_1_7: -1056389532
-      human_female_1_8: -1172138888
-      human_female_1_9: 453687200
+      goblin_4_0: -1365036013
+      goblin_4_1: 2000212947
+      goblin_4_10: 287175214
+      goblin_4_11: -1670908019
+      goblin_4_2: 1245053318
+      goblin_4_3: 1251345766
+      goblin_4_4: -1474741372
+      goblin_4_5: 48810740
+      goblin_4_6: -291780415
+      goblin_4_7: -1702591006
+      goblin_4_8: -2139164205
+      goblin_4_9: 1704482741
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

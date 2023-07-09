@@ -36,7 +36,7 @@ PrefabInstance:
     - target: {fileID: 3467385716305010558, guid: 0bae09c30bd1c31479a0e4c33260aade,
         type: 3}
       propertyPath: description
-      value: A dried and discolored carrot. It's better than nothing.
+      value: A dried and discolored carrot. Better than starving, you suppose.
       objectReference: {fileID: 0}
     - target: {fileID: 3467385716305010558, guid: 0bae09c30bd1c31479a0e4c33260aade,
         type: 3}
