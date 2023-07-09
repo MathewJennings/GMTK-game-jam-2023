@@ -90,38 +90,20 @@ public void Start()
                 new List<EventDelegate> { EventConsequences.GoblinSoldier_GiveUp, EventConsequences.GoblinSoldier_FightBack },
                 allNpcPrefabsList[4],0
             ),
-              new EventTemplate(
+            new EventTemplate(
                 "tax Event",
                 "You hear yelling from your gate. You see goblin soldiers standing there. \"We have come today to collect your taxes! This will be crucial to win this war! Now behave and pay your taxes!\"",
                 new List<string> { "Pay", "Ignore" },
-                new List<EventDelegate> { PayTax, NotPayTax },
+                new List<EventDelegate> { EventConsequences.PayTax, EventConsequences.NotPayTax },
                 allNpcPrefabsList[3],0
             ),
-
-             new EventTemplate(
-                "Friendly Humans",
-                "You hear voices near your gate. You see multiple humans including the human soldier you gave food few days ago. They seem to want to thank you for what you have done.",
-                new List<string> { "Invite them", "Ignore" },
-                new List<EventDelegate> {HumanSoldiers_Invite, HumanSoldiers_Ignore },
-                allNpcPrefabsList[3],0
-                ),
-                          new EventTemplate(
-                "Friendly Goblins",
-                "You hear voices near your gate. You see multiple goblin soldiers. \"We thank you for being a great goblin!\"" ,
-                new List<string> { "Ask for gift", "Thank" },
-                new List<EventDelegate> {GoblinSoldiers_Gift, GoblinSoldiers_Thank },
-                allNpcPrefabsList[3],0
-                ),
-
-
-              new EventTemplate(
+            new EventTemplate(
                 "robber",
                 "A disheveled goblin crashes through your gate. \"Oye! I heard you've been robbing passerbys in these parts. There's only enough room for one robber here!\"",
                 new List<string> { "Hand over money", "Fight" },
                 new List<EventDelegate> { EventConsequences.PayRobber, EventConsequences.FightRobber },
                 allNpcPrefabsList[4],0
             ),
-
         };
 
         eventCurrentDay = 0;
