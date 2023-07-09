@@ -43,7 +43,7 @@ public class EventManager : MonoBehaviour
     public static int goblin_loyalty = 0;
 
     public static int philanthropic = 0;
-    public static int robber_count = 0;
+    public static int refugee_denied_count = 0;
     public static int treasure_count = 0;
 
     public static int human_loyalty_guests_threshold = 3;
@@ -56,6 +56,8 @@ public class EventManager : MonoBehaviour
     public bool human_guests_occurred;
     public bool goblin_guests_occurred;
     public bool goblin_kick_occurred;
+
+    public const float tutorialMessageTime = 5f;
   
 
 // Start is called before the first frame update
@@ -72,85 +74,85 @@ public void Start()
         eventTemplates = new List<EventTemplate> {
             new EventTemplate(
                 "merchant",
-                "You hear a knock at your gate. \"Would you like to make a trade?\"",
-                new List<string> { "Let's Trade", "Not today" },
+                "A stranger walks up to your gate, a trader by the looks of her. You've been anxious of visitors ever since the human victory in the war started to become a slow inevitability. She approaches cautiously and, gauging you to be non-violent, asks you \"Want to trade?\"",
+                new List<string> { "Take a look at her wares", "Ask her to be on her way" },
                 new List<EventDelegate> { openShopMenu, EventConsequences.closeDialog },
                 allNpcPrefabsList[0],1
             ),
             new EventTemplate(
                 "lady", 
-                "You hear a knock at your gate. \"Would you help me? I'm a poor defenseless villager and my child is sick. I need 5 gold to buy some medicine\". You ponder your options", 
-                new List<string> { "Give gold!", "Rob her!" }, 
-                new List<EventDelegate> { EventConsequences.giveGrandma, EventConsequences.robGrandma },
+                "A human has discovered your farm, a refugee by the looks of her. Clearly desperate, she asks for your help. \"My child and I have been fleeing the war, but the wandering mercenaries are even worse than the soldiers. Please, my child is sick. Can you spare any gold to help?\". You ponder your options...", 
+                new List<string> { "Take pity on her (5G)", "Shoo her away" }, 
+                new List<EventDelegate> { EventConsequences.giveGrandma, EventConsequences.sendGrandmaAway },
                 allNpcPrefabsList[2],1
             ),
             new EventTemplate(
                 "human_soldier",
-                "You hear a voice coming from your gate. It's a human soldier. He seems tired and injured. Maybe some foo will help him.",
-                new List<string> { "Give Foo", "Report to Goblin soliders" },
-                new List<EventDelegate> { EventConsequences.giveFoo, EventConsequences.reportHumanSoldier },
+                "A limping human soldier discovered your farm and approached, seemingly in desperation. You quickly realize he's no threat, and as he gets closer you can see his left leg was crudely amputated. It smells infected. He begs for you to spare some food with him, any food at all.",
+                new List<string> { "Share some of your food (2)", "Report him to the defense army later" },
+                new List<EventDelegate> { EventConsequences.giveFood, EventConsequences.reportHumanSoldier },
                 allNpcPrefabsList[1],1
             ),
             new EventTemplate(
                 "angry_goblin",
-                "You hear a knock at your gate. It's goblin soldiers. \"Someone saw you helping the human soldiers!\" you betrayed us!",
-                new List<string> { "Give up", "fight back" },
-                new List<EventDelegate> { EventConsequences.GoblinSoldier_GiveUp, EventConsequences.GoblinSoldier_FightBack },
+                "Goblin soldiers appraoch your farm. They look violent and angry. They scream that they know you helped a human solider and that you betrayed the resistance. Spittle drops from their chins as they gesticulate wildly. They tell you they'd kill you right now if not for your food production.",
+                new List<string> { "Give them everything you have to placate them", "Brace yourself for their violence" },
+                new List<EventDelegate> { EventConsequences.GoblinSoldier_OfferInventory, EventConsequences.GoblinSoldier_Assault },
                 allNpcPrefabsList[4],0
             ),
             new EventTemplate(
                 "tax_goblin",
-                "You hear yelling from your gate. You see goblin soldiers standing there. \"We have come today to collect your taxes! This will be crucial to win this war! Now behave and pay your taxes!\"",
-                new List<string> { "Pay", "Ignore" },
+                "You hear roudy voices approaching your farm. A small group of mercenaries has arrived. These bands have become more and more common of late. This one looks particularly familiar with violence -- nasty even. \"What do you want?\" you ask them. \"Taxes! You're gonna help us in the fight against the humans, aren't you?\" You've been extorted before, and you'll be extorted again.",
+                new List<string> { "Give them what they want (5G)", "Don't and deal with the consequences" },
                 new List<EventDelegate> { EventConsequences.PayTax, EventConsequences.NotPayTax },
                 allNpcPrefabsList[3],1
             ),
             new EventTemplate(
                 "robber",
-                "A disheveled goblin crashes through your gate. \"Oye! I heard you've been robbing passerbys in these parts. There's only enough room for one robber here!\"",
-                new List<string> { "Hand over money", "Fight" },
-                new List<EventDelegate> { EventConsequences.PayRobber, EventConsequences.FightRobber },
+                "Very suddenly, a disheveled goblin crashes onto your farm. He's hyped up on fisstech, by the look of it. He seems aware of the stream of refugees passing through the area.  \"Oye! I bet you've had your way with a bunch of passerbys in these parts. An enterprising fellow like yourself has probably gotten fat and happy from it all huh?\" His threat is clear.",
+                new List<string> { "Give him what he wants", "Refuse and defend yourself" },
+                new List<EventDelegate> { EventConsequences.PayRobber, EventConsequences.AttackedByRobber },
                 allNpcPrefabsList[4],0
             ),
             new EventTemplate(
                 "treasure",
-                "A treasure chest walks up to your front door...",
-                new List<string> { "Open Chest", "Ignore" },
-                new List<EventDelegate> { EventConsequences.OpenChest, EventConsequences.closeDialog },
+                "You can't believe it. A treasure chest has somehow walked up to your farm. You reason that magicians must be fighting in the war now -- an indication that its reaching its climax. Regardless, you figure this is probably a blessing of pure luck. You consider your options...",
+                new List<string> { "Claim the chest", "Too risky..." },
+                new List<EventDelegate> { EventConsequences.OpenChest, EventConsequences.IgnoreChest },
                 allNpcPrefabsList[8],1
             ),
             new EventTemplate(
                 "treasure_owner",
-                "A man walks up to your door. \"My treasure chest grew legs and ran off! Have you seen it?\"",
-                new List<string> { "Return money", "Say no" },
+                "A mage approaches your farm. You notice that he is brimming with magical energy as the atmosphere in his immediate vicinity electrifies. This is a dangerous man. Aware of the power imbalance, he confidently asks you if you've seen his magic chest. He is clearly expecting you to say yes.",
+                new List<string> { "Fess up and pay him back", "Grovel and feign ignorance" },
                 new List<EventDelegate> { EventConsequences.TreasureOwnerReturnMoney, EventConsequences.TreasureOwnerSayNo },
                 allNpcPrefabsList[5],0
             ),
             new EventTemplate(
                 "treasure_mimic",
-                "A treasure chest walks up to your front door...",
-                new List<string> { "Open Chest", "Ignore" },
-                new List<EventDelegate> { EventConsequences.OpenMimicChest, EventConsequences.closeDialog },
+                "You can't believe it. A treasure chest has somehow walked up to your farm. You reason that magicians must be fighting in the war now -- an indication that its reaching its climax. Regardless, you figure this is probably a blessing of pure luck. You consider your options...",
+                new List<string> { "Claim the chest", "Too risky..." },
+                new List<EventDelegate> { EventConsequences.OpenMimicChest, EventConsequences.IgnoreChest },
                 allNpcPrefabsList[8],1
             ),
             new EventTemplate(
                 "rain",
-                "A cloud covers the sun for a brief moment and you feel rain against your forehead.",
-                new List<string> { "I'm drenched", "I'm still drenched" },
+                "Clouds move in, blanketing the sky. It's a preciously rare sight these days. Before you know it, you start to feel water on your forehead. It rapidly swells to a dark torrent. As you stand in the down pour you feel a well of appreciation for today's respite.",
+                new List<string> { "Rest", "Reflect" },
                 new List<EventDelegate> { EventConsequences.Rain, EventConsequences.Rain },
                 null,1
             ),
             new EventTemplate(
                 "drought",
-                "The sun beats down. An oppressive miasma suffocates you as you watch your plants dry up.",
-                new List<string> { "I'm thirsty", "I'm still thirsty" },
+                "The sun's heat intensifies today. An oppressive miasma of humidity suffocates you as you watch your plants start to shrivel in the heat.",
+                new List<string> { "Time to get to work", "No rest for the wicked..." },
                 new List<EventDelegate> { EventConsequences.Drought, EventConsequences.Drought },
                 null,1
             ),
             new EventTemplate(
                 "explosions",
-                "You hear explosions nearby. The explosions are contagious and some of your plots decide to explode too.",
-                new List<string> { "Oh no", "I'm in danger" },
+                "You suddenly hear loud explosions nearby. It must be a battle nearby, including mages. You sense imminent danger and pray to your gods that you and your land aren't caught in the crossfire...",
+                new List<string> { "Brace", "Seek shelter" },
                 new List<EventDelegate> { EventConsequences.Explosion, EventConsequences.Explosion },
                 null,1
             ),
@@ -212,7 +214,7 @@ public void Start()
     // Override whatever the next random event was going to be.
     public bool AddSpecialEvents()
     {
-        if (robber_count >= 2 && !robber_occurred)
+        if (refugee_denied_count >= 2 && !robber_occurred)
         {
             robber_occurred = true;
             ReplaceNextEvent("robber");

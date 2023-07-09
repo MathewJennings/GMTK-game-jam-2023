@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class Inventory : MonoBehaviour
 {
@@ -57,6 +58,20 @@ public class Inventory : MonoBehaviour
     {
         Item item = inventory[itemId];
         item.DecreaseQuantity(quantity);
+    }
+
+    public void ClearItem(string itemId)
+    {
+        Item item = inventory[itemId];
+        item.SetQuantity(0);
+    }
+
+    public void Clear()
+    {
+        foreach(string itemId in inventory.Keys)
+        {
+            inventory[itemId].SetQuantity(0);
+        }
     }
 
     public List<Item> GetSeeds()

@@ -69,8 +69,8 @@ public class Plot : MonoBehaviour
                 if (!firstCropDried)
                 {
                     firstCropDried = true;
-                    eventManager.PrintResult("The water evaporated due to the heat.", 3f);
-                    eventManager.PrintResultAfterDelay(3f, "Better water it again if you hope to ever harvest it. (E)", 3f);
+                    eventManager.PrintResult("The water evaporated due to the heat.", EventManager.tutorialMessageTime);
+                    eventManager.PrintResultAfterDelay(EventManager.tutorialMessageTime, "Better water it again if you hope to ever harvest it. (E)", EventManager.tutorialMessageTime);
                 }
             }
         }
@@ -160,7 +160,7 @@ public class Plot : MonoBehaviour
         this.isWatered = false;
         updateSprite(barren);
         removePlant();
-        eventManager.PrintResult("Your " + seed.gameObject.GetComponent<Item>().GetItemId() + " dried out and shriveled in the unrelenting sun.");
+        eventManager.PrintResult("Your " + seed.gameObject.GetComponent<Item>().GetItemId() + " dried out and shriveled in the unrelenting sun.", EventManager.tutorialMessageTime);
         this.seed = null;
     }
 

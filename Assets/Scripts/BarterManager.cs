@@ -57,7 +57,7 @@ public class BarterManager : MonoBehaviour
         if (!finishedFirstTrade)
         {
             finishedFirstTrade = true;
-            eventManager.PrintResultAfterDelay(0.5f, "You need to grow more food on your field. (E)");
+            eventManager.PrintResultAfterDelay(0.5f, "You need to grow more food on your field. (E)", EventManager.tutorialMessageTime);
         }
     }
     
