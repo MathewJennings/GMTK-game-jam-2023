@@ -128,16 +128,23 @@ public void Start()
                 new List<EventDelegate> { EventConsequences.OpenMimicChest, EventConsequences.closeDialog },
                 allNpcPrefabsList[5],0
             ),
+            new EventTemplate(
+                "rain",
+                "A cloud covers the sun for a brief moment and you feel rain against your forehead.",
+                new List<string> { "I'm drenched", "I'm still drenched" },
+                new List<EventDelegate> { EventConsequences.Rain, EventConsequences.Rain },
+                allNpcPrefabsList[5],0
+            ),
         };
 
         eventCurrentDay = 0;
 
         // Hard code first event to be merchant appearing 10 seconds in.
-        nextEventTime = 2f;
+        nextEventTime = 10f;
         nextEvent = new Event(eventTemplates[0]);
 
         events = new LinkedList<Event>();
-        AddSpecificEvent("treasure_mimic", true);
+        AddSpecificEvent("rain", true);
         AddSpecificEvent("lady", true);
         AddSpecificEvent("human soldier", true);
         AddSpecificEvent("tax Event", true);

@@ -168,4 +168,18 @@ public class EventConsequences
         EventManager.philanthropic--;
         return true;
     };
+
+    public static EventDelegate Rain = () =>
+    {
+        GameObject farmPlots = GameObject.Find("/GameManager/FarmPlots");
+        if (farmPlots == null)
+        {
+            return true;
+        }
+        foreach (Plot p in farmPlots.GetComponentsInChildren<Plot>())
+        {
+            p.waterPlot();
+        }
+        return true;
+    };
 }
