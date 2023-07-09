@@ -37,6 +37,7 @@ public class EventManager : MonoBehaviour
     private UIDocument uidoc;
     private List<Button> choiceButtons;
     private GameObject eventTextLabelObj;
+    private UIDocument eventButtonsDoc;
 
     public static int human_loyalty = 0 ;
     public static int goblin_loyalty = 0;
@@ -63,6 +64,7 @@ public void Start()
         uidoc = dialogBox.GetComponent<UIDocument>();
         choiceButtons = new List<Button>();
         eventTextLabelObj = dialogBox.transform.GetChild(0).gameObject;
+        eventButtonsDoc = dialogBox.transform.GetChild(1).gameObject.GetComponent<UIDocument>();
 
 
         summaryManager = FindAnyObjectByType<SummaryManager>();
@@ -354,8 +356,9 @@ public void Start()
                 dayTimeController.SetPausedTime(true);
                 VisualElement root = uidoc.rootVisualElement;
                 root.Q<Label>("Label").text = nextEvent.template.dialogText;
-                choiceButtons.Add(root.Q<Button>("acceptButton"));
-                choiceButtons.Add(root.Q<Button>("declineButton"));
+                VisualElement eventButtonsRoot = eventButtonsDoc.rootVisualElement;
+                choiceButtons.Add(eventButtonsRoot.Q<Button>("acceptButton"));
+                choiceButtons.Add(eventButtonsRoot.Q<Button>("declineButton"));
                 for (int i = 0; i < choiceButtons.Count; i++)
                 {
                     //needed because if you use i directly, i will update between when the listener is set vs when the listener is evaluated
