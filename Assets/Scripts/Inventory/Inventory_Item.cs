@@ -31,7 +31,7 @@ public class Inventory_Item : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        inventoryUI.UpdateItemDescription(item);
+        inventoryUI.UpdateItemDescription(item, barterManager.IsTrading());
         inventoryUI.itemName.gameObject.SetActive(true);
         inventoryUI.itemDescription.gameObject.SetActive(true);
     }
@@ -49,6 +49,11 @@ public class Inventory_Item : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     public string getItemId()
     {
         return item.GetItemId();
+    }
+
+    public int getItemPrice()
+    {
+        return item.GetPrice();
     }
 
     public bool isPlayerItem()
