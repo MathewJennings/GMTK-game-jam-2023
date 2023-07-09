@@ -340,8 +340,8 @@ public void Start()
     {
         // Earliest time is 5 seconds into the day.
         float earliestTime = (eventCurrentDay * DayTimeController.secondsInADay) + 5f;
-        // Latest time is 5 seconds before end of day.
-        float latestTime = ((eventCurrentDay + 1) * DayTimeController.secondsInADay) - 5f;
+        // Latest time is 20 seconds before end of day.
+        float latestTime = ((eventCurrentDay + 1) * DayTimeController.secondsInADay) - 20f;
 
         return UnityEngine.Random.Range(earliestTime, latestTime);
     }
