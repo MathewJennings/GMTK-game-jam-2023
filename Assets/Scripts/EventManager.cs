@@ -42,12 +42,14 @@ public class EventManager : MonoBehaviour
 
     public static int philanthropic = 0;
     public static int robber_count = 0;
+    public static int treasure_count = 0;
 
     public static int human_loyalty_guests_threshold = 3;
     public static int goblin_loyalty_guests_threshold = 3;
     public static int goblin_loyalty_kick_threshold = -3;
 
     public bool robber_occurred;
+    public bool treasure_owner_occurred;
     public bool angry_goblin_occurred;
     public bool human_guests_occurred;
     public bool goblin_guests_occurred;
@@ -78,7 +80,7 @@ public void Start()
                 allNpcPrefabsList[2],1
             ),
             new EventTemplate(
-                "human soldier",
+                "human_soldier",
                 "You hear a voice coming from your gate. It's a human soldier. He seems tired and injured. Maybe some foo will help him.",
                 new List<string> { "Give Foo", "Report to Goblin soliders" },
                 new List<EventDelegate> { EventConsequences.giveFoo, EventConsequences.reportHumanSoldier },
@@ -92,7 +94,7 @@ public void Start()
                 allNpcPrefabsList[4],0
             ),
             new EventTemplate(
-                "tax Event",
+                "tax_goblin",
                 "You hear yelling from your gate. You see goblin soldiers standing there. \"We have come today to collect your taxes! This will be crucial to win this war! Now behave and pay your taxes!\"",
                 new List<string> { "Pay", "Ignore" },
                 new List<EventDelegate> { EventConsequences.PayTax, EventConsequences.NotPayTax },
@@ -105,6 +107,34 @@ public void Start()
                 new List<EventDelegate> { EventConsequences.PayRobber, EventConsequences.FightRobber },
                 allNpcPrefabsList[4],0
             ),
+            new EventTemplate(
+                "treasure",
+                "A treasure chest walks up to your front door...",
+                new List<string> { "Open Chest", "Ignore" },
+                new List<EventDelegate> { EventConsequences.OpenChest, EventConsequences.closeDialog },
+                allNpcPrefabsList[8],0
+            ),
+            new EventTemplate(
+                "treasure_owner",
+                "A man walks up to your door. \"My treasure chest grew legs and ran off! Have you seen it?\"",
+                new List<string> { "Return money", "Say no" },
+                new List<EventDelegate> { EventConsequences.TreasureOwnerReturnMoney, EventConsequences.TreasureOwnerSayNo },
+                allNpcPrefabsList[5],0
+            ),
+            new EventTemplate(
+                "treasure_mimic",
+                "A treasure chest walks up to your front door...",
+                new List<string> { "Open Chest", "Ignore" },
+                new List<EventDelegate> { EventConsequences.OpenMimicChest, EventConsequences.closeDialog },
+                allNpcPrefabsList[8],0
+            ),
+            new EventTemplate(
+                "rain",
+                "A cloud covers the sun for a brief moment and you feel rain against your forehead.",
+                new List<string> { "I'm drenched", "I'm still drenched" },
+                new List<EventDelegate> { EventConsequences.Rain, EventConsequences.Rain },
+                null,0
+            ),
         };
 
         eventCurrentDay = 0;
@@ -115,9 +145,6 @@ public void Start()
 
         events = new LinkedList<Event>();
         AddSpecificEvent("lady", true);
-        AddSpecificEvent("lady", true);
-        AddSpecificEvent("human soldier", true);
-        AddSpecificEvent("tax Event", true);
     }
 
     public void PrintResultAfterDelay(float delay, string message)
@@ -175,6 +202,12 @@ public void Start()
         {
             angry_goblin_occurred = true;
             ReplaceNextEvent("angry_goblin");
+            return true;
+        }
+        if (treasure_count >= 1 && !treasure_owner_occurred)
+        {
+            treasure_owner_occurred = true;
+            ReplaceNextEvent("treasure_owner");
             return true;
         }
         if (human_loyalty > human_loyalty_guests_threshold && !human_guests_occurred)
@@ -303,21 +336,15 @@ public void Start()
                 nextEvent = events.First.Value;
                 events.RemoveFirst();
             }
-            if (events.Count < 2)
-            {
-                AddEvent();
-            }
+            AddEvent();
         }
 
         if (nextEvent != null && !nextEvent.eventStarted && nextEventTime < dayTimeController.getCurrentTimeSeconds())
         {
             nextEvent.eventStarted = true;
-            npc = Instantiate(nextEvent.template.npcPrefab);
-            DialogDelegate dialogDelegate = () =>
+            if(nextEvent.template.npcPrefab == null)
             {
                 dialogBox.SetActive(true);
-                npc.transform.GetChild(3).gameObject.SetActive(true);
-                playerPortrait.SetActive(true);
                 // Clear out all listeners on buttons to make sure we're not accumulating multiple
                 // listeners on a single button.
                 ResetChoiceButtons();
@@ -330,7 +357,7 @@ public void Start()
                 {
                     //needed because if you use i directly, i will update between when the listener is set vs when the listener is evaluated
                     int temp = i;
-                    Event tempEvent = nextEvent; 
+                    Event tempEvent = nextEvent;
                     string tempChoice = nextEvent.template.choices[i];
                     choiceButtons[i].clicked += () =>
                     {
@@ -350,9 +377,53 @@ public void Start()
                     };
                 }
                 nextEvent = null;
-            };
 
-            npc.GetComponent<Npc>().SetFields(dialogDelegate);
+            } else
+            {
+                
+                npc = Instantiate(nextEvent.template.npcPrefab);
+                DialogDelegate dialogDelegate = () =>
+                {
+                    dialogBox.SetActive(true);
+                    npc.transform.GetChild(3).gameObject.SetActive(true);
+                    playerPortrait.SetActive(true);
+                    // Clear out all listeners on buttons to make sure we're not accumulating multiple
+                    // listeners on a single button.
+                    ResetChoiceButtons();
+                    dayTimeController.SetPausedTime(true);
+                    VisualElement root = uidoc.rootVisualElement;
+                    root.Q<Label>("Label").text = nextEvent.template.dialogText;
+                    choiceButtons.Add(root.Q<Button>("acceptButton"));
+                    choiceButtons.Add(root.Q<Button>("declineButton"));
+                    for (int i = 0; i < choiceButtons.Count; i++)
+                    {
+                        //needed because if you use i directly, i will update between when the listener is set vs when the listener is evaluated
+                        int temp = i;
+                        Event tempEvent = nextEvent; 
+                        string tempChoice = nextEvent.template.choices[i];
+                        choiceButtons[i].clicked += () =>
+                        {
+                            bool success = tempEvent.template.executeOption(temp);
+
+                            if (success)
+                            {
+                                InitializeEventSummaryIfNotExist();
+                                eventSummary.Add(new List<string> { tempEvent.template.name, tempChoice });
+                                dayTimeController.SetPausedTime(false);
+                                dialogBox.SetActive(false);
+                                //playerPortrait.SetActive(false);
+                                //npc.transform.GetChild(3).gameObject.SetActive(false);
+                                //npc.GetComponent<Animator>().SetBool("walkRight", true);
+                            }
+                            // else keep dialog open and wait for a different choice.
+                        };
+                    }
+                    nextEvent = null;
+                };
+
+                npc.GetComponent<Npc>().SetFields(dialogDelegate);
+            }
+
         }
     }
     private void InitializeEventSummaryIfNotExist()

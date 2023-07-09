@@ -82,7 +82,7 @@ public class EventConsequences
     public static EventDelegate GoblinSoldier_FightBack = () => {
         GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>().ChangeAp(-3);
         GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
-            .PrintResult("Lost 3 AP.");
+            .PrintResult("Lost 3 energy.");
         EventManager.goblin_loyalty--;
         return true;
     };
@@ -104,7 +104,7 @@ public class EventConsequences
     public static EventDelegate NotPayTax = () => {
         GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>().ChangeAp(-3);
         GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
-            .PrintResult("Lost 3 AP.");
+            .PrintResult("Lost 3 energy.");
         EventManager.goblin_loyalty--;
         return true;
     };
@@ -127,7 +127,59 @@ public class EventConsequences
     public static EventDelegate FightRobber = () => {
         GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>().ChangeAp(-10);
         GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
-            .PrintResult("Lost 10 AP.");
+            .PrintResult("Lost 10 energy.");
+        return true;
+    };
+
+    public static EventDelegate OpenChest = () =>
+    {
+        Inventory playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
+        playerInventory.AddItem("gold", 10);
+        GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
+            .PrintResult("You got 10 gold.");
+        EventManager.treasure_count++;
+        return true;
+    };
+
+    public static EventDelegate OpenMimicChest = () => {
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>().ChangeAp(-3);
+        GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
+            .PrintResult("It was a Mimic! Lost 3 energy.");
+        return true;
+    };
+
+    public static EventDelegate TreasureOwnerReturnMoney = () => {
+        Inventory playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
+        if (playerInventory.inventory["gold"].GetQuantity() < 10)
+        {
+            GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
+                .PrintResult("You no longer have the money.");
+            return false;
+        }
+
+        playerInventory.RemoveItem("gold", 10);
+        GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
+            .PrintResult("Handed back 10 gold.");
+        EventManager.human_loyalty++;
+        return true;
+    };
+
+    public static EventDelegate TreasureOwnerSayNo = () => {
+        EventManager.philanthropic--;
+        return true;
+    };
+
+    public static EventDelegate Rain = () =>
+    {
+        GameObject farmPlots = GameObject.Find("/GameManager/FarmPlots");
+        if (farmPlots == null)
+        {
+            return true;
+        }
+        foreach (Plot p in farmPlots.GetComponentsInChildren<Plot>())
+        {
+            p.waterPlot();
+        }
         return true;
     };
 }
