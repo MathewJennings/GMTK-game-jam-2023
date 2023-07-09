@@ -40,6 +40,21 @@ PrefabInstance:
       propertyPath: maturationHours
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -192941532611814194, guid: e125e33635f104c42b8d83445da4e719,
+        type: 3}
+      propertyPath: hoursToMaturation
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: -192941532611814194, guid: e125e33635f104c42b8d83445da4e719,
+        type: 3}
+      propertyPath: waterDurationInHours
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: -192941532611814194, guid: e125e33635f104c42b8d83445da4e719,
+        type: 3}
+      propertyPath: dryTimeToleranceInHours
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 3228856449878463659, guid: e125e33635f104c42b8d83445da4e719,
         type: 3}
       propertyPath: price

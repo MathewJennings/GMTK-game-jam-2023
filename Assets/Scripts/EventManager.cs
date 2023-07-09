@@ -157,9 +157,9 @@ public void Start()
                 null,1
             ),
             new EventTemplate(
-                "wealthy merchant",
+                "wealthy_merchant",
                 "The air smells like gold and arrogance. You hear an anticipated knock on your door. The wealthy merchant has appeared at your door.",
-                new List<string> { "Shall we trade?", "Too rich for me" },
+                new List<string> { "Take a look at her wares?", "Ask her to leave." },
                 new List<EventDelegate> { openShopMenu, EventConsequences.closeDialog },
                 allNpcPrefabsList[9],1
             ),
@@ -179,8 +179,9 @@ public void Start()
         nextEvent = GetSpecificEvent("merchant");
 
         events = new LinkedList<Event>();
+        AddRandomEvent();
         AddSpecificEvent("tax_goblin", true);
-        AddSpecificEvent("merchant", true);
+        AddSpecificEvent("wealthy_merchant", true);
     }
 
     public void PrintResultAfterDelay(float delay, string message)
