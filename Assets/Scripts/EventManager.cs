@@ -20,6 +20,7 @@ public class EventManager : MonoBehaviour
     public GameObject dialogBox;
     public GameObject consequenceBox;
     public TMP_Text consequenceText;
+    public GameObject eventOverlay;
     public List<GameObject> allNpcPrefabsList;
     public GameObject npcManager;
     public GameObject playerPortrait;
@@ -379,7 +380,14 @@ public void Start()
             if (eventCurrentDay >= dayTimeController.numDaysToWin - 1)
             {
                 nextEventTime = RandomNextEventTime();
-                nextEvent = GetSpecificEvent("final_event");
+                if (human_loyalty > goblin_loyalty)
+                {
+                    nextEvent = GetSpecificEvent("final_event_human");
+                }
+                else
+                {
+                    nextEvent = GetSpecificEvent("final_event_goblin");
+                }
             }
             else
             {
@@ -399,6 +407,7 @@ public void Start()
             if(nextEvent.template.npcPrefab == null)
             {
                 dialogBox.SetActive(true);
+                eventOverlay.SetActive(true);
                 // Clear out all listeners on buttons to make sure we're not accumulating multiple
                 // listeners on a single button.
                 ResetChoiceButtons();
@@ -425,6 +434,7 @@ public void Start()
                             eventSummary.Add(new List<string> { tempEvent.template.name, tempChoice });
                             dayTimeController.SetPausedTime(false);
                             dialogBox.SetActive(false);
+                            eventOverlay.SetActive(false);
                             //playerPortrait.SetActive(false);
                             //npc.transform.GetChild(3).gameObject.SetActive(false);
                             //npc.GetComponent<Animator>().SetBool("walkRight", true);
@@ -441,6 +451,7 @@ public void Start()
                 DialogDelegate dialogDelegate = () =>
                 {
                     dialogBox.SetActive(true);
+                    eventOverlay.SetActive(true);
                     npc.transform.GetChild(3).gameObject.SetActive(true);
                     playerPortrait.SetActive(true);
                     // Clear out all listeners on buttons to make sure we're not accumulating multiple
@@ -469,6 +480,7 @@ public void Start()
                                 eventSummary.Add(new List<string> { tempEvent.template.name, tempChoice });
                                 dayTimeController.SetPausedTime(false);
                                 dialogBox.SetActive(false);
+                                eventOverlay.SetActive(false);
                                 //playerPortrait.SetActive(false);
                                 //npc.transform.GetChild(3).gameObject.SetActive(false);
                                 //npc.GetComponent<Animator>().SetBool("walkRight", true);
