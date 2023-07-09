@@ -19,9 +19,12 @@ public class InventoryUI : MonoBehaviour
 
     private bool isOpen;
     private List<GameObject> currentInventoryItems = new List<GameObject>();
-    private float inventoryImageWidth=100; 
+    private float inventoryImageWidth=100;
 
-
+    public void OnCloseInventory()
+    {
+        CloseInventory();
+    }
     public bool isInventoryOpen()
     {
         return isOpen;

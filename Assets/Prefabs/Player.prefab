@@ -56,6 +56,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 2.8
+  defaultSpeed: 2.8
+  crippleSpeed: 1.4
+  crippleDuration: 30
   originalStartPosition: {fileID: 0}
 --- !u!212 &5906261969621895122
 SpriteRenderer:
