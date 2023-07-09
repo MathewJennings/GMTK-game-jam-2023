@@ -30,7 +30,7 @@ public class EventConsequences
         Inventory playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
         playerInventory.AddItem("gold", 10);
         GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
-            .PrintResult("You got 5 gold.");
+            .PrintResult("You got 10 gold.");
         EventManager.robber_count++;
         return true;
     };
@@ -56,6 +56,7 @@ public class EventConsequences
         playerInventory.AddItem("gold", 2);
         GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
             .PrintResult("You got 2 gold.");
+        EventManager.goblin_loyalty++;
         return true;
     };
     public static EventDelegate GoblinSoldier_GiveUp = () => {
