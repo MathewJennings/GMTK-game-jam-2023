@@ -49,7 +49,7 @@ public class SummaryManager : MonoBehaviour
         // List of tuples. List<List<eventName, eventChoice>>
         if (summary.ContainsKey(SummaryType.EVENT))
         {
-            stringBuilder.Append("Events");
+            stringBuilder.Append("Events: ");
             bool isFirstDone = false;
             foreach(List<string> l in (List<List<string>>)summary[SummaryType.EVENT])
             {

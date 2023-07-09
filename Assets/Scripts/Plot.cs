@@ -36,6 +36,8 @@ public class Plot : MonoBehaviour
         timePlanted = 0f;
         timeOutOfWater = 0f;
         timeWatered = 0f;
+        timeDesolate = 0f;
+        isDesolate = false;
         updateSprite(barren);
         removePlant();
     }
