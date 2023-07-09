@@ -98,7 +98,7 @@ public void Start()
                 "You hear yelling from your gate. You see goblin soldiers standing there. \"We have come today to collect your taxes! This will be crucial to win this war! Now behave and pay your taxes!\"",
                 new List<string> { "Pay", "Ignore" },
                 new List<EventDelegate> { EventConsequences.PayTax, EventConsequences.NotPayTax },
-                allNpcPrefabsList[3],0
+                allNpcPrefabsList[3],1
             ),
             new EventTemplate(
                 "robber",
@@ -112,7 +112,7 @@ public void Start()
                 "A treasure chest walks up to your front door...",
                 new List<string> { "Open Chest", "Ignore" },
                 new List<EventDelegate> { EventConsequences.OpenChest, EventConsequences.closeDialog },
-                allNpcPrefabsList[8],0
+                allNpcPrefabsList[8],1
             ),
             new EventTemplate(
                 "treasure_owner",
@@ -126,14 +126,14 @@ public void Start()
                 "A treasure chest walks up to your front door...",
                 new List<string> { "Open Chest", "Ignore" },
                 new List<EventDelegate> { EventConsequences.OpenMimicChest, EventConsequences.closeDialog },
-                allNpcPrefabsList[8],0
+                allNpcPrefabsList[8],1
             ),
             new EventTemplate(
                 "rain",
                 "A cloud covers the sun for a brief moment and you feel rain against your forehead.",
                 new List<string> { "I'm drenched", "I'm still drenched" },
                 new List<EventDelegate> { EventConsequences.Rain, EventConsequences.Rain },
-                null,0
+                null,1
             ),
         };
 
