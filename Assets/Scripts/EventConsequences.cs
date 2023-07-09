@@ -130,4 +130,35 @@ public class EventConsequences
             .PrintResult("Lost 10 AP.");
         return true;
     };
+
+    public static EventDelegate OpenChest = () =>
+    {
+        Inventory playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
+        playerInventory.AddItem("gold", 10);
+        GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
+            .PrintResult("You got 10 gold.");
+        EventManager.treasure_count++;
+        return true;
+    };
+
+    public static EventDelegate TreasureOwnerReturnMoney = () => {
+        Inventory playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
+        if (playerInventory.inventory["gold"].GetQuantity() < 10)
+        {
+            GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
+                .PrintResult("You no longer have the money.");
+            return false;
+        }
+
+        playerInventory.RemoveItem("gold", 10);
+        GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
+            .PrintResult("Handed back 10 gold.");
+        EventManager.human_loyalty++;
+        return true;
+    };
+
+    public static EventDelegate TreasureOwnerSayNo = () => {
+        EventManager.philanthropic--;
+        return true;
+    };
 }
