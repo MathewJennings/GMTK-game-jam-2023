@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class PlayerStats : MonoBehaviour
 {
@@ -12,28 +14,32 @@ public class PlayerStats : MonoBehaviour
     public int hunger { set; get; }
     public int ap { set; get; }
     public GameObject hungerEmptyBar;
+    public TMP_Text hungerText;
     public GameObject apEmptyBar;
+    public TMP_Text apText;
     public GameObject overlayManager;
 
     float nextHungerTick;
-    float hungerTickIntervalSeconds = DayTimeController.secondsInAnHour;
+    float hungerTickIntervalSeconds = DayTimeController.secondsInAnHour * 2; // -1 hunger every 2 hours
     DayTimeController dayTimeController;
-    Vector2 originalStartPosition;
+
+    [SerializeField] GameObject originalStartPosition;
+
+    private EventManager eventManager;
 
     // Start is called before the first frame update
     public void Start()
     {
-        if(originalStartPosition == null)
-        {
-            originalStartPosition = transform.position;
-        }
         ap = maxAp; 
-        hunger = maxHunger;
-        SetBar(BarType.Hunger, maxHunger);
-        SetBar(BarType.AP, maxAp);
+        hunger = maxHunger/2; // Start at half hunger so the player learns to eat
+        SetBar(BarType.Hunger, .5f);
+        SetBar(BarType.AP, 1);
         nextHungerTick = hungerTickIntervalSeconds;
         dayTimeController = FindAnyObjectByType<DayTimeController>();
-        gameObject.transform.position = originalStartPosition;
+        gameObject.transform.position = originalStartPosition.transform.position;
+
+        eventManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>();
+        eventManager.PrintResultAfterDelay(1.5f, "You feel hungry, check your inventory for something to eat.");
     }
 
     // Update is called once per frame
@@ -131,9 +137,11 @@ public class PlayerStats : MonoBehaviour
         {
             case BarType.Hunger:
                 hungerEmptyBar.GetComponent<Image>().fillAmount = emptyRatio;
+                hungerText.text = hunger + "/" + maxHunger;
                 break;
             case BarType.AP:
                 apEmptyBar.GetComponent<Image>().fillAmount = emptyRatio;
+                apText.text = ap+ "/" + maxAp;
                 break;
         }
     }

@@ -97,8 +97,8 @@ public void Start()
 
         eventCurrentDay = 0;
 
-        // Hard code first event to be merchant appearing 2 seconds in.
-        nextEventTime = 2f;
+        // Hard code first event to be merchant appearing 10 seconds in.
+        nextEventTime = 10f;
         nextEvent = new Event(eventTemplates[0]);
 
         events = new LinkedList<Event>();
@@ -106,6 +106,17 @@ public void Start()
         AddSpecificEvent("lady", true);
         AddSpecificEvent("human soldier", true);
         AddSpecificEvent("tax Event", true);
+    }
+
+    public void PrintResultAfterDelay(float delay, string message)
+    {
+        StartCoroutine(WaitAndPrintResult(delay, message));
+    }
+
+    IEnumerator WaitAndPrintResult(float delay, string message)
+    {
+        yield return new WaitForSeconds(delay);
+        PrintResult(message);
     }
 
     public void PrintResult(string message)
