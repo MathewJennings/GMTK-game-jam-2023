@@ -15,11 +15,13 @@ public class BarterManager : MonoBehaviour
     private Inventory_Item selectedBarteringInventoryItem;
     private GameObject merchant;
     private GameObject player;
+    private PlayerSounds playerSounds;
     private EventManager eventManager;
 
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        playerSounds = player.GetComponent<PlayerSounds>();
         eventManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>();
     }
 
@@ -72,6 +74,7 @@ public class BarterManager : MonoBehaviour
         {
             merchantScript.SellItem(selectedBarteringInventoryItem.getItemId());
         }
+        playerSounds.playBuySell();
         player.GetComponent<InventoryUI>().refresh();
         merchant.GetComponent<InventoryUI>().refresh();
     }

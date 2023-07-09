@@ -85,7 +85,7 @@ public class Inventory_Item : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         if (seed != null)
         {
             playerCropInteraction.plantSeed(item, seed);
-            inventoryUI.CloseInventory();
+            inventoryUI.CloseInventory(false);
         }
     }
 
@@ -95,7 +95,7 @@ public class Inventory_Item : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         if (crop != null)
         {
             playerCropInteraction.eatCrop(item, crop);
-            inventoryUI.CloseInventory();
+            inventoryUI.CloseInventory(false);
         }
     }
 }

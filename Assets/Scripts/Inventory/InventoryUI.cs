@@ -12,6 +12,7 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] Inventory inventory;
     [SerializeField] GameObject inventoryItemPrefab;
     [SerializeField] GameObject inventoryBackground;
+    [SerializeField] PlayerSounds playerSounds;
     [SerializeField] public TMP_Text itemName;
     [SerializeField] public TMP_Text itemDescription;
     [SerializeField] public Inventory_Item goldInventoryItem;
@@ -37,11 +38,15 @@ public class InventoryUI : MonoBehaviour
         }
     }
 
-    public void OpenInventory()
+    public void OpenInventory(bool playSound = true)
     {
         if (isOpen)
         {
             return;
+        }
+        if (playerSounds != null && playSound)
+        {
+            playerSounds.playOpenInventory();
         }
         inventoryBackground.SetActive(true);
         setupGoldInventoryItem();
@@ -82,11 +87,15 @@ public class InventoryUI : MonoBehaviour
             currentInventoryItems[i].transform.Translate(-1 * totalImageWidth / 2 + inventoryImageWidth * i + 50, 0, 0);
         }
     }
-    public void CloseInventory()
+    public void CloseInventory(bool playSound = true)
     {
         if(!isOpen)
         {
             return;
+        }
+        if (playerSounds != null && playSound)
+        {
+            playerSounds.playCloseInventory();
         }
         inventoryBackground.SetActive(false);
         foreach (GameObject inventoryItem in currentInventoryItems)
@@ -109,7 +118,7 @@ public class InventoryUI : MonoBehaviour
     public void refresh()
     {
         setupGoldInventoryItem();
-        CloseInventory();
-        OpenInventory();
+        CloseInventory(false);
+        OpenInventory(false);
     }
 }

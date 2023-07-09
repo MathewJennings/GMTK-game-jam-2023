@@ -1,13 +1,20 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-
     [SerializeField] float speed;
+    [SerializeField] float defaultSpeed;
+    [SerializeField] float crippleSpeed;
+    [SerializeField] float crippleDuration;
     [SerializeField] GameObject originalStartPosition;
+
+    private DayTimeController dayTimeController;
+
+    private float crippleTime;
 
     private Rigidbody2D rigidbody;
     private Animator animator;
@@ -16,6 +23,10 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     public void Start()
     {
+        dayTimeController = GameObject.FindObjectOfType<DayTimeController>();
+        defaultSpeed = 2.8f;
+        crippleSpeed = 1.4f;
+
         rigidbody = gameObject.GetComponent<Rigidbody2D>();
         animator = gameObject.GetComponent<Animator>();
         allowMovement = true;
@@ -44,9 +55,21 @@ public class PlayerMovement : MonoBehaviour
         allowMovement = a;
     }
 
+    [ContextMenu("Cripple Movement")]
+    public void CrippleMovement()
+    {
+        crippleTime = dayTimeController.getCurrentTimeSeconds() + crippleDuration;
+    }
+
+    public bool IsCrippled()
+    {
+        return dayTimeController.getCurrentTimeSeconds() < crippleTime;
+    }
+
     // Update is called once per frame
     void FixedUpdate()
     {
+        speed = IsCrippled() ? crippleSpeed : defaultSpeed;
         float h;
         float v;
         if (!allowMovement || GetComponentInChildren<useFarmTool>() != null)

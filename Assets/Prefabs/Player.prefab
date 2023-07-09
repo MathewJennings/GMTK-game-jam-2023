@@ -19,6 +19,8 @@ GameObject:
   - component: {fileID: 5435077983625184426}
   - component: {fileID: 7846411221716759685}
   - component: {fileID: 7963742395487797735}
+  - component: {fileID: -8711059502678120387}
+  - component: {fileID: -1664522594398560621}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -39,7 +41,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &-5959350627749875866
 MonoBehaviour:
@@ -324,6 +326,125 @@ MonoBehaviour:
   inventoryItemPrefab: {fileID: 6460754405479298437, guid: be429873bb8a8f748953d7284ad63a82,
     type: 3}
   inventoryBackground: {fileID: 0}
+  playerSounds: {fileID: -1664522594398560621}
   itemName: {fileID: 0}
   itemDescription: {fileID: 0}
   goldInventoryItem: {fileID: 0}
+--- !u!82 &-8711059502678120387
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3885562788245913499}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &-1664522594398560621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3885562788245913499}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6711aa44d39caa41a88e9dc135168d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioSource: {fileID: -8711059502678120387}
+  leftStep: {fileID: 8300000, guid: e8fef0da60f0a174692ef71a57ec0cb7, type: 3}
+  rightStep: {fileID: 8300000, guid: 9a46254cde006c645aff55d41776d249, type: 3}
+  openInventory: {fileID: 8300000, guid: 135a27b8ce8fd85438a1e8b240e2087e, type: 3}
+  closeInventory: {fileID: 8300000, guid: c17c4d7dfb8fd2941a27a8dae8d4e757, type: 3}
+  buySell: {fileID: 8300000, guid: 0aa0297727990da4b9bce212ae6cba7b, type: 3}
+  waterPlant: {fileID: 8300000, guid: f7b973478d2e8724d9d860203ec30d1c, type: 3}
+  plantSeed: {fileID: 8300000, guid: e5b1b932f4fba9344af05628d0b6ff33, type: 3}
+  harvestPlant: {fileID: 8300000, guid: 98597350119548d49a310abe20f859b4, type: 3}
+  eatFood: {fileID: 8300000, guid: cb2da99dae29d214bbe1560c4b8be462, type: 3}

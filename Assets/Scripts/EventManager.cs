@@ -160,7 +160,7 @@ public void Start()
 
         // Hard code first event to be merchant appearing 10 seconds in.
         nextEventTime = 10f;
-        nextEvent = new Event(eventTemplates[0]);
+        nextEvent = GetSpecificEvent("merchant");
 
         events = new LinkedList<Event>();
         AddSpecificEvent("tax_goblin", true);
@@ -215,19 +215,19 @@ public void Start()
         if (robber_count >= 2 && !robber_occurred)
         {
             robber_occurred = true;
-            ReplaceNextEvent("robber");
+            nextEvent = GetSpecificEvent("robber");
             return true;
         }
         if (human_loyalty >= 1 && !angry_goblin_occurred)
         {
             angry_goblin_occurred = true;
-            ReplaceNextEvent("angry_goblin");
+            nextEvent = GetSpecificEvent("angry_goblin");
             return true;
         }
         if (treasure_count >= 1 && !treasure_owner_occurred)
         {
             treasure_owner_occurred = true;
-            ReplaceNextEvent("treasure_owner");
+            nextEvent = GetSpecificEvent("treasure_owner");
             return true;
         }
         //if (human_loyalty > human_loyalty_guests_threshold && !human_guests_occurred)
@@ -273,31 +273,32 @@ public void Start()
     //Add an event of name "name"
     public void AddSpecificEvent(string name, bool addLast)
     {
-        foreach(EventTemplate template in eventTemplates) 
+        Event e = GetSpecificEvent(name);
+        if (e == null)
         {
-            if(template.name == name)
-            {
-                if (addLast)
-                {
-                    events.AddLast(new Event(template));
-                }
-                else
-                {
-                    events.AddFirst(new Event(template));
-                }
-                return;
-            }
+            return;
+        }
+
+        if (addLast)
+        {
+            events.AddLast(e);
+        }
+        else
+        {
+            events.AddFirst(e);
         }
     }
-    public void ReplaceNextEvent(string name)
+
+    public Event GetSpecificEvent(string name)
     {
         foreach (EventTemplate template in eventTemplates)
         {
             if (template.name == name)
             {
-                nextEvent = new Event(template);
+                return new Event(template);
             }
         }
+        return null;
     }
 
     public void AddEvent()

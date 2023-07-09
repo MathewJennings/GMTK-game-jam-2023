@@ -8,6 +8,7 @@ public class PlayerCropInteraction : MonoBehaviour
 
     private InventoryUI inventoryUI;
     private Inventory playerInventory;
+    private PlayerSounds playerSounds;
     private EventManager eventManager;
     private bool plantedFirstSeed;
     private bool wateredFirstCrop;
@@ -29,6 +30,7 @@ public class PlayerCropInteraction : MonoBehaviour
         playerInventory = GetComponent<Inventory>();
         eventManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>();
         summaryManager = FindAnyObjectByType<SummaryManager>(); 
+        playerSounds = GetComponent<PlayerSounds>();
     }
 
     // Update is called once per frame
@@ -71,6 +73,7 @@ public class PlayerCropInteraction : MonoBehaviour
             {
                 playerStats.ChangeAp(-1*cost);
                 Instantiate(waterPrefab, gameObject.transform, false);
+                playerSounds.playWaterPlant();
                 plot.waterPlot();
                 if (!wateredFirstCrop)
                 {
@@ -89,6 +92,7 @@ public class PlayerCropInteraction : MonoBehaviour
             if (playerStats.canAffordAction(cost))
             {
                 playerStats.ChangeAp(-1*cost);
+                playerSounds.playHarvestPlant();
                 Item yield = plot.harvest();
                 Instantiate(sythePrefab, gameObject.transform, false);
                 playerInventory.AddItem(yield.GetItemId(), yield.GetQuantity());
@@ -148,6 +152,7 @@ public class PlayerCropInteraction : MonoBehaviour
             if (playerStats.canAffordAction(cost))
             {
                 playerStats.ChangeAp(-1*cost);
+                playerSounds.playPlantSeed();
                 plot.plantSeed(seed);
                 Instantiate(hoePrefab, gameObject.transform, false);
                 playerInventory.RemoveItem(item.GetItemId(), 1);
@@ -171,6 +176,7 @@ public class PlayerCropInteraction : MonoBehaviour
     }
 
     public void eatCrop(Item item, Crop crop) {
+        playerSounds.playEatFood();
         playerStats.ChangeHunger(crop.sustenance);
         eventManager.PrintResult("The " + item.GetItemId() + " made you less hungry. (+" + crop.sustenance + ")", 3f);
         int energyChange = crop.sustenance;
