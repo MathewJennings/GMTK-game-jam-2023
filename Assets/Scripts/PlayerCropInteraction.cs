@@ -55,8 +55,15 @@ public class PlayerCropInteraction : MonoBehaviour
 
     private void serviceCrop()
     {
-        if (plot == null || plot.isDesolate)
+        if (plot == null)
         {
+
+            return;
+        }
+
+        if (plot.isDesolate)
+        {
+            eventManager.PrintResult("This plot of land is still recovering and is currently unusable", EventManager.tutorialMessageTime);
             return;
         }
 
