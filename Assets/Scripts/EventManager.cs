@@ -35,6 +35,7 @@ public class EventManager : MonoBehaviour
 
     public static int human_loyalty = 0 ;
     public static int goblin_loyalty = 0;
+
     public static int philanthropic = 0;
     public static int robber_count = 0;
 
@@ -43,6 +44,7 @@ public class EventManager : MonoBehaviour
     public static int goblin_loyalty_kick_threshold = -3;
 
     public bool robber_occurred;
+    public bool angry_goblin_occurred;
     public bool human_guests_occurred;
     public bool goblin_guests_occurred;
     public bool goblin_kick_occurred;
@@ -78,7 +80,7 @@ public void Start()
                 allNpcPrefabsList[1],1
             ),
             new EventTemplate(
-                "Angry Goblin Soldier: Human Soldier",
+                "angry_goblin",
                 "You hear a knock at your gate. It's goblin soldiers. \"Someone saw you helping the human soldiers!\" you betrayed us!",
                 new List<string> { "Give up", "fight back" },
                 new List<EventDelegate> { GoblinSoldier_GiveUp, GoblinSoldier_FightBack },
@@ -180,8 +182,6 @@ public void Start()
         playerInventory.RemoveItem("appleCrop", 2);
         GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
             .PrintResult("You gave 2 apples.");
-        UpdateEventPossibility("Angry Goblin Soldier: Human Soldier", 1);
-        UpdateEventPossibility("human soldier", 0);
         philanthropic++;
         human_loyalty++;
         return true;
@@ -210,8 +210,6 @@ public void Start()
         playerInventory.RemoveItem("gold", 5);
         GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
             .PrintResult("Lost 3 apples, 3 carrots, and 5 gold.");
-        UpdateEventPossibility("Angry Goblin Soldier: Human Soldier", 0);
-        UpdateEventPossibility("human soldier", 1);
         return true;
 
 
@@ -220,8 +218,6 @@ public void Start()
         GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>().ChangeAp(-3);
         GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
             .PrintResult("Lost 3 AP.");
-        UpdateEventPossibility("Angry Goblin Soldier: Human Soldier", 0);
-        UpdateEventPossibility("human soldier", 1);
         goblin_loyalty--;
         return true;
     };
@@ -284,6 +280,12 @@ EventDelegate openShopMenu = () =>
         {
             robber_occurred = true;
             ReplaceNextEvent("robber");
+            return true;
+        }
+        if (human_loyalty >= 1 && !angry_goblin_occurred)
+        {
+            angry_goblin_occurred = true;
+            ReplaceNextEvent("angry_goblin");
             return true;
         }
         if (human_loyalty > human_loyalty_guests_threshold && !human_guests_occurred)
