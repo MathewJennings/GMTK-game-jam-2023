@@ -18,10 +18,15 @@ public class Plot : MonoBehaviour
     public Sprite seededAndWatered;
     public SpriteRenderer sproutRenderer;
     public DayTimeController dayTimeController;
+
+    private float timeSpentWatered;
+    private EventManager eventManager;
+    private bool firstCropDried;
     // Start is called before the first frame update
     public void Start()
     {
         dayTimeController = GameObject.FindObjectOfType<DayTimeController>();
+        eventManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>();
         seed = null;
         isWatered = false;
         timePlanted = 0f;
@@ -33,7 +38,7 @@ public class Plot : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (seed != null)
+        if (!dayTimeController.isTimePaused && seed != null)
         {
             checkWater();
             checkDead();
@@ -53,17 +58,27 @@ public class Plot : MonoBehaviour
     }
     private void checkWater()
     {
-        if (isWatered && outOfWater())
+        if (isWatered)
         {
-            isWatered = false;
-            timeOutOfWater = dayTimeController.getCurrentTimeSeconds();
-            updateSprite(seeded);
+            timeSpentWatered += Time.deltaTime;
+            if (outOfWater())
+            {
+                isWatered = false;
+                timeOutOfWater = dayTimeController.getCurrentTimeSeconds();
+                updateSprite(seeded);
+                if (!firstCropDried)
+                {
+                    firstCropDried = true;
+                    eventManager.PrintResult("The water evaporated quickly in the heat.", 3f);
+                    eventManager.PrintResultAfterDelay(3f, "Better water it again if you hope to ever harvest it. (E)", 3f);
+                }
+            }
         }
     }
 
     private bool outOfWater()
     {
-        return timeWatered + seed.getWaterDurationTime() <= dayTimeController.getCurrentTimeSeconds();
+        return dayTimeController.getCurrentTimeSeconds() >= timeWatered + seed.getWaterDurationTime();
     }
 
     private void checkDead()
@@ -76,7 +91,7 @@ public class Plot : MonoBehaviour
 
     private bool outOfTime()
     {
-        return timeOutOfWater + seed.getDryToleranceTime() <= dayTimeController.getCurrentTimeSeconds();
+        return dayTimeController.getCurrentTimeSeconds() >= timeOutOfWater + seed.getDryToleranceTime();
     }
 
     private void checkMature()
@@ -134,9 +149,10 @@ public class Plot : MonoBehaviour
     {
         // Update Sprite when killed
         this.isWatered = false;
-        this.seed = null;
         updateSprite(barren);
         removePlant();
+        eventManager.PrintResult("Your " + seed.gameObject.GetComponent<Item>().GetItemId() + " dried out and shrivled in the unrelenting sun.");
+        this.seed = null;
     }
 
     public bool needsWatering()
@@ -151,7 +167,7 @@ public class Plot : MonoBehaviour
 
     public bool isMature()
     {
-        Debug.Log(seed);
-        return timePlanted + seed.getMaturationTime() <= dayTimeController.getCurrentTimeSeconds();
+        Debug.Log(timeSpentWatered + "/" + seed.getMaturationTime());
+        return timeSpentWatered >= seed.getMaturationTime();
     }
 }

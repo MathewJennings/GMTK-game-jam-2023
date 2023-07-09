@@ -13,6 +13,9 @@ public class EventManager : MonoBehaviour
 {
     LinkedList<Event> events;
     Event nextEvent;
+    SummaryManager summaryManager;
+    // List of tuples <EventName, EventChoice>
+    List<List<string>> eventSummary;
     public DayTimeController dayTimeController;
     public GameObject dialogBox;
     public GameObject consequenceBox;
@@ -56,6 +59,7 @@ public void Start()
         uidoc = dialogBox.GetComponent<UIDocument>();
         choiceButtons = new List<Button>();
 
+        summaryManager = FindAnyObjectByType<SummaryManager>();
         barterManager = GameObject.FindGameObjectWithTag("BarterManager").GetComponent<BarterManager>();
         eventTemplates = new List<EventTemplate> {
             new EventTemplate(
@@ -90,9 +94,26 @@ public void Start()
                 "tax Event",
                 "You hear yelling from your gate. You see goblin soldiers standing there. \"We have come today to collect your taxes! This will be crucial to win this war! Now behave and pay your taxes!\"",
                 new List<string> { "Pay", "Ignore" },
-                new List<EventDelegate> { EventConsequences.PayTax, EventConsequences.NotPayTax },
-                allNpcPrefabsList[3],1
+                new List<EventDelegate> { PayTax, NotPayTax },
+                allNpcPrefabsList[3],0
             ),
+
+             new EventTemplate(
+                "Friendly Humans",
+                "You hear voices near your gate. You see multiple humans including the human soldier you gave food few days ago. They seem to want to thank you for what you have done.",
+                new List<string> { "Invite them", "Ignore" },
+                new List<EventDelegate> {HumanSoldiers_Invite, HumanSoldiers_Ignore },
+                allNpcPrefabsList[3],0
+                ),
+                          new EventTemplate(
+                "Friendly Goblins",
+                "You hear voices near your gate. You see multiple goblin soldiers. \"We thank you for being a great goblin!\"" ,
+                new List<string> { "Ask for gift", "Thank" },
+                new List<EventDelegate> {GoblinSoldiers_Gift, GoblinSoldiers_Thank },
+                allNpcPrefabsList[3],0
+                ),
+
+
               new EventTemplate(
                 "robber",
                 "A disheveled goblin crashes through your gate. \"Oye! I heard you've been robbing passerbys in these parts. There's only enough room for one robber here!\"",
@@ -100,6 +121,7 @@ public void Start()
                 new List<EventDelegate> { EventConsequences.PayRobber, EventConsequences.FightRobber },
                 allNpcPrefabsList[4],0
             ),
+
         };
 
         eventCurrentDay = 0;
@@ -117,13 +139,18 @@ public void Start()
 
     public void PrintResultAfterDelay(float delay, string message)
     {
-        StartCoroutine(WaitAndPrintResult(delay, message));
+        StartCoroutine(WaitAndPrintResult(delay, message, 2f));
     }
 
-    IEnumerator WaitAndPrintResult(float delay, string message)
+    public void PrintResultAfterDelay(float delay, string message, float visibleTime)
+    {
+        StartCoroutine(WaitAndPrintResult(delay, message, visibleTime));
+    }
+
+    IEnumerator WaitAndPrintResult(float delay, string message, float visibleTime)
     {
         yield return new WaitForSeconds(delay);
-        PrintResult(message);
+        PrintResult(message, visibleTime);
     }
 
     public void PrintResult(string message)
@@ -170,6 +197,7 @@ public void Start()
         if (human_loyalty > human_loyalty_guests_threshold && !human_guests_occurred)
         {
             human_guests_occurred = true;
+            AddSpecificEvent("Friendly Humans",true);
             return true;
         }
         if (goblin_loyalty > goblin_loyalty_guests_threshold && !goblin_guests_occurred)
@@ -318,13 +346,16 @@ public void Start()
                 {
                     //needed because if you use i directly, i will update between when the listener is set vs when the listener is evaluated
                     int temp = i;
-                    Event tempEvent = nextEvent;
+                    Event tempEvent = nextEvent; 
+                    string tempChoice = nextEvent.template.choices[i];
                     choiceButtons[i].clicked += () =>
                     {
                         bool success = tempEvent.template.executeOption(temp);
 
                         if (success)
                         {
+                            InitializeEventSummaryIfNotExist();
+                            eventSummary.Add(new List<string> { tempEvent.template.name, tempChoice });
                             dayTimeController.SetPausedTime(false);
                             dialogBox.SetActive(false);
                             //npc.transform.GetChild(3).gameObject.SetActive(false);
@@ -337,6 +368,16 @@ public void Start()
             };
 
             npc.GetComponent<Npc>().SetFields(dialogDelegate);
+        }
+    }
+    private void InitializeEventSummaryIfNotExist()
+    {
+        //Set up summary
+        Dictionary<SummaryManager.SummaryType, object> summary = summaryManager.summary;
+        if (!summary.ContainsKey(SummaryManager.SummaryType.EVENT))
+        {
+            summary.Add(SummaryManager.SummaryType.EVENT, new List<List<string>>());
+            eventSummary = (List<List<string>>)summary[SummaryManager.SummaryType.EVENT];
         }
     }
 }
