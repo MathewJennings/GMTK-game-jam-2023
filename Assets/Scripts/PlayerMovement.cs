@@ -49,7 +49,7 @@ public class PlayerMovement : MonoBehaviour
     {
         float h;
         float v;
-        if (!allowMovement)
+        if (!allowMovement || GetComponentInChildren<useFarmTool>() != null)
         {
             h = 0;
             v = 0;

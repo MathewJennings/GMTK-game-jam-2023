@@ -54,6 +54,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 2.8
+  originalStartPosition: {fileID: 0}
 --- !u!212 &5906261969621895122
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -212,7 +213,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plot: {fileID: 0}
-  playerManager: {fileID: 5435077983625184426}
+  playerStats: {fileID: 0}
+  hoePrefab: {fileID: 6600421203481930579, guid: 117b75787bdaa524d9abaa7eada8aed7,
+    type: 3}
+  waterPrefab: {fileID: 6626973606453474233, guid: 9f19c1b58b6423d4691fa3f1c6b958f2,
+    type: 3}
+  sythePrefab: {fileID: 8461217643978414467, guid: ccb796911931ab144a8ad14a01c183d0,
+    type: 3}
 --- !u!114 &229923360912203666
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -280,7 +287,6 @@ MonoBehaviour:
   apEmptyBar: {fileID: 0}
   apText: {fileID: 0}
   overlayManager: {fileID: 0}
-  originalStartPosition: {fileID: 0}
 --- !u!114 &7846411221716759685
 MonoBehaviour:
   m_ObjectHideFlags: 0
