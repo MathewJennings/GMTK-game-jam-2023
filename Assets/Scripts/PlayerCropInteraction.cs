@@ -13,6 +13,7 @@ public class PlayerCropInteraction : MonoBehaviour
     private bool wateredFirstCrop;
     private bool harvestedFirstCrop;
     private SummaryManager summaryManager;
+    private bool canDogPet;
     //Summary in the format <cropName, countOfCropHarvested>
     private Dictionary<string, int> cropSummary;
     //Summary in the format <cropName, countOfCropHarvested>
@@ -36,6 +37,14 @@ public class PlayerCropInteraction : MonoBehaviour
     public void OnUse()
     {
         serviceCrop();
+        petDog();
+    }
+
+    private void petDog()
+    {
+        if (canDogPet) {
+            Debug.Log("pet the dog");
+        }
     }
 
     private void serviceCrop()
@@ -173,6 +182,15 @@ public class PlayerCropInteraction : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        DogArea dogArea = collision.GetComponent<DogArea>();
+        if (dogArea != null)
+        {
+            canDogPet = true;
+        }
+    }
+
     private void OnTriggerStay2D(Collider2D collision)
     {
         Plot collidedPlot = collision.gameObject.GetComponent<Plot>();
@@ -200,6 +218,11 @@ public class PlayerCropInteraction : MonoBehaviour
         {
             plot.unhilight();
             plot = null;
+        }
+        DogArea dogArea = collision.GetComponent<DogArea>();
+        if (dogArea != null)
+        {
+            canDogPet = false;
         }
     }
 }
