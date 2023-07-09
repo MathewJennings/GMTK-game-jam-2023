@@ -16,6 +16,7 @@ public class DayTimeController : MonoBehaviour
     public Color nightLightColor;
     public AnimationCurve nightTimeCurve;
     public Color dayLightColor = Color.white;
+    public UnityEngine.UI.Image sun;
     public OverlayManager overlayManager;
     public PlayerMovement playerMovement;
     public GameObject pauseButtonObject;
@@ -78,6 +79,11 @@ public class DayTimeController : MonoBehaviour
         //    numMinutesText = "0" + numMinutesText;
         //}
         currTime.text = "Day " + (numDays + 1).ToString() + "\n" + numHoursText + ":00"; //+ "elapsedTime: " + time.ToString();
+
+        float percentOfDay = (time % secondsInADay) / secondsInADay;
+        float curveValue = nightTimeCurve.Evaluate(percentOfDay);
+        Color c = Color.Lerp(nightLightColor, dayLightColor, curveValue);
+        sun.color = c;
 
         updatePauseButtonOnClick();
     }
