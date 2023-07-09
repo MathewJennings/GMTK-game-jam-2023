@@ -85,7 +85,7 @@ public class Inventory_Item : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         if (seed != null)
         {
             playerCropInteraction.plantSeed(item, seed);
-            inventoryUI.CloseInventory();
+            inventoryUI.CloseInventory(false);
         }
     }
 

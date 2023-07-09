@@ -11,6 +11,9 @@ public class PlayerSounds : MonoBehaviour
     public AudioClip openInventory;
     public AudioClip closeInventory;
     public AudioClip buySell;
+    public AudioClip waterPlant;
+    public AudioClip plantSeed;
+    public AudioClip harvestPlant;
     
     public void playLeftStep()
     {
@@ -34,5 +37,20 @@ public class PlayerSounds : MonoBehaviour
     public void playBuySell()
     {
         audioSource.PlayOneShot(buySell);
+    }
+
+    public void playWaterPlant()
+    {
+        audioSource.PlayOneShot(waterPlant);
+    }
+
+    public void playPlantSeed()
+    {
+        audioSource.PlayOneShot(plantSeed);
+    }
+
+    public void playHarvestPlant()
+    {
+        audioSource.PlayOneShot(harvestPlant);
     }
 }
