@@ -89,35 +89,35 @@ public void Start()
             ),
             new EventTemplate(
                 "human_soldier",
-                "A limping human soldier discovered your farm and approached, seemingly in desperation. You quickly realize he's no threat, and as he gets closer you can see his left leg was crudely amputated. It smells infected. He begs for you to spare some food with him, any food at all.",
+                "A limping human soldier discovered your farm and approached, seemingly in desperation. He must have faught in one of the recent battles nearby. You quickly realize he's no threat, and as he gets closer you can see his left leg was crudely amputated... it smells infected to you, even from a distance. He begs for you to share some food with him, any food at all. It seems food insecurity is plaguing the larger realm.",
                 new List<string> { "Share some of your food (2)", "Report him to the defense army later" },
                 new List<EventDelegate> { EventConsequences.giveFood, EventConsequences.reportHumanSoldier },
                 allNpcPrefabsList[1],1
             ),
             new EventTemplate(
                 "angry_goblin",
-                "Goblin soldiers appraoch your farm. They look violent and angry. They scream that they know you helped a human solider and that you betrayed the resistance. Spittle drops from their chins as they gesticulate wildly. They tell you they'd kill you right now if not for your food production.",
+                "Goblin soldiers appraoch your farm, looking violent and angry. They are screaming at you about helping humans and betraying the resistance. Spittle drops from their chins as they gesticulate wildly. They tell you they'd kill you right now if not for the meager food you're producing. This makes you wonder if the goblin resistance is starving.",
                 new List<string> { "Give them everything you have to placate them", "Brace yourself for their violence" },
                 new List<EventDelegate> { EventConsequences.GoblinSoldier_OfferInventory, EventConsequences.GoblinSoldier_Assault },
                 allNpcPrefabsList[4],0
             ),
             new EventTemplate(
                 "tax_goblin",
-                "You hear roudy voices approaching your farm. A small group of mercenaries has arrived. These bands have become more and more common of late. This one looks particularly familiar with violence -- nasty even. \"What do you want?\" you ask them. \"Taxes! You're gonna help us in the fight against the humans, aren't you?\" You've been extorted before, and you'll be extorted again.",
+                "You hear loud voices approaching the edge of your land. A small group of ggoblin mercenaries has arrived. Bands like this one are becoming more and more common of late, and they're often no better than bandits. This band looks particularly nasty. You steal yourself and ask what they want. \"We're collecting taxes for the war fund!\" they reply. \"You're gonna support us in the fight against the humans, aren't you?\"",
                 new List<string> { "Give them what they want (5G)", "Don't and deal with the consequences" },
                 new List<EventDelegate> { EventConsequences.PayTax, EventConsequences.NotPayTax },
                 allNpcPrefabsList[3],1
             ),
             new EventTemplate(
                 "robber",
-                "Very suddenly, a disheveled goblin crashes onto your farm. He's hyped up on fisstech, by the look of it. He seems aware of the stream of refugees passing through the area.  \"Oye! I bet you've had your way with a bunch of passerbys in these parts. An enterprising fellow like yourself has probably gotten fat and happy from it all huh?\" His threat is clear.",
+                "Very suddenly, a disheveled goblin barges onto your land. He's hyped up on salts, by the look of it. \"Oye!\" he says. \"I bet you've had your way with a bunch of passerbys in these parts. An enterprising fellow like yourself has probably gotten fat and happy from it all huh?\" He is clearly aware of the increase in refugees from the war.",
                 new List<string> { "Give him what he wants", "Refuse and defend yourself" },
                 new List<EventDelegate> { EventConsequences.PayRobber, EventConsequences.AttackedByRobber },
                 allNpcPrefabsList[4],0
             ),
             new EventTemplate(
                 "treasure",
-                "You can't believe it. A treasure chest has somehow walked up to your farm. You reason that magicians must be fighting in the war now -- an indication that its reaching its climax. Regardless, you figure this is probably a blessing of pure luck. You consider your options...",
+                "Are your eyes deceiving you? You can't believe it. A treasure chest has somehow walked up to your farm. You reason that magicians must be fighting in the war now -- an indication that its reaching its climax. Regardless, you figure this is probably a blessing of pure luck. You consider your options...",
                 new List<string> { "Claim the chest", "Too risky..." },
                 new List<EventDelegate> { EventConsequences.OpenChest, EventConsequences.IgnoreChest },
                 allNpcPrefabsList[8],1
