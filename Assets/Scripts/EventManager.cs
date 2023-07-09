@@ -215,19 +215,19 @@ public void Start()
         if (robber_count >= 2 && !robber_occurred)
         {
             robber_occurred = true;
-            ReplaceNextEvent("robber");
+            nextEvent = GetSpecificEvent("robber");
             return true;
         }
         if (human_loyalty >= 1 && !angry_goblin_occurred)
         {
             angry_goblin_occurred = true;
-            ReplaceNextEvent("angry_goblin");
+            nextEvent = GetSpecificEvent("angry_goblin");
             return true;
         }
         if (treasure_count >= 1 && !treasure_owner_occurred)
         {
             treasure_owner_occurred = true;
-            ReplaceNextEvent("treasure_owner");
+            nextEvent = GetSpecificEvent("treasure_owner");
             return true;
         }
         //if (human_loyalty > human_loyalty_guests_threshold && !human_guests_occurred)
@@ -299,17 +299,6 @@ public void Start()
             }
         }
         return null;
-    }
-
-    public void ReplaceNextEvent(string name)
-    {
-        foreach (EventTemplate template in eventTemplates)
-        {
-            if (template.name == name)
-            {
-                nextEvent = new Event(template);
-            }
-        }
     }
 
     public void AddEvent()
