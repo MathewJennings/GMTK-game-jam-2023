@@ -14,6 +14,11 @@ public class PlayerCropInteraction : MonoBehaviour
     private bool plantedFirstSeed;
     private bool wateredFirstCrop;
     private bool harvestedFirstCrop;
+    private SummaryManager summaryManager;
+    //Summary in the format <cropName, countOfCropHarvested>
+    private Dictionary<string, int> cropSummary;
+    //Summary in the format <cropName, countOfCropHarvested>
+    private Dictionary<string, int> eatenSummary;
 
     // Start is called before the first frame update
     void Start()
@@ -21,6 +26,7 @@ public class PlayerCropInteraction : MonoBehaviour
         inventoryUI = GetComponent<InventoryUI>();
         playerInventory = GetComponent<Inventory>();
         eventManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>();
+        summaryManager = FindAnyObjectByType<SummaryManager>(); 
     }
 
     // Update is called once per frame
@@ -67,6 +73,16 @@ public class PlayerCropInteraction : MonoBehaviour
                 playerManager.ChangeAp(-3);
                 Item yield = plot.harvest();
                 playerInventory.AddItem(yield.GetItemId(), yield.GetQuantity());
+                //add it to your summary
+                InitializeCropSummaryIfNotExist();
+                if (!cropSummary.ContainsKey(yield.name))
+                {
+                    cropSummary.Add(yield.name, yield.GetQuantity());
+                }
+                else
+                {
+                    cropSummary[yield.name] += yield.GetQuantity();
+                }
             } else
             {
                 printOutOfEnergyMessage();
@@ -74,6 +90,26 @@ public class PlayerCropInteraction : MonoBehaviour
         }
     }
 
+    private void InitializeCropSummaryIfNotExist()
+    {
+        //Set up summary
+        Dictionary<SummaryManager.SummaryType, object> summary = summaryManager.summary;
+        if (!summary.ContainsKey(SummaryManager.SummaryType.CROP))
+        {
+            summary.Add(SummaryManager.SummaryType.CROP, new Dictionary<string, int>());
+            cropSummary = (Dictionary<string, int>)summary[SummaryManager.SummaryType.CROP];
+        }
+    }
+    private void InitializeEatenSummaryIfNotExist()
+    {
+        //Set up summary
+        Dictionary<SummaryManager.SummaryType, object> summary = summaryManager.summary;
+        if (!summary.ContainsKey(SummaryManager.SummaryType.EATEN))
+        {
+            summary.Add(SummaryManager.SummaryType.EATEN, new Dictionary<string, int>());
+            eatenSummary = (Dictionary<string, int>)summary[SummaryManager.SummaryType.EATEN];
+        }
+    }
     public void plantSeed(Item item, Seed seed)
     {
         if (plot == null)
@@ -110,6 +146,15 @@ public class PlayerCropInteraction : MonoBehaviour
         playerManager.ChangeHunger(crop.sustenance);
         playerInventory.RemoveItem(item.GetItemId(), 1);
         eventManager.PrintResult("The " + item.GetItemId() + " made you less hungry. (+" + crop.sustenance + ")", 3f);
+        InitializeEatenSummaryIfNotExist();
+        if (!eatenSummary.ContainsKey(crop.name))
+        {
+            eatenSummary.Add(crop.name, 1);
+        }
+        else
+        {
+            eatenSummary[crop.name] += 1;
+        }
     }
 
     private void OnTriggerStay2D(Collider2D collision)

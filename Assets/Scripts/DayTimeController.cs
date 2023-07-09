@@ -48,10 +48,10 @@ public class DayTimeController : MonoBehaviour
         if (currentDay >= numDaysToWin)
         {
             overlayManager.GetComponent<OverlayManager>().GameOverTransition(
-                "You Did It. You Survived",
+                "You Did It.\nYou Survived",
                 "Despite all of the odds, you, a humble goblin farmer living between two warring factions have survived the war. Were you able to live proudly? Or did you need to do what it took to survive. Maybe for another goblin, the conditions would have been different.",
                 true,
-                "Try Again",
+                "Another Story Awaits",
                 // Restart manager will 
                 () => FindAnyObjectByType<RestartManager>().Restart()
             );

@@ -35,7 +35,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 346.09753}
+  m_AnchoredPosition: {x: -0.00024414062, y: 473}
   m_SizeDelta: {x: 0, y: 303.04495}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7584432448280688931
@@ -93,8 +93,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 223.75
-  m_fontSizeBase: 223.75
+  m_fontSize: 174.02
+  m_fontSizeBase: 174.02
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1572,6 +1572,50 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   barterButton: {fileID: 9042799998587758844}
   barterButtonText: {fileID: 5231115064415294657}
+--- !u!1 &3959881154460269672
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4038486093737006013}
+  - component: {fileID: 8020587049929589397}
+  m_Layer: 0
+  m_Name: SummaryManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4038486093737006013
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3959881154460269672}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 577.7745, y: 264.52066, z: -3.9874198}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8916128969497441438}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8020587049929589397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3959881154460269672}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eaf16d7ce7f14ee4c9f4a5a65774d788, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4095478356922456318
 GameObject:
   m_ObjectHideFlags: 0
@@ -2629,6 +2673,7 @@ MonoBehaviour:
   playerInventory: {fileID: 837200613407389485}
   merchantInventory: {fileID: 4954467861480814968}
   playerMovement: {fileID: 5347596603119480014}
+  summaryManager: {fileID: 8020587049929589397}
 --- !u!1 &6408663264905922559
 GameObject:
   m_ObjectHideFlags: 0
@@ -2796,7 +2841,7 @@ MonoBehaviour:
   dayLightColor: {r: 0.8301887, g: 0.69312924, b: 0.69312924, a: 1}
   overlayManager: {fileID: 2149463482883547177}
   playerMovement: {fileID: 5347596603119480014}
-  numDaysToWin: 5
+  numDaysToWin: 1
   isTimePaused: 0
   currTime: {fileID: 8370897722651218487}
 --- !u!114 &1404973091818599975
@@ -2980,7 +3025,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.00010881, y: -252}
+  m_AnchoredPosition: {x: -0.00032643, y: -109}
   m_SizeDelta: {x: 1920, y: 1010}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7391840412266241204

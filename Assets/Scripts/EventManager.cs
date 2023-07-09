@@ -13,6 +13,9 @@ public class EventManager : MonoBehaviour
 {
     LinkedList<Event> events;
     Event nextEvent;
+    SummaryManager summaryManager;
+    // List of tuples <EventName, EventChoice>
+    List<List<string>> eventSummary;
     public DayTimeController dayTimeController;
     public GameObject dialogBox;
     public GameObject consequenceBox;
@@ -56,6 +59,7 @@ public void Start()
         uidoc = dialogBox.GetComponent<UIDocument>();
         choiceButtons = new List<Button>();
 
+        summaryManager = FindAnyObjectByType<SummaryManager>();
         barterManager = GameObject.FindGameObjectWithTag("BarterManager").GetComponent<BarterManager>();
         eventTemplates = new List<EventTemplate> {
             new EventTemplate(
@@ -497,13 +501,16 @@ EventDelegate openShopMenu = () =>
                 {
                     //needed because if you use i directly, i will update between when the listener is set vs when the listener is evaluated
                     int temp = i;
-                    Event tempEvent = nextEvent;
+                    Event tempEvent = nextEvent; 
+                    string tempChoice = nextEvent.template.choices[i];
                     choiceButtons[i].clicked += () =>
                     {
                         bool success = tempEvent.template.executeOption(temp);
 
                         if (success)
                         {
+                            InitializeEventSummaryIfNotExist();
+                            eventSummary.Add(new List<string> { tempEvent.template.name, tempChoice });
                             dayTimeController.SetPausedTime(false);
                             dialogBox.SetActive(false);
                             //npc.transform.GetChild(3).gameObject.SetActive(false);
@@ -516,6 +523,16 @@ EventDelegate openShopMenu = () =>
             };
 
             npc.GetComponent<Npc>().SetFields(dialogDelegate);
+        }
+    }
+    private void InitializeEventSummaryIfNotExist()
+    {
+        //Set up summary
+        Dictionary<SummaryManager.SummaryType, object> summary = summaryManager.summary;
+        if (!summary.ContainsKey(SummaryManager.SummaryType.EVENT))
+        {
+            summary.Add(SummaryManager.SummaryType.EVENT, new List<List<string>>());
+            eventSummary = (List<List<string>>)summary[SummaryManager.SummaryType.EVENT];
         }
     }
 }
