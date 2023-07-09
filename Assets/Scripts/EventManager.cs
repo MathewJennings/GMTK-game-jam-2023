@@ -368,7 +368,7 @@ public void Start()
                 // Clear out all listeners on buttons to make sure we're not accumulating multiple
                 // listeners on a single button.
                 ResetChoiceButtons();
-                dayTimeController.SetPausedTime(true);
+                dayTimeController.SetPausedTime();
                 VisualElement root = uidoc.rootVisualElement;
                 root.Q<Label>("label").text = nextEvent.template.dialogText;
                 VisualElement eventButtonsRoot = eventButtonsDoc.rootVisualElement;
