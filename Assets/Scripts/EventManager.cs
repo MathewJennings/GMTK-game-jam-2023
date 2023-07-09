@@ -176,7 +176,7 @@ public void Start()
 
         // Hard code first event to be merchant appearing 10 seconds in.
         nextEventTime = 10f;
-        nextEvent = GetSpecificEvent("wealthy merchant");
+        nextEvent = GetSpecificEvent("merchant");
 
         events = new LinkedList<Event>();
         AddSpecificEvent("tax_goblin", true);
