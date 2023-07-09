@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 public class EventManager : MonoBehaviour
 {
-    Queue<Event> events;
+    LinkedList<Event> events;
     Event nextEvent;
     public DayTimeController dayTimeController;
     public TMP_Text dialogText;
@@ -97,9 +97,9 @@ public void Start()
         nextEventTime = 2f;
         nextEvent = new Event(eventTemplates[0]);
 
-        events = new Queue<Event>();
-        AddSpecificEvent("human soldier");
-        AddSpecificEvent("tax Event");
+        events = new LinkedList<Event>();
+        AddSpecificEvent("human soldier", true);
+        AddSpecificEvent("tax Event", true);
     }
 
     public void PrintResult(string message)
@@ -279,17 +279,24 @@ public void Start()
             }
         }
 
-        events.Enqueue(new Event(eventTemplates[randomIndex]));
+        events.AddLast(new Event(eventTemplates[randomIndex]));
 
     }
     //Add an event of name "name"
-    public void AddSpecificEvent(string name)
+    public void AddSpecificEvent(string name, bool addLast)
     {
         foreach(EventTemplate template in eventTemplates) 
         {
             if(template.name == name)
             {
-                events.Enqueue(new Event(template));
+                if (addLast)
+                {
+                    events.AddLast(new Event(template));
+                }
+                else
+                {
+                    events.AddFirst(new Event(template));
+                }
                 return;
             }
         }
@@ -349,7 +356,8 @@ public void Start()
             if (events.Count > 0)
             {
                 nextEventTime = RandomNextEventTime();
-                nextEvent = events.Dequeue();
+                nextEvent = events.First.Value;
+                events.RemoveFirst();
             }
             if (events.Count < 2)
             {
