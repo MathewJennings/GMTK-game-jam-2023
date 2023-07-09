@@ -9,8 +9,8 @@ using Button = UnityEngine.UIElements.Button;
 public class DayTimeController : MonoBehaviour
 {
 
-    public static float secondsInADay = 64;
-    public static float secondsInAnHour = 4;
+    public static float secondsInADay = 32;
+    public static float secondsInAnHour = 2;
     // hoursInADay = 16
 
     public Color nightLightColor;
@@ -71,13 +71,13 @@ public class DayTimeController : MonoBehaviour
         float numSecRemaining = time % secondsInADay;
         int numHours = (int)(numSecRemaining / secondsInAnHour) + 6; // Start day at 6am
         string numHoursText = numHours < 10 ? "0" + numHours : numHours.ToString();
-        int numMinutes = (int)time % (int)secondsInAnHour * 15;
-        string numMinutesText = numMinutes.ToString();
-        if (numMinutes < 10)
-        {
-            numMinutesText = "0" + numMinutesText;
-        }
-        currTime.text = "Day " + (numDays + 1).ToString() + "\n" + numHoursText + ":" + numMinutesText; //+ "elapsedTime: " + time.ToString();
+        //int numMinutes = (int)time % (int)secondsInAnHour * 15;
+        //string numMinutesText = numMinutes.ToString();
+        //if (numMinutes < 10)
+        //{
+        //    numMinutesText = "0" + numMinutesText;
+        //}
+        currTime.text = "Day " + (numDays + 1).ToString() + "\n" + numHoursText + ":00"; //+ "elapsedTime: " + time.ToString();
 
         updatePauseButtonOnClick();
     }
