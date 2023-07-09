@@ -514,6 +514,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 8533133175270247388}
   - {fileID: 7397099293575673137}
   - {fileID: 3198524908577593483}
   - {fileID: 1087587976347712090}
@@ -852,6 +853,82 @@ Transform:
   m_Father: {fileID: 8916128969497441438}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1922524801198629628
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8533133175270247388}
+  - component: {fileID: 9088433089559368132}
+  - component: {fileID: 2625404656882117530}
+  m_Layer: 0
+  m_Name: SunLight
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &8533133175270247388
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1922524801198629628}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2192539973088130717}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &9088433089559368132
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1922524801198629628}
+  m_CullTransparentMesh: 1
+--- !u!114 &2625404656882117530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1922524801198629628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &2245534740395107653
 GameObject:
   m_ObjectHideFlags: 0
@@ -2674,24 +2751,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bac236eb31a3c74dbb82550f8aac99d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nightLightColor: {r: 0.41509432, g: 0.28782484, b: 0.28782484, a: 0}
+  nightLightColor: {r: 0.057938773, g: 0.057938773, b: 0.13207549, a: 0.8666667}
   nightTimeCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0.0025153076
       value: 0.0004803678
-      inSlope: 2.0168135
-      outSlope: 2.0168135
+      inSlope: 3.3055
+      outSlope: 3.3055
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
+      time: 0.13187318
+      value: 0.4280728
+      inSlope: 2.4347491
+      outSlope: 2.4347491
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
       time: 0.50001836
       value: 1.0038513
-      inSlope: 0.01266551
-      outSlope: 0.01266551
+      inSlope: 0.0033078194
+      outSlope: 0.0033078194
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.89042896
+      value: 0.39583257
+      inSlope: -2.5477993
+      outSlope: -2.5477993
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
@@ -2699,8 +2794,8 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 1
       value: 0.008146584
-      inSlope: -1.9914825
-      outSlope: -1.9914825
+      inSlope: -3.5382159
+      outSlope: -3.5382159
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
@@ -2708,7 +2803,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  dayLightColor: {r: 0.8301887, g: 0.69312924, b: 0.69312924, a: 1}
+  dayLightColor: {r: 0.61636704, g: 0.6267744, b: 0.764151, a: 0.15686275}
+  sun: {fileID: 2625404656882117530}
   overlayManager: {fileID: 2149463482883547177}
   playerMovement: {fileID: 5347596603119480014}
   pauseButtonObject: {fileID: 6821718323940032531}
@@ -2745,6 +2841,7 @@ MonoBehaviour:
   npcManager: {fileID: 1337556105351859235}
   playerPortrait: {fileID: 8896923330972972025}
   robber_occurred: 0
+  treasure_owner_occurred: 0
   angry_goblin_occurred: 0
   human_guests_occurred: 0
   goblin_guests_occurred: 0
