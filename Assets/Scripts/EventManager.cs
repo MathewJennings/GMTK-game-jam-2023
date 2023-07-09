@@ -62,42 +62,42 @@ public void Start()
                 "merchant",
                 "You hear a knock at your gate. \"Would you like to make a trade?\"",
                 new List<string> { "Let's Trade", "Not today" },
-                new List<EventDelegate> { openShopMenu, closeDialog },
+                new List<EventDelegate> { openShopMenu, EventConsequences.closeDialog },
                 allNpcPrefabsList[0],1
             ),
             new EventTemplate(
                 "lady", 
                 "You hear a knock at your gate. \"Would you help me? I'm a poor defenseless villager and my child is sick. I need 5 gold to buy some medicine\". You ponder your options", 
                 new List<string> { "Give gold!", "Rob her!" }, 
-                new List<EventDelegate> { giveGrandma, robGrandma },
+                new List<EventDelegate> { EventConsequences.giveGrandma, EventConsequences.robGrandma },
                 allNpcPrefabsList[2],1
             ),
             new EventTemplate(
                 "human soldier",
                 "You hear a voice coming from your gate. It's a human soldier. He seems tired and injured. Maybe some foo will help him.",
                 new List<string> { "Give Foo", "Report to Goblin soliders" },
-                new List<EventDelegate> { giveFoo, reportHumanSoldier },
+                new List<EventDelegate> { EventConsequences.giveFoo, EventConsequences.reportHumanSoldier },
                 allNpcPrefabsList[1],1
             ),
             new EventTemplate(
                 "angry_goblin",
                 "You hear a knock at your gate. It's goblin soldiers. \"Someone saw you helping the human soldiers!\" you betrayed us!",
                 new List<string> { "Give up", "fight back" },
-                new List<EventDelegate> { GoblinSoldier_GiveUp, GoblinSoldier_FightBack },
+                new List<EventDelegate> { EventConsequences.GoblinSoldier_GiveUp, EventConsequences.GoblinSoldier_FightBack },
                 allNpcPrefabsList[4],0
             ),
               new EventTemplate(
                 "tax Event",
                 "You hear yelling from your gate. You see goblin soldiers standing there. \"We have come today to collect your taxes! This will be crucial to win this war! Now behave and pay your taxes!\"",
                 new List<string> { "Pay", "Ignore" },
-                new List<EventDelegate> { PayTax, NotPayTax },
+                new List<EventDelegate> { EventConsequences.PayTax, EventConsequences.NotPayTax },
                 allNpcPrefabsList[3],1
             ),
               new EventTemplate(
                 "robber",
                 "A disheveled goblin crashes through your gate. \"Oye! I heard you've been robbing passerbys in these parts. There's only enough room for one robber here!\"",
                 new List<string> { "Hand over money", "Fight" },
-                new List<EventDelegate> { PayRobber, FightRobber },
+                new List<EventDelegate> { EventConsequences.PayRobber, EventConsequences.FightRobber },
                 allNpcPrefabsList[4],0
             ),
         };
@@ -145,133 +145,7 @@ public void Start()
         consequenceBox.SetActive(false);
     }
 
-    EventDelegate closeDialog = () =>
-    {
-        // Do nothing.
-        return true;
-    };
-
-    EventDelegate giveGrandma = () => {
-        Inventory playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
-        if (playerInventory.inventory["gold"].GetQuantity() < 5)
-        {
-            GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
-                .PrintResult("You do not have enough gold.");
-            return false;
-        }
-
-        playerInventory.RemoveItem("gold", 5);
-        philanthropic++;
-        GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
-            .PrintResult("You gave 5 gold.");
-        return true;
-    };
-
-    EventDelegate robGrandma = () => {
-        Inventory playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
-        playerInventory.AddItem("gold", 10);
-        GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
-            .PrintResult("You got 5 gold.");
-        robber_count++;
-        return true;
-    };
-    EventDelegate giveFoo = () => {
-        Inventory playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
-        if (playerInventory.inventory["appleCrop"].GetQuantity() < 2)
-        {
-            GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
-                .PrintResult("You do not have enough apples.");
-            return false;
-        }
-
-        playerInventory.RemoveItem("appleCrop", 2);
-        GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
-            .PrintResult("You gave 2 apples.");
-        philanthropic++;
-        human_loyalty++;
-        return true;
-    };
-    EventDelegate reportHumanSoldier = () => {
-        Inventory playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
-        goblin_loyalty++;
-        playerInventory.AddItem("gold", 2);
-        GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
-            .PrintResult("You got 2 gold.");
-        return true;
-    };
-    EventDelegate GoblinSoldier_GiveUp = () => {
-        Inventory playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
-        if (playerInventory.inventory["appleCrop"].GetQuantity() < 3 ||
-            playerInventory.inventory["carrotCrop"].GetQuantity() < 3 ||
-            playerInventory.inventory["gold"].GetQuantity() < 5)
-        {
-            GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
-                .PrintResult("You do not have enough resources to give.");
-            return false;
-        }
-
-        playerInventory.RemoveItem("appleCrop", 3);
-        playerInventory.RemoveItem("carrotCrop", 3);
-        playerInventory.RemoveItem("gold", 5);
-        GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
-            .PrintResult("Lost 3 apples, 3 carrots, and 5 gold.");
-        return true;
-
-
-    };
-    EventDelegate GoblinSoldier_FightBack = () => {
-        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>().ChangeAp(-3);
-        GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
-            .PrintResult("Lost 3 AP.");
-        goblin_loyalty--;
-        return true;
-    };
-    EventDelegate PayTax = () => {
-        Inventory playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
-        if (playerInventory.inventory["gold"].GetQuantity() < 5)
-        {
-            GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
-                .PrintResult("You do not have enough resources to give.");
-            return false;
-        }
-
-        playerInventory.RemoveItem("gold", 5);
-        GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
-            .PrintResult("Lost 5 gold.");
-        goblin_loyalty++;
-        return true;
-    };
-    EventDelegate NotPayTax = () => {
-        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>().ChangeAp(-3);
-        GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
-            .PrintResult("Lost 3 AP.");
-        goblin_loyalty--;
-        return true;
-    };
-
-    EventDelegate PayRobber = () => {
-        Inventory playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
-        if (playerInventory.inventory["gold"].GetQuantity() < 20)
-        {
-            GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
-                .PrintResult("The robber demands 20 gold.");
-            return false;
-        }
-
-        playerInventory.RemoveItem("gold", 20);
-        GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
-            .PrintResult("Lost 20 gold.");
-        return true;
-    };
-
-    EventDelegate FightRobber = () => {
-        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>().ChangeAp(-10);
-        GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
-            .PrintResult("Lost 10 AP.");
-        return true;
-    };
-
-EventDelegate openShopMenu = () =>
+    EventDelegate openShopMenu = () =>
     {
         barterManager.startTrading(npc.gameObject);
         return true;
