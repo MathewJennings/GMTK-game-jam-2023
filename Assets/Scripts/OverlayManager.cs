@@ -30,7 +30,7 @@ public class OverlayManager : MonoBehaviour
     {
         PlayerStats playerStats = GameObject.FindGameObjectsWithTag("Player")[0].GetComponent<PlayerStats>();
         int hunger = playerStats.hunger;
-        StartCoroutine(DisplayOverlay("Day " + (currentDay + 1).ToString(), "Hunger was " + hunger.ToString() + "\nAp gained is " + hunger.ToString(), false)); 
+        StartCoroutine(DisplayOverlay("Day " + (currentDay + 1).ToString(), "Hunger was " + hunger.ToString() + "\nEnergy gained is " + hunger.ToString(), false)); 
         playerStats.ChangeAp(hunger);
     }
 
