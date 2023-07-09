@@ -9,7 +9,7 @@ public class Plot : MonoBehaviour
     public Seed seed;
     public bool isWatered;
     public bool isDesolate;
-    public int hoursUnusable;
+    public int daysUnusable;
     public float timeDesolate = 0f;
     public float timePlanted = 0f;
     public float timeWatered = 0f;
@@ -103,7 +103,7 @@ public class Plot : MonoBehaviour
 
     public bool readyForCrop()
     {
-        return dayTimeController.getCurrentTimeSeconds() >= timeDesolate + (DayTimeController.secondsInAnHour * hoursUnusable);
+        return dayTimeController.getCurrentTimeSeconds() >= timeDesolate + (DayTimeController.secondsInADay * daysUnusable);
     }
     
     private bool outOfWater()

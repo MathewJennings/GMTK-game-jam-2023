@@ -231,7 +231,8 @@ MonoBehaviour:
   seed: {fileID: 0}
   isWatered: 0
   isDesolate: 0
-  hoursUnusable: 32
+  hoursUnusable: 0
+  daysUnusable: 4
   timeDesolate: 0
   timePlanted: 0
   timeWatered: 0
