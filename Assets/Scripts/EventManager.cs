@@ -160,7 +160,7 @@ public void Start()
             new EventTemplate(
                 "wealthy_merchant",
                 "The air smells like gold and arrogance. You hear an anticipated knock on your door. The wealthy merchant has appeared at your door.",
-                new List<string> { "Take a look at her wares", "Ask her to leave." },
+                new List<string> { "Take a look at his wares", "Ask him to leave." },
                 new List<EventDelegate> { openShopMenu, EventConsequences.closeDialog },
                 allNpcPrefabsList[9],1
             ),
