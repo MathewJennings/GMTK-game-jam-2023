@@ -34,12 +34,13 @@ public class EventManager : MonoBehaviour
     public static int human_loyalty = 0 ;
     public static int goblin_loyalty = 0;
     public static int philanthropic = 0;
-    public static int business = 0;
+    public static int robber_count = 0;
 
     public static int human_loyalty_guests_threshold = 3;
     public static int goblin_loyalty_guests_threshold = 3;
     public static int goblin_loyalty_kick_threshold = -3;
 
+    public bool robber_occurred;
     public bool human_guests_occurred;
     public bool goblin_guests_occurred;
     public bool goblin_kick_occurred;
@@ -85,6 +86,13 @@ public void Start()
                 new List<EventDelegate> { PayTax, NotPayTax },
                 allNpcPrefabsList[3],1
             ),
+              new EventTemplate(
+                "robber",
+                "A disheveled goblin crashes through your gate. \"Oye! I heard you've been robbing passerbys in these parts. There's only enough room for one robber here!\"",
+                new List<string> { "Hand over money", "Fight" },
+                new List<EventDelegate> { PayRobber, FightRobber },
+                allNpcPrefabsList[3],0
+            ),
         };
 
         eventCurrentDay = 0;
@@ -94,6 +102,8 @@ public void Start()
         nextEvent = new Event(eventTemplates[0]);
 
         events = new LinkedList<Event>();
+        AddSpecificEvent("lady", true);
+        AddSpecificEvent("lady", true);
         AddSpecificEvent("human soldier", true);
         AddSpecificEvent("tax Event", true);
     }
@@ -139,7 +149,7 @@ public void Start()
         playerInventory.AddItem("gold", 10);
         GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
             .PrintResult("You got 5 gold.");
-        business--;
+        robber_count++;
         return true;
     };
     EventDelegate giveFoo = () => {
@@ -213,8 +223,6 @@ public void Start()
             .PrintResult("Lost 5 gold.");
         goblin_loyalty++;
         return true;
-
-
     };
     EventDelegate NotPayTax = () => {
         GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>().ChangeAp(-3);
@@ -222,36 +230,60 @@ public void Start()
             .PrintResult("Lost 3 AP.");
         goblin_loyalty--;
         return true;
-
-
     };
 
-    EventDelegate openShopMenu = () =>
+    EventDelegate PayRobber = () => {
+        Inventory playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
+        if (playerInventory.inventory["gold"].GetQuantity() < 20)
+        {
+            GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
+                .PrintResult("The robber demands 20 gold.");
+            return false;
+        }
+
+        playerInventory.RemoveItem("gold", 20);
+        GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
+            .PrintResult("Lost 20 gold.");
+        return true;
+    };
+
+    EventDelegate FightRobber = () => {
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>().ChangeAp(-10);
+        GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
+            .PrintResult("Lost 10 AP.");
+        return true;
+    };
+
+EventDelegate openShopMenu = () =>
     {
         barterManager.startTrading(npc.gameObject);
         return true;
     };
 
     //Events that occur based on parameters are added through this method
+    // Override whatever the next random event was going to be.
     public bool AddSpecialEvents()
     {
+        if (robber_count >= 2 && !robber_occurred)
+        {
+            robber_occurred = true;
+            ReplaceNextEvent("robber");
+            return true;
+        }
         if (human_loyalty > human_loyalty_guests_threshold && !human_guests_occurred)
         {
             human_guests_occurred = true;
             return true;
-
         }
-        else if (goblin_loyalty > goblin_loyalty_guests_threshold && !goblin_guests_occurred)
+        if (goblin_loyalty > goblin_loyalty_guests_threshold && !goblin_guests_occurred)
         {
             goblin_guests_occurred = true;
             return true;
-
         }
-        else if (human_loyalty < goblin_loyalty_kick_threshold && !goblin_kick_occurred)
+        if (human_loyalty < goblin_loyalty_kick_threshold && !goblin_kick_occurred)
         {
             goblin_kick_occurred = true;
             return true;
-
         }
         return false;
     }
@@ -296,8 +328,18 @@ public void Start()
                 return;
             }
         }
-
     }
+    public void ReplaceNextEvent(string name)
+    {
+        foreach (EventTemplate template in eventTemplates)
+        {
+            if (template.name == name)
+            {
+                nextEvent = new Event(template);
+            }
+        }
+    }
+
     public void AddEvent()
     {
         bool success = AddSpecialEvents();
