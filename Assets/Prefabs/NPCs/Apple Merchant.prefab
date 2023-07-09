@@ -169,7 +169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6806cf9773fd1b4bad637c32af12731, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startGold: 80
+  startGold: 95
   startAppleSeed: 5
   startAppleCrop: 5
   startCarrotSeed: 0

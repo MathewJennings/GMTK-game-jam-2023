@@ -8,6 +8,7 @@ public class PlayerCropInteraction : MonoBehaviour
 
     private InventoryUI inventoryUI;
     private Inventory playerInventory;
+    private PlayerSounds playerSounds;
     private EventManager eventManager;
     private bool plantedFirstSeed;
     private bool wateredFirstCrop;
@@ -18,6 +19,10 @@ public class PlayerCropInteraction : MonoBehaviour
     private Dictionary<string, int> cropSummary;
     //Summary in the format <cropName, countOfCropHarvested>
     private Dictionary<string, int> eatenSummary;
+    public GameObject hoePrefab;
+    public GameObject waterPrefab;
+    public GameObject sythePrefab;
+
 
     // Start is called before the first frame update
     void Start()
@@ -25,7 +30,8 @@ public class PlayerCropInteraction : MonoBehaviour
         inventoryUI = GetComponent<InventoryUI>();
         playerInventory = GetComponent<Inventory>();
         eventManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>();
-        summaryManager = FindAnyObjectByType<SummaryManager>(); 
+        summaryManager = FindAnyObjectByType<SummaryManager>();
+        playerSounds = GetComponent<PlayerSounds>();
     }
 
     // Update is called once per frame
@@ -67,6 +73,8 @@ public class PlayerCropInteraction : MonoBehaviour
             if (playerStats.canAffordAction(cost))
             {
                 playerStats.ChangeAp(-1*cost);
+                Instantiate(waterPrefab, gameObject.transform, false);
+                playerSounds.playWaterPlant();
                 plot.waterPlot();
                 if (!wateredFirstCrop)
                 {
@@ -85,7 +93,9 @@ public class PlayerCropInteraction : MonoBehaviour
             if (playerStats.canAffordAction(cost))
             {
                 playerStats.ChangeAp(-1*cost);
+                playerSounds.playHarvestPlant();
                 Item yield = plot.harvest();
+                Instantiate(sythePrefab, gameObject.transform, false);
                 playerInventory.AddItem(yield.GetItemId(), yield.GetQuantity());
                 playerInventory.AddItem(yield.GetCorrespondingId(), 1); // yield 1 seed as well
 
@@ -143,7 +153,9 @@ public class PlayerCropInteraction : MonoBehaviour
             if (playerStats.canAffordAction(cost))
             {
                 playerStats.ChangeAp(-1*cost);
+                playerSounds.playPlantSeed();
                 plot.plantSeed(seed);
+                Instantiate(hoePrefab, gameObject.transform, false);
                 playerInventory.RemoveItem(item.GetItemId(), 1);
                 if (!plantedFirstSeed)
                 {
@@ -165,11 +177,12 @@ public class PlayerCropInteraction : MonoBehaviour
     }
 
     public void eatCrop(Item item, Crop crop) {
+        playerSounds.playEatFood();
         playerStats.ChangeHunger(crop.sustenance);
         eventManager.PrintResult("The " + item.GetItemId() + " made you less hungry. (+" + crop.sustenance + ")", EventManager.tutorialMessageTime);
         int energyChange = crop.sustenance;
         playerStats.ChangeAp(energyChange);
-        eventManager.PrintResultAfterDelay(5f, "... You feel a bit more energized too. (+" + energyChange + ")", EventManager.tutorialMessageTime);
+        eventManager.PrintResultAfterDelay(EventManager.tutorialMessageTime, "... You feel a bit more energized too. (+" + energyChange + ")", EventManager.tutorialMessageTime);
         playerInventory.RemoveItem(item.GetItemId(), 1);
         InitializeEatenSummaryIfNotExist();
         if (!eatenSummary.ContainsKey(crop.name))

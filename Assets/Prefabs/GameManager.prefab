@@ -7059,11 +7059,6 @@ PrefabInstance:
       objectReference: {fileID: 8896923330972972025}
     - target: {fileID: 7072095574098916414, guid: 50b83364adf04a7478280be40a606398,
         type: 3}
-      propertyPath: startGold
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 7072095574098916414, guid: 50b83364adf04a7478280be40a606398,
-        type: 3}
       propertyPath: priceAppleSeed
       value: 8
       objectReference: {fileID: 0}
