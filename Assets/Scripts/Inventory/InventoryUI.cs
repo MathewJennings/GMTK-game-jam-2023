@@ -94,12 +94,15 @@ public class InventoryUI : MonoBehaviour
             Destroy(inventoryItem);
         }
         currentInventoryItems.Clear();
+        itemName.gameObject.SetActive(false);
+        itemDescription.gameObject.SetActive(false);
         isOpen = false;
     }
 
-    public void UpdateItemDescription(Item item)
+    public void UpdateItemDescription(Item item, bool isTrading)
     {
-        itemName.text = new CultureInfo("en-US", false).TextInfo.ToTitleCase(item.GetItemId());
+        string description = item.GetItemId() + (isTrading ? " (" + item.GetPrice() + "G)" : "");
+        itemName.text = new CultureInfo("en-US", false).TextInfo.ToTitleCase(description);
         itemDescription.text = item.GetDescription();
     }
 

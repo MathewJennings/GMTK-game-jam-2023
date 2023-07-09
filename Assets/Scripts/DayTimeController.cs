@@ -55,6 +55,7 @@ public class DayTimeController : MonoBehaviour
         }
         if (currentDay >= numDaysToWin)
         {
+            pauseButtonObject.SetActive(false);
             overlayManager.GetComponent<OverlayManager>().GameOverTransition(
                 "You Did It.\nYou Survived",
                 "Despite all of the odds, you, a humble goblin farmer living between two warring factions have survived the war. Were you able to live proudly? Or did you need to do what it took to survive. Maybe for another goblin, the conditions would have been different.",

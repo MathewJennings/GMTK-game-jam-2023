@@ -21,7 +21,7 @@ public class Plot : MonoBehaviour
 
     private float timeSpentWatered;
     private EventManager eventManager;
-    private bool firstCropDried;
+    private static bool firstCropDried;
     // Start is called before the first frame update
     public void Start()
     {

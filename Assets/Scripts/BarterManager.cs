@@ -28,7 +28,7 @@ public class BarterManager : MonoBehaviour
         selectedBarteringInventoryItem = inventoryItem;
         barterButton.gameObject.SetActive(true);
         playerIsBuying = !selectedBarteringInventoryItem.isPlayerItem();
-        string barterText = (playerIsBuying ? "Buy" : "Sell") + " 1 " + inventoryItem.getItemId() + "?";
+        string barterText = (playerIsBuying ? "Buy" : "Sell") + " 1 " + inventoryItem.getItemId() + " for " + inventoryItem.getItemPrice() + "G?";
         barterButtonText.text = barterText;
     }
 
