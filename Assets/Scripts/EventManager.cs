@@ -147,6 +147,13 @@ public void Start()
                 new List<EventDelegate> { EventConsequences.Drought, EventConsequences.Drought },
                 null,1
             ),
+            new EventTemplate(
+                "explosions",
+                "You hear explosions nearby. The explosions are contagious and some of your plots decide to explode too.",
+                new List<string> { "Oh no", "I'm in danger" },
+                new List<EventDelegate> { EventConsequences.Explosion, EventConsequences.Explosion },
+                null,1
+            ),
         };
 
         eventCurrentDay = 0;

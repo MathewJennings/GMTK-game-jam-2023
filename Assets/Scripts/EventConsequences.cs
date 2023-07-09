@@ -200,4 +200,23 @@ public class EventConsequences
             .PrintResult("All your plots have dried up.");
         return true;
     };
+
+    public static EventDelegate Explosion = () =>
+    {
+        GameObject farmPlots = GameObject.Find("/GameManager/FarmPlots");
+        if (farmPlots == null)
+        {
+            return true;
+        }
+        foreach (Plot p in farmPlots.GetComponentsInChildren<Plot>())
+        {
+            float r = UnityEngine.Random.Range(0f, 1f);
+            if (r > 0.5f) {
+                p.killPlot();
+            }
+        }
+        GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
+            .PrintResult("Some of your plots have exploded.");
+        return true;
+    };
 }
