@@ -13,11 +13,13 @@ public class Npc : MonoBehaviour
     DayTimeController dayTimeController;
     private Animator animator;
     private GameObject player;
+    public GameObject playerPortrait;
     private BarterManager barterManager;
 
     void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        Debug.Log(playerPortrait);
         barterManager = GameObject.FindGameObjectWithTag("BarterManager").GetComponent<BarterManager>();
         worldSpaceWaypoints = new List<GameObject>();
         foreach(GameObject waypoint in waypoints)
@@ -74,6 +76,7 @@ public class Npc : MonoBehaviour
                 waypointIndex++;
                 if (waypointIndex >= worldSpaceWaypoints.Count)
                 {
+                    playerPortrait.SetActive(false);
                     Destroy(this.gameObject);
                 }
             }
@@ -85,6 +88,7 @@ public class Npc : MonoBehaviour
         barterManager.stopTrading();
         animator.SetBool("walkRight", true);
         this.transform.GetChild(3).gameObject.SetActive(false);
+        playerPortrait.SetActive(false);
     }
 
 }
