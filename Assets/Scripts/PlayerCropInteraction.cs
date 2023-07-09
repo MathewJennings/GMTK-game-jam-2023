@@ -105,8 +105,12 @@ public class PlayerCropInteraction : MonoBehaviour
                 Instantiate(sythePrefab, gameObject.transform, false);
                 playerInventory.AddItem(yield.GetItemId(), yield.GetQuantity());
                 playerInventory.AddItem(yield.GetCorrespondingId(), 1); // yield 1 seed as well
+                if (inventoryUI.isInventoryOpen()) {
+                    inventoryUI.refresh();
+                }
 
-                if(!harvestedFirstCrop)
+
+                if (!harvestedFirstCrop)
                 {
                     eventManager.PrintResult("You harvested a " + yield.GetItemId() + " and got a seed too. You're not sure if you should eat it or sell it.", EventManager.tutorialMessageTime);
                     harvestedFirstCrop = true;

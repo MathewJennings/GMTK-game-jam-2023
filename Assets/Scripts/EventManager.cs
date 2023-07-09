@@ -89,77 +89,77 @@ public void Start()
             ),
             new EventTemplate(
                 "human_soldier",
-                "A limping human soldier discovered your farm and approached, seemingly in desperation. You quickly realize he's no threat, and as he gets closer you can see his left leg was crudely amputated. It smells infected. He begs for you to spare some food with him, any food at all.",
+                "A limping human soldier discovered your farm and approached, seemingly in desperation. He must have faught in one of the recent battles nearby. You quickly realize he's no threat, and as he gets closer you can see his left leg was crudely amputated... it smells infected to you, even from a distance. He begs for you to share some food with him, any food at all. It seems food insecurity is plaguing the larger realm.",
                 new List<string> { "Share some of your food (2)", "Report him to the defense army later" },
                 new List<EventDelegate> { EventConsequences.giveFood, EventConsequences.reportHumanSoldier },
                 allNpcPrefabsList[1],1
             ),
             new EventTemplate(
                 "angry_goblin",
-                "Goblin soldiers appraoch your farm. They look violent and angry. They scream that they know you helped a human solider and that you betrayed the resistance. Spittle drops from their chins as they gesticulate wildly. They tell you they'd kill you right now if not for your food production.",
+                "Goblin soldiers appraoch your farm, looking violent and angry. They are screaming at you about helping humans and betraying the resistance. Spittle drops from their chins as they gesticulate wildly. They tell you they'd kill you right now if not for the meager food you're producing. This makes you wonder if the goblin resistance is starving.",
                 new List<string> { "Give them everything you have to placate them", "Brace yourself for their violence" },
                 new List<EventDelegate> { EventConsequences.GoblinSoldier_OfferInventory, EventConsequences.GoblinSoldier_Assault },
                 allNpcPrefabsList[4],0
             ),
             new EventTemplate(
                 "tax_goblin",
-                "You hear roudy voices approaching your farm. A small group of mercenaries has arrived. These bands have become more and more common of late. This one looks particularly familiar with violence -- nasty even. \"What do you want?\" you ask them. \"Taxes! You're gonna help us in the fight against the humans, aren't you?\" You've been extorted before, and you'll be extorted again.",
+                "You hear loud voices approaching the edge of your land. A small group of ggoblin mercenaries has arrived. Bands like this one are becoming more and more common of late, and they're often no better than bandits. This band looks particularly nasty. You steal yourself and ask what they want. \"We're collecting taxes for the war fund!\" they reply. \"You're gonna support us in the fight against the humans, aren't you?\"",
                 new List<string> { "Give them what they want (5G)", "Don't and deal with the consequences" },
                 new List<EventDelegate> { EventConsequences.PayTax, EventConsequences.NotPayTax },
                 allNpcPrefabsList[3],1
             ),
             new EventTemplate(
                 "robber",
-                "Very suddenly, a disheveled goblin crashes onto your farm. He's hyped up on fisstech, by the look of it. He seems aware of the stream of refugees passing through the area.  \"Oye! I bet you've had your way with a bunch of passerbys in these parts. An enterprising fellow like yourself has probably gotten fat and happy from it all huh?\" His threat is clear.",
+                "Very suddenly, a disheveled goblin barges onto your land. He's hyped up on salts, by the look of it. \"Oye!\" he says. \"I bet you've had your way with a bunch of passerbys in these parts. An enterprising fellow like yourself has probably gotten fat and happy from it all huh?\" He is clearly aware of the increase in refugees from the war.",
                 new List<string> { "Give him what he wants", "Refuse and defend yourself" },
                 new List<EventDelegate> { EventConsequences.PayRobber, EventConsequences.AttackedByRobber },
                 allNpcPrefabsList[4],0
             ),
             new EventTemplate(
                 "treasure",
-                "You can't believe it. A treasure chest has somehow walked up to your farm. You reason that magicians must be fighting in the war now -- an indication that its reaching its climax. Regardless, you figure this is probably a blessing of pure luck. You consider your options...",
+                "Are your eyes deceiving you? You can't believe it. A treasure chest has somehow walked up to your farm. You reason that it must have been created by one of the human war mages -- clearly this war is approaching its climax. War mages are powerful figures, and you know you wouldn't want to ever cross one. But as long as none of them are around...",
                 new List<string> { "Claim the chest", "Too risky..." },
                 new List<EventDelegate> { EventConsequences.OpenChest, EventConsequences.IgnoreChest },
                 allNpcPrefabsList[8],1
             ),
             new EventTemplate(
                 "treasure_owner",
-                "A mage approaches your farm. You notice that he is brimming with magical energy as the atmosphere in his immediate vicinity electrifies. This is a dangerous man. Aware of the power imbalance, he confidently asks you if you've seen his magic chest. He is clearly expecting you to say yes.",
+                "A war mage approaches your farm. He walks proudly in his rich robes -- he is clearly a respected individual. And clearly powerful too. The atmosphere around him is practically electric from the energy he carries within himself. This is a dangerous man. He confidently asks you if you've seen his magic chest. He clearly expects you to say yes.",
                 new List<string> { "Fess up and pay him back", "Grovel and feign ignorance" },
                 new List<EventDelegate> { EventConsequences.TreasureOwnerReturnMoney, EventConsequences.TreasureOwnerSayNo },
                 allNpcPrefabsList[5],0
             ),
             new EventTemplate(
                 "treasure_mimic",
-                "You can't believe it. A treasure chest has somehow walked up to your farm. You reason that magicians must be fighting in the war now -- an indication that its reaching its climax. Regardless, you figure this is probably a blessing of pure luck. You consider your options...",
+                "Are your eyes deceiving you? You can't believe it. A treasure chest has somehow walked up to your farm. You reason that it must have been created by one of the human war mages -- clearly this war is approaching its climax. War mages are powerful figures, and you know you wouldn't want to ever cross one. But as long as none of them are around...",
                 new List<string> { "Claim the chest", "Too risky..." },
                 new List<EventDelegate> { EventConsequences.OpenMimicChest, EventConsequences.IgnoreChest },
                 allNpcPrefabsList[8],1
             ),
             new EventTemplate(
                 "rain",
-                "Clouds move in, blanketing the sky. It's a preciously rare sight these days. Before you know it, you start to feel water on your forehead. It rapidly swells to a dark torrent. As you stand in the down pour you feel a well of appreciation for today's respite.",
+                "Dark clouds quickly move in, blanketing the sky. Before you know it, you start to feel waterdrops on your forehead. The weather rapidly swells to a dark torrent. As you stand in the down pour you feel a well of appreciation for today's respite.",
                 new List<string> { "Rest", "Reflect" },
                 new List<EventDelegate> { EventConsequences.Rain, EventConsequences.Rain },
                 null,1
             ),
             new EventTemplate(
                 "drought",
-                "The sun's heat intensifies today. An oppressive miasma of humidity suffocates you as you watch your plants start to shrivel in the heat.",
+                "The sun's heat suddenly intensifies. An oppressive miasma of humidity suffocates you as you watch your plants start to dry out in the heat.",
                 new List<string> { "Time to get to work", "No rest for the wicked..." },
                 new List<EventDelegate> { EventConsequences.Drought, EventConsequences.Drought },
                 null,1
             ),
             new EventTemplate(
                 "explosions",
-                "You suddenly hear loud explosions nearby. It must be a battle nearby, including mages. You sense imminent danger and pray to your gods that you and your land aren't caught in the crossfire...",
+                "You suddenly hear loud explosions nearby. It must be a battle involving powerful human war mages. You worry about your kinsmen. Not even your mystical shamans can summon power remotely equal in strength. You sense imminent danger and pray to your gods that you and your land aren't caught in the crossfire...",
                 new List<string> { "Brace", "Seek shelter" },
                 new List<EventDelegate> { EventConsequences.Explosion, EventConsequences.Explosion },
                 null,1
             ),
             new EventTemplate(
                 "wealthy_merchant",
-                "The air smells like gold and arrogance. You hear an anticipated knock on your door. The wealthy merchant has appeared at your door.",
+                "An opulent trader approaches your land. The air fills with the scent of dandelions and tea leaves. Miraculously, this individual seems to be thriving right now",
                 new List<string> { "Take a look at his wares", "Ask him to leave." },
                 new List<EventDelegate> { openShopMenu, EventConsequences.closeDialog },
                 allNpcPrefabsList[9],1
@@ -189,6 +189,10 @@ public void Start()
         events = new LinkedList<Event>();
         AddRandomEvent();
         AddSpecificEvent("tax_goblin", true);
+        AddSpecificEvent("wealthy_merchant", true);
+        AddRandomEvent();
+        AddRandomEvent();
+        AddRandomEvent();
         AddSpecificEvent("wealthy_merchant", true);
     }
 
@@ -340,8 +344,8 @@ public void Start()
     {
         // Earliest time is 5 seconds into the day.
         float earliestTime = (eventCurrentDay * DayTimeController.secondsInADay) + 5f;
-        // Latest time is 5 seconds before end of day.
-        float latestTime = ((eventCurrentDay + 1) * DayTimeController.secondsInADay) - 5f;
+        // Latest time is 20 seconds before end of day.
+        float latestTime = ((eventCurrentDay + 1) * DayTimeController.secondsInADay) - 20f;
 
         return UnityEngine.Random.Range(earliestTime, latestTime);
     }
