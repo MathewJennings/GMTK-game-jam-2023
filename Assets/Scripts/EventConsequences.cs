@@ -80,7 +80,9 @@ public class EventConsequences
 
     };
     public static EventDelegate GoblinSoldier_FightBack = () => {
-        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>().ChangeAp(-3);
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        player.GetComponent<PlayerStats>().ChangeAp(-3);
+        player.GetComponent<PlayerMovement>().CrippleMovement();
         GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
             .PrintResult("You get injured and lose 3 energy.");
         EventManager.goblin_loyalty--;
@@ -102,7 +104,9 @@ public class EventConsequences
         return true;
     };
     public static EventDelegate NotPayTax = () => {
-        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>().ChangeAp(-3);
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        player.GetComponent<PlayerStats>().ChangeAp(-3);
+        player.GetComponent<PlayerMovement>().CrippleMovement();
         GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
             .PrintResult("You get hurt and lose 3 energy.");
         EventManager.goblin_loyalty--;
@@ -125,7 +129,9 @@ public class EventConsequences
     };
 
     public static EventDelegate FightRobber = () => {
-        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>().ChangeAp(-10);
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        player.GetComponent<PlayerStats>().ChangeAp(-10);
+        player.GetComponent<PlayerMovement>().CrippleMovement();
         GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
             .PrintResult("You get thrashed and lose 10 energy.");
         return true;
@@ -142,9 +148,11 @@ public class EventConsequences
     };
 
     public static EventDelegate OpenMimicChest = () => {
-        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>().ChangeAp(-3);
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        player.GetComponent<PlayerStats>().ChangeAp(-3);
+        player.GetComponent<PlayerMovement>().CrippleMovement();
         GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
-            .PrintResult("It was a Mimic! Lost 3 energy.");
+            .PrintResult("It was a Mimic! You are hurt and lost 3 energy.");
         return true;
     };
 
