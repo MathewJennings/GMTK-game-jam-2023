@@ -28,7 +28,7 @@ PrefabInstance:
     - target: {fileID: 2457092576051856506, guid: c798d6131e1c3394db6bc89416b2de22,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.8
+      value: -2.1
       objectReference: {fileID: 0}
     - target: {fileID: 2507222093660633905, guid: c798d6131e1c3394db6bc89416b2de22,
         type: 3}
@@ -184,6 +184,7 @@ MonoBehaviour:
   inventoryItemPrefab: {fileID: 6460754405479298437, guid: be429873bb8a8f748953d7284ad63a82,
     type: 3}
   inventoryBackground: {fileID: 0}
+  playerSounds: {fileID: 0}
   itemName: {fileID: 0}
   itemDescription: {fileID: 0}
   goldInventoryItem: {fileID: 0}
