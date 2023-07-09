@@ -156,13 +156,20 @@ public void Start()
                 new List<EventDelegate> { EventConsequences.Explosion, EventConsequences.Explosion },
                 null,1
             ),
+            new EventTemplate(
+                "final_event",
+                "I'm the final event.",
+                new List<string> { "Much", "Wow" },
+                new List<EventDelegate> { EventConsequences.FinalChoice1, EventConsequences.FinalChoice2 },
+                null,1
+            ),
         };
 
         eventCurrentDay = 0;
 
         // Hard code first event to be merchant appearing 10 seconds in.
         nextEventTime = 10f;
-        nextEvent = new Event(eventTemplates[0]);
+        nextEvent = GetSpecificEvent("merchant");
 
         events = new LinkedList<Event>();
         AddSpecificEvent("tax_goblin", true);
@@ -217,19 +224,19 @@ public void Start()
         if (refugee_denied_count >= 2 && !robber_occurred)
         {
             robber_occurred = true;
-            ReplaceNextEvent("robber");
+            nextEvent = GetSpecificEvent("robber");
             return true;
         }
         if (human_loyalty >= 1 && !angry_goblin_occurred)
         {
             angry_goblin_occurred = true;
-            ReplaceNextEvent("angry_goblin");
+            nextEvent = GetSpecificEvent("angry_goblin");
             return true;
         }
         if (treasure_count >= 1 && !treasure_owner_occurred)
         {
             treasure_owner_occurred = true;
-            ReplaceNextEvent("treasure_owner");
+            nextEvent = GetSpecificEvent("treasure_owner");
             return true;
         }
         //if (human_loyalty > human_loyalty_guests_threshold && !human_guests_occurred)
@@ -275,31 +282,32 @@ public void Start()
     //Add an event of name "name"
     public void AddSpecificEvent(string name, bool addLast)
     {
-        foreach(EventTemplate template in eventTemplates) 
+        Event e = GetSpecificEvent(name);
+        if (e == null)
         {
-            if(template.name == name)
-            {
-                if (addLast)
-                {
-                    events.AddLast(new Event(template));
-                }
-                else
-                {
-                    events.AddFirst(new Event(template));
-                }
-                return;
-            }
+            return;
+        }
+
+        if (addLast)
+        {
+            events.AddLast(e);
+        }
+        else
+        {
+            events.AddFirst(e);
         }
     }
-    public void ReplaceNextEvent(string name)
+
+    public Event GetSpecificEvent(string name)
     {
         foreach (EventTemplate template in eventTemplates)
         {
             if (template.name == name)
             {
-                nextEvent = new Event(template);
+                return new Event(template);
             }
         }
+        return null;
     }
 
     public void AddEvent()
@@ -351,13 +359,23 @@ public void Start()
         {
             // We hit the next day. Pull out an event from the queue.
             eventCurrentDay = dayTimeController.getCurrentDay();
-            if (events.Count > 0)
+
+            // If it's the final day before winning, hard code the final event.
+            if (eventCurrentDay >= dayTimeController.numDaysToWin - 1)
             {
                 nextEventTime = RandomNextEventTime();
-                nextEvent = events.First.Value;
-                events.RemoveFirst();
+                nextEvent = GetSpecificEvent("final_event");
             }
-            AddEvent();
+            else
+            {
+                if (events.Count > 0)
+                {
+                    nextEventTime = RandomNextEventTime();
+                    nextEvent = events.First.Value;
+                    events.RemoveFirst();
+                }
+                AddEvent();
+            }
         }
 
         if (nextEvent != null && !nextEvent.eventStarted && nextEventTime < dayTimeController.getCurrentTimeSeconds())

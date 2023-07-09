@@ -96,7 +96,9 @@ public class EventConsequences
     };
     public static EventDelegate GoblinSoldier_Assault = () => {
         int energyCost = -7;
-        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>().ChangeAp(energyCost);
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        player.GetComponent<PlayerStats>().ChangeAp(energyCost);
+        player.GetComponent<PlayerMovement>().CrippleMovement();
         GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
             .PrintResult("They assault you all at once, leaving you bloodied and broken. (" + energyCost + ")", 5f);
         EventManager.goblin_loyalty--;
@@ -122,6 +124,7 @@ public class EventConsequences
         Inventory playerInventory = player.GetComponent<Inventory>();
         playerInventory.Clear();
         player.GetComponent<PlayerStats>().ChangeAp(-3);
+        player.GetComponent<PlayerMovement>().CrippleMovement();
         GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
         .PrintResult("The mercenaries won't let you get away with that. They take pleasure in assaulting you (-3) and stealing what you have.", 5f);
         EventManager.goblin_loyalty--;
@@ -150,7 +153,9 @@ public class EventConsequences
 
     public static EventDelegate AttackedByRobber = () => {
         int energyCost = -5;
-        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>().ChangeAp(energyCost);
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        player.GetComponent<PlayerStats>().ChangeAp(energyCost);
+        player.GetComponent<PlayerMovement>().CrippleMovement();
         GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
             .PrintResult("Clearly upset, the robber thrashed you before leaving you bloodied and bruised (" + energyCost + ")");
         return true;
@@ -177,6 +182,7 @@ public class EventConsequences
         int energyCost = -5;
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         player.GetComponent<PlayerStats>().ChangeAp(energyCost);
+        player.GetComponent<PlayerMovement>().CrippleMovement();
         GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
             .PrintResult("Your luck has turned, this chest was a mimic! It takes a bite out of you before running away (" + energyCost + ").", 5f);
         return true;
@@ -260,7 +266,17 @@ public class EventConsequences
             }
         }
         GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
-            .PrintResult("Your whole field has been destroyed. You'll have to plant new crops.", 5f);
+            .PrintResult("Your field has been partially destroyed. You'll have to plant new crops.", 5f);
+        return true;
+    };
+
+    public static EventDelegate FinalChoice1 = () =>
+    {
+        return true;
+    };
+
+    public static EventDelegate FinalChoice2 = () =>
+    {
         return true;
     };
 }

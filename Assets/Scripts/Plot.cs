@@ -38,11 +38,15 @@ public class Plot : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!dayTimeController.isTimePaused && seed != null)
+        if (!dayTimeController.isTimePaused)
         {
             checkWater();
-            checkDead();
-            checkMature();
+            if (seed != null)
+            {
+                checkDead();
+                checkMature();
+
+            }
         }
     }
 
@@ -65,7 +69,7 @@ public class Plot : MonoBehaviour
             {
                 isWatered = false;
                 timeOutOfWater = dayTimeController.getCurrentTimeSeconds();
-                updateSprite(seeded);
+                updateSprite(seed == null ? barren : seeded);
                 if (!firstCropDried)
                 {
                     firstCropDried = true;
@@ -160,7 +164,10 @@ public class Plot : MonoBehaviour
         this.isWatered = false;
         updateSprite(barren);
         removePlant();
-        eventManager.PrintResult("Your " + seed.gameObject.GetComponent<Item>().GetItemId() + " dried out and shriveled in the unrelenting sun.", EventManager.tutorialMessageTime);
+        if (seed != null)
+        {
+            eventManager.PrintResult("Your " + seed.gameObject.GetComponent<Item>().GetItemId() + " dried out and shriveled in the unrelenting sun.", EventManager.tutorialMessageTime);
+        }
         this.seed = null;
     }
 

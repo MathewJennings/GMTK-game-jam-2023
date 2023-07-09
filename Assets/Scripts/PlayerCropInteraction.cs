@@ -169,7 +169,7 @@ public class PlayerCropInteraction : MonoBehaviour
         eventManager.PrintResult("The " + item.GetItemId() + " made you less hungry. (+" + crop.sustenance + ")", EventManager.tutorialMessageTime);
         int energyChange = crop.sustenance;
         playerStats.ChangeAp(energyChange);
-        eventManager.PrintResultAfterDelay(3f, "... You feel a bit more energized too. (+" + energyChange + ")", EventManager.tutorialMessageTime);
+        eventManager.PrintResultAfterDelay(5f, "... You feel a bit more energized too. (+" + energyChange + ")", EventManager.tutorialMessageTime);
         playerInventory.RemoveItem(item.GetItemId(), 1);
         InitializeEatenSummaryIfNotExist();
         if (!eatenSummary.ContainsKey(crop.name))
