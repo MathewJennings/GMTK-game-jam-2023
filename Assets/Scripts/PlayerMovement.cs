@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
 {
 
     [SerializeField] float speed;
+    [SerializeField] GameObject originalStartPosition;
 
     private Rigidbody2D rigidbody;
     private Animator animator;
@@ -18,6 +19,12 @@ public class PlayerMovement : MonoBehaviour
         rigidbody = gameObject.GetComponent<Rigidbody2D>();
         animator = gameObject.GetComponent<Animator>();
         allowMovement = true;
+        ResetToOriginalStartPosition();
+    }
+
+    public void ResetToOriginalStartPosition()
+    {
+        gameObject.transform.position = originalStartPosition.transform.position;
     }
 
     public void setAllowMovement(bool a)

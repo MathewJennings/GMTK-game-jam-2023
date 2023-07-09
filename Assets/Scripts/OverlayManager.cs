@@ -28,10 +28,14 @@ public class OverlayManager : MonoBehaviour
 
     public void DayTransition(int currentDay)
     {
-        PlayerStats playerStats = GameObject.FindGameObjectsWithTag("Player")[0].GetComponent<PlayerStats>();
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        PlayerStats playerStats = player.GetComponent<PlayerStats>();
         int hunger = playerStats.hunger;
-        StartCoroutine(DisplayOverlay("Day " + (currentDay + 1).ToString(), "Hunger was " + hunger.ToString() + "\nEnergy gained is " + hunger.ToString(), false)); 
         playerStats.ChangeAp(hunger);
+        StartCoroutine(DisplayOverlay("Day " + (currentDay + 1).ToString(), "Finished the day with " + hunger.ToString() + " Hunger\nResting overnight you gained " + hunger.ToString() + " Energy", false));
+
+        PlayerMovement playerMovement = player.GetComponent<PlayerMovement>();
+        playerMovement.ResetToOriginalStartPosition();
     }
 
     public void GameOverTransition(string title, string subtitle, bool showButton, string buttonText, ButtonDelegate buttonDelegate)
