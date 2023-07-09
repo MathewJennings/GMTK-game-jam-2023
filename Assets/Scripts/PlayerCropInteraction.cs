@@ -10,12 +10,18 @@ public class PlayerCropInteraction : MonoBehaviour
 
     private InventoryUI inventoryUI;
     private Inventory playerInventory;
+    private SummaryManager summaryManager;
+    //Summary in the format <cropName, countOfCropHarvested>
+    private Dictionary<string, int> cropSummary;
+    //Summary in the format <cropName, countOfCropHarvested>
+    private Dictionary<string, int> eatenSummary;
 
     // Start is called before the first frame update
     void Start()
     {
         inventoryUI = GetComponent<InventoryUI>();
         playerInventory = GetComponent<Inventory>();
+        summaryManager = FindAnyObjectByType<SummaryManager>(); 
     }
 
     // Update is called once per frame
@@ -63,6 +69,15 @@ public class PlayerCropInteraction : MonoBehaviour
                 Item yield = plot.harvest();
                 playerInventory.AddItem(yield.GetItemId(), yield.GetQuantity());
                 //STICK IT IN THE INVENTORY!!!!!
+                //add it to your summary
+                InitializeCropSummaryIfNotExist();
+                if (!cropSummary.ContainsKey(yield.name))
+                {
+                    cropSummary.Add(yield.name, yield.GetQuantity());
+                } else
+                {
+                    cropSummary[yield.name] += yield.GetQuantity();
+                }
             } else
             {
                 Debug.Log("You are out of energy and can not perform that action!");
@@ -70,6 +85,26 @@ public class PlayerCropInteraction : MonoBehaviour
         }
     }
 
+    private void InitializeCropSummaryIfNotExist()
+    {
+        //Set up summary
+        Dictionary<SummaryManager.SummaryType, object> summary = summaryManager.summary;
+        if (!summary.ContainsKey(SummaryManager.SummaryType.CROP))
+        {
+            summary.Add(SummaryManager.SummaryType.CROP, new Dictionary<string, int>());
+            cropSummary = (Dictionary<string, int>)summary[SummaryManager.SummaryType.CROP];
+        }
+    }
+    private void InitializeEatenSummaryIfNotExist()
+    {
+        //Set up summary
+        Dictionary<SummaryManager.SummaryType, object> summary = summaryManager.summary;
+        if (!summary.ContainsKey(SummaryManager.SummaryType.EATEN))
+        {
+            summary.Add(SummaryManager.SummaryType.EATEN, new Dictionary<string, int>());
+            eatenSummary = (Dictionary<string, int>)summary[SummaryManager.SummaryType.EATEN];
+        }
+    }
     public void plantSeed(Item item, Seed seed)
     {
         if (plot == null)
@@ -93,6 +128,15 @@ public class PlayerCropInteraction : MonoBehaviour
     public void eatCrop(Item item, Crop crop) {
         playerManager.ChangeHunger(crop.sustenance);
         playerInventory.RemoveItem(item.GetItemId(), 1);
+        InitializeEatenSummaryIfNotExist();
+        if (!eatenSummary.ContainsKey(crop.name))
+        {
+            eatenSummary.Add(crop.name, 1);
+        }
+        else
+        {
+            eatenSummary[crop.name] += 1;
+        }
     }
 
     private void OnTriggerStay2D(Collider2D collision)

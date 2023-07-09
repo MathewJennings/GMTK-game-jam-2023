@@ -11,6 +11,9 @@ public class EventManager : MonoBehaviour
 {
     LinkedList<Event> events;
     Event nextEvent;
+    SummaryManager summaryManager;
+    // List of tuples <EventName, EventChoice>
+    List<List<string>> eventSummary;
     public DayTimeController dayTimeController;
     public TMP_Text dialogText;
     public List<Button> choiceButtons;
@@ -32,9 +35,6 @@ public class EventManager : MonoBehaviour
 
     private static List<EventTemplate> eventTemplates;
 
-
-
-
     public static int human_loyalty =0 ;
     public static int goblin_loyalty = 0;
     public static int philanthropic = 0;
@@ -52,6 +52,7 @@ public class EventManager : MonoBehaviour
 // Start is called before the first frame update
 public void Start()
     {
+        summaryManager = FindAnyObjectByType<SummaryManager>();
         barterManager = GameObject.FindGameObjectWithTag("BarterManager").GetComponent<BarterManager>();
         eventTemplates = new List<EventTemplate> {
             new EventTemplate(
@@ -383,13 +384,16 @@ public void Start()
                     //needed because if you use i directly, i will update between when the listener is set vs when the listener is evaluated
                     int temp = i;
                     Event tempEvent = nextEvent;
-                    choiceButtons[i].GetComponentInChildren<TMP_Text>().text = nextEvent.template.choices[i];
+                    string tempChoice = nextEvent.template.choices[i];
+                    choiceButtons[i].GetComponentInChildren<TMP_Text>().text = tempChoice;
                     choiceButtons[i].onClick.AddListener(() =>
                     {
                         bool success = tempEvent.template.executeOption(temp);
 
                         if (success)
                         {
+                            InitializeEventSummaryIfNotExist();
+                            eventSummary.Add(new List<string> { tempEvent.template.name, tempChoice });
                             dayTimeController.SetPausedTime(false);
                             dialogBox.SetActive(false);
                             //npc.GetComponent<Animator>().SetBool("walkRight", true);
@@ -401,6 +405,16 @@ public void Start()
             };
 
             npc.GetComponent<Npc>().SetFields(dialogDelegate);
+        }
+    }
+    private void InitializeEventSummaryIfNotExist()
+    {
+        //Set up summary
+        Dictionary<SummaryManager.SummaryType, object> summary = summaryManager.summary;
+        if (!summary.ContainsKey(SummaryManager.SummaryType.EVENT))
+        {
+            summary.Add(SummaryManager.SummaryType.EVENT, new List<List<string>>());
+            eventSummary = (List<List<string>>)summary[SummaryManager.SummaryType.EVENT];
         }
     }
 }

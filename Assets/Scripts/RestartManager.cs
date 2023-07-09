@@ -12,6 +12,7 @@ public class RestartManager : MonoBehaviour
     public Inventory playerInventory;
     public Inventory merchantInventory;
     public PlayerMovement playerMovement;
+    public SummaryManager summaryManager;
     // Start is called before the first frame update
     void Start()
     {
@@ -30,5 +31,6 @@ public class RestartManager : MonoBehaviour
         playerInventory.Start();
         merchantInventory.Start();
         playerMovement.Start();
+        summaryManager.Start();
     }
 }
