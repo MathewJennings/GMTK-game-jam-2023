@@ -133,7 +133,7 @@ public void Start()
                 "A cloud covers the sun for a brief moment and you feel rain against your forehead.",
                 new List<string> { "I'm drenched", "I'm still drenched" },
                 new List<EventDelegate> { EventConsequences.Rain, EventConsequences.Rain },
-                allNpcPrefabsList[5],0
+                null,0
             ),
         };
 
@@ -345,7 +345,7 @@ public void Start()
         if (nextEvent != null && !nextEvent.eventStarted && nextEventTime < dayTimeController.getCurrentTimeSeconds())
         {
             nextEvent.eventStarted = true;
-            if(npc == null)
+            if(nextEvent.template.npcPrefab == null)
             {
                 dialogBox.SetActive(true);
                 // Clear out all listeners on buttons to make sure we're not accumulating multiple
