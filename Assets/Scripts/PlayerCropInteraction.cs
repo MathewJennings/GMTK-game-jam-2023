@@ -8,7 +8,6 @@ public class PlayerCropInteraction : MonoBehaviour
 
     private InventoryUI inventoryUI;
     private Inventory playerInventory;
-    private PlayerSounds playerSounds;
     private EventManager eventManager;
     private bool plantedFirstSeed;
     private bool wateredFirstCrop;
@@ -19,9 +18,6 @@ public class PlayerCropInteraction : MonoBehaviour
     private Dictionary<string, int> cropSummary;
     //Summary in the format <cropName, countOfCropHarvested>
     private Dictionary<string, int> eatenSummary;
-    public GameObject hoePrefab;
-    public GameObject waterPrefab;
-    public GameObject sythePrefab;
 
     // Start is called before the first frame update
     void Start()
@@ -30,7 +26,6 @@ public class PlayerCropInteraction : MonoBehaviour
         playerInventory = GetComponent<Inventory>();
         eventManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>();
         summaryManager = FindAnyObjectByType<SummaryManager>(); 
-        playerSounds = GetComponent<PlayerSounds>();
     }
 
     // Update is called once per frame
@@ -72,13 +67,11 @@ public class PlayerCropInteraction : MonoBehaviour
             if (playerStats.canAffordAction(cost))
             {
                 playerStats.ChangeAp(-1*cost);
-                Instantiate(waterPrefab, gameObject.transform, false);
-                playerSounds.playWaterPlant();
                 plot.waterPlot();
                 if (!wateredFirstCrop)
                 {
-                    eventManager.PrintResult("Your back aches from watering the crop. (-" + cost + ")");
-                    eventManager.PrintResultAfterDelay(2f, "It will probably be ready for harvest tomorrow...");
+                    eventManager.PrintResult("Your back aches from watering the crop. (-" + cost + ")", EventManager.tutorialMessageTime);
+                    eventManager.PrintResultAfterDelay(EventManager.tutorialMessageTime, "It will probably be ready for harvest tomorrow...", EventManager.tutorialMessageTime);
                     wateredFirstCrop = true;
                 }
             } else
@@ -92,15 +85,13 @@ public class PlayerCropInteraction : MonoBehaviour
             if (playerStats.canAffordAction(cost))
             {
                 playerStats.ChangeAp(-1*cost);
-                playerSounds.playHarvestPlant();
                 Item yield = plot.harvest();
-                Instantiate(sythePrefab, gameObject.transform, false);
                 playerInventory.AddItem(yield.GetItemId(), yield.GetQuantity());
                 playerInventory.AddItem(yield.GetCorrespondingId(), 1); // yield 1 seed as well
 
                 if(!harvestedFirstCrop)
                 {
-                    eventManager.PrintResult("You harvested a " + yield.GetItemId() + " and got a seed too. You're not sure if you should eat it or sell it.", 3f);
+                    eventManager.PrintResult("You harvested a " + yield.GetItemId() + " and got a seed too. You're not sure if you should eat it or sell it.", EventManager.tutorialMessageTime);
                     harvestedFirstCrop = true;
                 }
                 
@@ -152,14 +143,12 @@ public class PlayerCropInteraction : MonoBehaviour
             if (playerStats.canAffordAction(cost))
             {
                 playerStats.ChangeAp(-1*cost);
-                playerSounds.playPlantSeed();
                 plot.plantSeed(seed);
-                Instantiate(hoePrefab, gameObject.transform, false);
                 playerInventory.RemoveItem(item.GetItemId(), 1);
                 if (!plantedFirstSeed)
                 {
-                    eventManager.PrintResult("You planted your " + item.GetItemId() + ". You're always so tired now. (-" + cost + ")", 3f);
-                    eventManager.PrintResultAfterDelay(3f, "Don't forget to water it (E)");
+                    eventManager.PrintResult("You planted your " + item.GetItemId() + ". You're always so tired now. (-" + cost + ")", EventManager.tutorialMessageTime);
+                    eventManager.PrintResultAfterDelay(EventManager.tutorialMessageTime, "Don't forget to water it (E)", EventManager.tutorialMessageTime);
                     plantedFirstSeed = true;
                 }
             }
@@ -172,16 +161,15 @@ public class PlayerCropInteraction : MonoBehaviour
 
     private void printOutOfEnergyMessage(int necessaryAP)
     {
-        eventManager.PrintResult("You are too tired to do that (need " + necessaryAP + " Energy)");
+        eventManager.PrintResult("You are too tired to do that (need " + necessaryAP + " Energy)", EventManager.tutorialMessageTime);
     }
 
     public void eatCrop(Item item, Crop crop) {
-        playerSounds.playEatFood();
         playerStats.ChangeHunger(crop.sustenance);
-        eventManager.PrintResult("The " + item.GetItemId() + " made you less hungry. (+" + crop.sustenance + ")", 3f);
+        eventManager.PrintResult("The " + item.GetItemId() + " made you less hungry. (+" + crop.sustenance + ")", EventManager.tutorialMessageTime);
         int energyChange = crop.sustenance;
         playerStats.ChangeAp(energyChange);
-        eventManager.PrintResultAfterDelay(3f, "... You feel a bit more energized too. (+" + energyChange + ")", 3f);
+        eventManager.PrintResultAfterDelay(5f, "... You feel a bit more energized too. (+" + energyChange + ")", EventManager.tutorialMessageTime);
         playerInventory.RemoveItem(item.GetItemId(), 1);
         InitializeEatenSummaryIfNotExist();
         if (!eatenSummary.ContainsKey(crop.name))
