@@ -13,6 +13,9 @@ public class EventManager : MonoBehaviour
 {
     LinkedList<Event> events;
     Event nextEvent;
+    SummaryManager summaryManager;
+    // List of tuples <EventName, EventChoice>
+    List<List<string>> eventSummary;
     public DayTimeController dayTimeController;
     public GameObject dialogBox;
     public GameObject consequenceBox;
@@ -35,6 +38,7 @@ public class EventManager : MonoBehaviour
 
     public static int human_loyalty = 0 ;
     public static int goblin_loyalty = 0;
+
     public static int philanthropic = 0;
     public static int robber_count = 0;
 
@@ -43,6 +47,7 @@ public class EventManager : MonoBehaviour
     public static int goblin_loyalty_kick_threshold = -3;
 
     public bool robber_occurred;
+    public bool angry_goblin_occurred;
     public bool human_guests_occurred;
     public bool goblin_guests_occurred;
     public bool goblin_kick_occurred;
@@ -54,6 +59,7 @@ public void Start()
         uidoc = dialogBox.GetComponent<UIDocument>();
         choiceButtons = new List<Button>();
 
+        summaryManager = FindAnyObjectByType<SummaryManager>();
         barterManager = GameObject.FindGameObjectWithTag("BarterManager").GetComponent<BarterManager>();
         eventTemplates = new List<EventTemplate> {
             new EventTemplate(
@@ -78,7 +84,7 @@ public void Start()
                 allNpcPrefabsList[1],1
             ),
             new EventTemplate(
-                "Angry Goblin Soldier: Human Soldier",
+                "angry_goblin",
                 "You hear a knock at your gate. It's goblin soldiers. \"Someone saw you helping the human soldiers!\" you betrayed us!",
                 new List<string> { "Give up", "fight back" },
                 new List<EventDelegate> { GoblinSoldier_GiveUp, GoblinSoldier_FightBack },
@@ -89,8 +95,25 @@ public void Start()
                 "You hear yelling from your gate. You see goblin soldiers standing there. \"We have come today to collect your taxes! This will be crucial to win this war! Now behave and pay your taxes!\"",
                 new List<string> { "Pay", "Ignore" },
                 new List<EventDelegate> { PayTax, NotPayTax },
-                allNpcPrefabsList[3],1
+                allNpcPrefabsList[3],0
             ),
+
+             new EventTemplate(
+                "Friendly Humans",
+                "You hear voices near your gate. You see multiple humans including the human soldier you gave food few days ago. They seem to want to thank you for what you have done.",
+                new List<string> { "Invite them", "Ignore" },
+                new List<EventDelegate> {HumanSoldiers_Invite, HumanSoldiers_Ignore },
+                allNpcPrefabsList[3],0
+                ),
+                          new EventTemplate(
+                "Friendly Goblins",
+                "You hear voices near your gate. You see multiple goblin soldiers. \"We thank you for being a great goblin!\"" ,
+                new List<string> { "Ask for gift", "Thank" },
+                new List<EventDelegate> {GoblinSoldiers_Gift, GoblinSoldiers_Thank },
+                allNpcPrefabsList[3],0
+                ),
+
+
               new EventTemplate(
                 "robber",
                 "A disheveled goblin crashes through your gate. \"Oye! I heard you've been robbing passerbys in these parts. There's only enough room for one robber here!\"",
@@ -98,6 +121,7 @@ public void Start()
                 new List<EventDelegate> { PayRobber, FightRobber },
                 allNpcPrefabsList[4],0
             ),
+
         };
 
         eventCurrentDay = 0;
@@ -190,8 +214,6 @@ public void Start()
         playerInventory.RemoveItem("appleCrop", 2);
         GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
             .PrintResult("You gave 2 apples.");
-        UpdateEventPossibility("Angry Goblin Soldier: Human Soldier", 1);
-        UpdateEventPossibility("human soldier", 0);
         philanthropic++;
         human_loyalty++;
         return true;
@@ -220,8 +242,6 @@ public void Start()
         playerInventory.RemoveItem("gold", 5);
         GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
             .PrintResult("Lost 3 apples, 3 carrots, and 5 gold.");
-        UpdateEventPossibility("Angry Goblin Soldier: Human Soldier", 0);
-        UpdateEventPossibility("human soldier", 1);
         return true;
 
 
@@ -230,8 +250,6 @@ public void Start()
         GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>().ChangeAp(-3);
         GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
             .PrintResult("Lost 3 AP.");
-        UpdateEventPossibility("Angry Goblin Soldier: Human Soldier", 0);
-        UpdateEventPossibility("human soldier", 1);
         goblin_loyalty--;
         return true;
     };
@@ -255,6 +273,40 @@ public void Start()
         GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
             .PrintResult("Lost 3 AP.");
         goblin_loyalty--;
+        return true;
+    };
+    EventDelegate HumanSoldiers_Invite = () => {
+        Inventory playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
+        playerInventory.AddItem("appleCrop", 2);
+        playerInventory.AddItem("carrotCrop", 2);
+        playerInventory.AddItem("gold", 3);
+
+        GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
+            .PrintResult("You received 2 apples 2 carrots and 3 gold.");
+        UpdateEventPossibility("Angry Goblin Soldier: Human Soldier", 1);
+        human_loyalty++;
+     
+        return true;
+    };
+    EventDelegate HumanSoldiers_Ignore = () => {
+
+        GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
+            .PrintResult("You ignored them.");
+        goblin_loyalty++;
+        return true;
+    };
+    EventDelegate GoblinSoldiers_Gift = () => {
+        GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
+            .PrintResult("The goblin soldiers seemed disappointed");
+        return true;
+    };
+    EventDelegate GoblinSoldiers_Thank = () => {
+        Inventory playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
+        playerInventory.AddItem("gold", 3);
+
+        GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
+            .PrintResult("You received 3 gold.");
+        goblin_loyalty++;
         return true;
     };
 
@@ -296,9 +348,16 @@ EventDelegate openShopMenu = () =>
             ReplaceNextEvent("robber");
             return true;
         }
+        if (human_loyalty >= 1 && !angry_goblin_occurred)
+        {
+            angry_goblin_occurred = true;
+            ReplaceNextEvent("angry_goblin");
+            return true;
+        }
         if (human_loyalty > human_loyalty_guests_threshold && !human_guests_occurred)
         {
             human_guests_occurred = true;
+            AddSpecificEvent("Friendly Humans",true);
             return true;
         }
         if (goblin_loyalty > goblin_loyalty_guests_threshold && !goblin_guests_occurred)
@@ -447,13 +506,16 @@ EventDelegate openShopMenu = () =>
                 {
                     //needed because if you use i directly, i will update between when the listener is set vs when the listener is evaluated
                     int temp = i;
-                    Event tempEvent = nextEvent;
+                    Event tempEvent = nextEvent; 
+                    string tempChoice = nextEvent.template.choices[i];
                     choiceButtons[i].clicked += () =>
                     {
                         bool success = tempEvent.template.executeOption(temp);
 
                         if (success)
                         {
+                            InitializeEventSummaryIfNotExist();
+                            eventSummary.Add(new List<string> { tempEvent.template.name, tempChoice });
                             dayTimeController.SetPausedTime(false);
                             dialogBox.SetActive(false);
                             //npc.transform.GetChild(3).gameObject.SetActive(false);
@@ -466,6 +528,16 @@ EventDelegate openShopMenu = () =>
             };
 
             npc.GetComponent<Npc>().SetFields(dialogDelegate);
+        }
+    }
+    private void InitializeEventSummaryIfNotExist()
+    {
+        //Set up summary
+        Dictionary<SummaryManager.SummaryType, object> summary = summaryManager.summary;
+        if (!summary.ContainsKey(SummaryManager.SummaryType.EVENT))
+        {
+            summary.Add(SummaryManager.SummaryType.EVENT, new List<List<string>>());
+            eventSummary = (List<List<string>>)summary[SummaryManager.SummaryType.EVENT];
         }
     }
 }

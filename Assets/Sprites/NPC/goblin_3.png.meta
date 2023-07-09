@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 86561a8616ff485449b5f04618c2d4fd
+guid: 3278c2f8a1b3d674cb5a061abbaa201f
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -34,7 +34,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -136,211 +136,253 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: textualButtonParts_0
+      name: goblin_3_0
       rect:
         serializedVersion: 2
-        x: 4
-        y: 29
-        width: 23
+        x: 0
+        y: 149
+        width: 19
         height: 24
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3464f191a82748b43b380c3b99d77e0d
-      internalID: 117966571
+      spriteID: 283d692cc90dc3942afcf0b03e9627a9
+      internalID: -908615137
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: textualButtonParts_1
+      name: goblin_3_1
       rect:
         serializedVersion: 2
-        x: 30
-        y: 29
-        width: 21
-        height: 24
+        x: 47
+        y: 151
+        width: 19
+        height: 23
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7202a46675a66da4e8734ba577ba132d
-      internalID: 36531837
+      spriteID: cd090c6aa35db2b4f81dbe543b73c800
+      internalID: 268218478
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: textualButtonParts_2
+      name: goblin_3_2
       rect:
         serializedVersion: 2
-        x: 54
-        y: 29
-        width: 24
+        x: 94
+        y: 149
+        width: 19
         height: 24
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bc55ce75a7fb5f44f84f7a48aeacc551
-      internalID: 906576588
+      spriteID: 82085bcbf86a13a4b9b09e267edeefd3
+      internalID: -1530679769
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: textualButtonParts_3
+      name: goblin_3_3
       rect:
         serializedVersion: 2
-        x: 79
-        y: 29
-        width: 46
-        height: 24
+        x: 0
+        y: 101
+        width: 16
+        height: 21
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7f87e770742bc8d498c528ec250dc2fb
-      internalID: -1476766333
+      spriteID: b8e273d3bf606764db6e00b8764cd574
+      internalID: 1019017826
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: textualButtonParts_4
+      name: goblin_3_4
       rect:
         serializedVersion: 2
-        x: 126
-        y: 29
-        width: 47
-        height: 24
+        x: 47
+        y: 101
+        width: 16
+        height: 22
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 34e4ab7fbe26cb24b918e363f34a6c4c
-      internalID: -671753500
+      spriteID: c33ca24ab45529a49906ac25207d9ed0
+      internalID: -1284919400
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: textualButtonParts_5
+      name: goblin_3_5
       rect:
         serializedVersion: 2
-        x: 4
-        y: 4
-        width: 24
-        height: 24
+        x: 94
+        y: 101
+        width: 16
+        height: 21
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 1, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: bfa4d4f15dfba684497f5a6c85cbd110
-      internalID: 1733893030
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: textualButtonParts_6
-      rect:
-        serializedVersion: 2
-        x: 29
-        y: 4
-        width: 23
-        height: 24
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 1, y: 0, z: 1, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: bc52ad01f53d1234e9a24de8f4805678
-      internalID: 1110671417
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: textualButtonParts_7
-      rect:
-        serializedVersion: 2
-        x: 54
-        y: 4
-        width: 24
-        height: 24
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 485d034a919fea04cbfbd0e38c1575c0
-      internalID: -1069490375
+      spriteID: 148e7b822b87c7d498317f9ca3cf5a8c
+      internalID: 1061314568
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: textualButtonParts_8
+      name: goblin_3_6
       rect:
         serializedVersion: 2
-        x: 79
-        y: 4
-        width: 46
-        height: 24
+        x: 3
+        y: 51
+        width: 16
+        height: 21
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 47fae5f969f9f6044909f11e4e0dbbbb
-      internalID: -1774087646
+      spriteID: f59f0e8769f374e4cbe276b4b2218863
+      internalID: 406293170
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: textualButtonParts_9
+      name: goblin_3_7
       rect:
         serializedVersion: 2
-        x: 126
-        y: 4
-        width: 47
-        height: 24
+        x: 50
+        y: 51
+        width: 16
+        height: 22
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6d592cdaccb862545be7edf206bd0352
-      internalID: -469438413
+      spriteID: c149f79a078fa024cab6ea5d7a8ee469
+      internalID: 806939239
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: goblin_3_8
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 51
+        width: 16
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f00bcfaf0009a974b8668fd3b6593cc4
+      internalID: 488087063
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: goblin_3_9
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1
+        width: 19
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 29ef371011b8186409fb8bf19cf94a54
+      internalID: 100402474
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: goblin_3_10
+      rect:
+        serializedVersion: 2
+        x: 47
+        y: 0
+        width: 20
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bba94c25111165c408ffe6357c3411ac
+      internalID: 2023010137
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: goblin_3_11
+      rect:
+        serializedVersion: 2
+        x: 94
+        y: 1
+        width: 19
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f3a0c652b4799d645b4548b497308c05
+      internalID: -475941200
       vertices: []
       indices: 
       edges: []
@@ -356,16 +398,18 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      textualButtonParts_0: 117966571
-      textualButtonParts_1: 36531837
-      textualButtonParts_2: 906576588
-      textualButtonParts_3: -1476766333
-      textualButtonParts_4: -671753500
-      textualButtonParts_5: 1733893030
-      textualButtonParts_6: 1110671417
-      textualButtonParts_7: -1069490375
-      textualButtonParts_8: -1774087646
-      textualButtonParts_9: -469438413
+      goblin_3_0: -908615137
+      goblin_3_1: 268218478
+      goblin_3_10: 2023010137
+      goblin_3_11: -475941200
+      goblin_3_2: -1530679769
+      goblin_3_3: 1019017826
+      goblin_3_4: -1284919400
+      goblin_3_5: 1061314568
+      goblin_3_6: 406293170
+      goblin_3_7: 806939239
+      goblin_3_8: 488087063
+      goblin_3_9: 100402474
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
