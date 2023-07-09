@@ -30,7 +30,7 @@ public class OverlayManager : MonoBehaviour
     {
         PlayerStats playerStats = GameObject.FindGameObjectsWithTag("Player")[0].GetComponent<PlayerStats>();
         int hunger = playerStats.hunger;
-        StartCoroutine(DisplayOverlay("Day " + (currentDay + 1).ToString(), "Hunger was " + hunger.ToString() + "\nAp gained is " + hunger.ToString())); 
+        StartCoroutine(DisplayOverlay("Day " + (currentDay + 1).ToString(), "Hunger was " + hunger.ToString() + "\nAp gained is " + hunger.ToString(), false)); 
         playerStats.ChangeAp(hunger);
     }
 
@@ -41,13 +41,13 @@ public class OverlayManager : MonoBehaviour
                 title,
                 subtitle,
                 showButton,
-                buttonText, 
-                buttonDelegate
-            )
+                buttonText,
+                buttonDelegate,
+                true, true)
         );
     }
 
-    public IEnumerator DisplayOverlay(string mainText, string subText, bool showButton = false, string buttonText = "", ButtonDelegate buttonDelegate = null)
+    public IEnumerator DisplayOverlay(string mainText, string subText, bool showButton = false, string buttonText = "", ButtonDelegate buttonDelegate = null, bool showSummary = false, bool shouldFadeIn = true)
     {
         dayTimeController.SetPausedTime(true);
         float fadeTime = 3f;
@@ -63,19 +63,41 @@ public class OverlayManager : MonoBehaviour
         textFields[dayNumberTextIndex].text = mainText;
         textFields[apGainedText].text = subText;
 
-        
+
         //fade in
-        while (elapsedTime < fadeTime)
+        if (shouldFadeIn)
         {
-            elapsedTime += Time.deltaTime;
-            dayTransitionOverlay.GetComponent<CanvasGroup>().alpha = Mathf.Lerp(0, 1, elapsedTime / fadeTime);
-            yield return null;
+            while (elapsedTime < fadeTime)
+            {
+                elapsedTime += Time.deltaTime;
+                dayTransitionOverlay.GetComponent<CanvasGroup>().alpha = Mathf.Lerp(0, 1, elapsedTime / fadeTime);
+                yield return null;
+            }
+            yield return new WaitForSeconds(waitTime);
         }
 
-
-        yield return new WaitForSeconds(waitTime);
+        //If we need to show the summary on a second screen, intercept the try again button and go to the summary screen first
+        if(showSummary)
+        {
+            Button b = dayTransitionOverlay.GetComponentInChildren<Button>(true);
+            b.gameObject.SetActive(true);
+            b.GetComponentInChildren<TMP_Text>().text = "See Adventure Summary";
+            b.onClick.RemoveAllListeners();
+            b.onClick.AddListener(() => {
+                StartCoroutine(
+                    DisplayOverlay(
+                        "Your Story",
+                        FindAnyObjectByType<SummaryManager>().GenerateSummary(),
+                        showButton,
+                        buttonText,
+                        buttonDelegate,
+                        false, 
+                        false)
+                );
+            });
+        }
         //if waiting on button input
-        if (showButton)
+        else if (showButton)
         {
             Button b = dayTransitionOverlay.GetComponentInChildren<Button>(true);
             b.gameObject.SetActive(true);
