@@ -91,7 +91,7 @@ public void Start()
                 "A disheveled goblin crashes through your gate. \"Oye! I heard you've been robbing passerbys in these parts. There's only enough room for one robber here!\"",
                 new List<string> { "Hand over money", "Fight" },
                 new List<EventDelegate> { PayRobber, FightRobber },
-                allNpcPrefabsList[3],0
+                allNpcPrefabsList[4],0
             ),
         };
 
