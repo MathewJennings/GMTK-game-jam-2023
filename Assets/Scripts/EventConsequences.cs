@@ -180,6 +180,24 @@ public class EventConsequences
         {
             p.waterPlot();
         }
+        GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
+            .PrintResult("All your plots have been watered.");
+        return true;
+    };
+
+    public static EventDelegate Drought = () =>
+    {
+        GameObject farmPlots = GameObject.Find("/GameManager/FarmPlots");
+        if (farmPlots == null)
+        {
+            return true;
+        }
+        foreach (Plot p in farmPlots.GetComponentsInChildren<Plot>())
+        {
+            p.unwaterPlot();
+        }
+        GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
+            .PrintResult("All your plots have dried up.");
         return true;
     };
 }

@@ -140,6 +140,13 @@ public void Start()
                 new List<EventDelegate> { EventConsequences.Rain, EventConsequences.Rain },
                 null,1
             ),
+            new EventTemplate(
+                "drought",
+                "The sun beats down. An oppressive miasma suffocates you as you watch your plants dry up.",
+                new List<string> { "I'm thirsty", "I'm still thirsty" },
+                new List<EventDelegate> { EventConsequences.Drought, EventConsequences.Drought },
+                null,1
+            ),
         };
 
         eventCurrentDay = 0;
