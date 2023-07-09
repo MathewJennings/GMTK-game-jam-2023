@@ -362,7 +362,7 @@ public void Start()
                 ResetChoiceButtons();
                 dayTimeController.SetPausedTime(true);
                 VisualElement root = uidoc.rootVisualElement;
-                root.Q<Label>("Label").text = nextEvent.template.dialogText;
+                root.Q<Label>("label").text = nextEvent.template.dialogText;
                 VisualElement eventButtonsRoot = eventButtonsDoc.rootVisualElement;
                 choiceButtons.Add(eventButtonsRoot.Q<Button>("acceptButton"));
                 choiceButtons.Add(eventButtonsRoot.Q<Button>("declineButton"));
@@ -372,6 +372,7 @@ public void Start()
                     int temp = i;
                     Event tempEvent = nextEvent;
                     string tempChoice = nextEvent.template.choices[i];
+                    choiceButtons[i].text = tempChoice;
                     choiceButtons[i].clicked += () =>
                     {
                         bool success = tempEvent.template.executeOption(temp);
