@@ -227,4 +227,14 @@ public class EventConsequences
             .PrintResult("Some of your plots have exploded.");
         return true;
     };
+
+    public static EventDelegate FinalChoice1 = () =>
+    {
+        return true;
+    };
+
+    public static EventDelegate FinalChoice2 = () =>
+    {
+        return true;
+    };
 }

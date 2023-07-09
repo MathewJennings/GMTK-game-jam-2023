@@ -161,6 +161,13 @@ public void Start()
                 new List<EventDelegate> { openShopMenu, EventConsequences.closeDialog },
                 allNpcPrefabsList[9],1
             ),
+            new EventTemplate(
+                "final_event",
+                "I'm the final event.",
+                new List<string> { "Much", "Wow" },
+                new List<EventDelegate> { EventConsequences.FinalChoice1, EventConsequences.FinalChoice2 },
+                null,1
+            )
         };
 
         eventCurrentDay = 0;
@@ -357,13 +364,23 @@ public void Start()
         {
             // We hit the next day. Pull out an event from the queue.
             eventCurrentDay = dayTimeController.getCurrentDay();
-            if (events.Count > 0)
+
+            // If it's the final day before winning, hard code the final event.
+            if (eventCurrentDay >= dayTimeController.numDaysToWin - 1)
             {
                 nextEventTime = RandomNextEventTime();
-                nextEvent = events.First.Value;
-                events.RemoveFirst();
+                nextEvent = GetSpecificEvent("final_event");
             }
-            AddEvent();
+            else
+            {
+                if (events.Count > 0)
+                {
+                    nextEventTime = RandomNextEventTime();
+                    nextEvent = events.First.Value;
+                    events.RemoveFirst();
+                }
+                AddEvent();
+            }
         }
 
         if (nextEvent != null && !nextEvent.eventStarted && nextEventTime < dayTimeController.getCurrentTimeSeconds())
