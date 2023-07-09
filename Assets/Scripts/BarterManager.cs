@@ -9,15 +9,18 @@ public class BarterManager : MonoBehaviour
     [SerializeField] Button barterButton;
     [SerializeField] TMP_Text barterButtonText;
 
+    private bool finishedFirstTrade;
     private bool isTrading;
     private bool playerIsBuying;
     private Inventory_Item selectedBarteringInventoryItem;
     private GameObject merchant;
     private GameObject player;
+    private EventManager eventManager;
 
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        eventManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>();
     }
 
     public void setBarteringItem(Inventory_Item inventoryItem)
@@ -50,6 +53,12 @@ public class BarterManager : MonoBehaviour
         isTrading = false;
         barterButton.gameObject.SetActive(false);
         selectedBarteringInventoryItem = null;
+
+        if (!finishedFirstTrade)
+        {
+            finishedFirstTrade = true;
+            eventManager.PrintResultAfterDelay(0.5f, "You need to grow more food on your field. (E)");
+        }
     }
     
     public void performTrade()
