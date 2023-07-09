@@ -19,6 +19,7 @@ public class DayTimeController : MonoBehaviour
     public OverlayManager overlayManager;
     public PlayerMovement playerMovement;
     public GameObject pauseButtonObject;
+    public GameObject pauseOverlay;
     public int numDaysToWin;
 
     float time = 0;
@@ -69,7 +70,7 @@ public class DayTimeController : MonoBehaviour
         float numSecRemaining = time % secondsInADay;
         int numHours = (int)(numSecRemaining / secondsInAnHour) + 6; // Start day at 6am
         string numHoursText = numHours < 10 ? "0" + numHours : numHours.ToString();
-        int numMinutes = Mathf.RoundToInt(time) % 60;
+        int numMinutes = (int)time % (int)secondsInAnHour * 15;
         string numMinutesText = numMinutes.ToString();
         if (numMinutes < 10)
         {
@@ -99,6 +100,7 @@ public class DayTimeController : MonoBehaviour
     public void SetPausedTime(bool paused)
     {
         isTimePaused = paused;
+        pauseOverlay.SetActive(paused);
         playerMovement.setAllowMovement(!paused);
     }
 
