@@ -22,7 +22,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: c27e68a7972523349b52a1a14270099b, type: 2}
+  m_Motion: {fileID: 7400000, guid: 31f010a251191254c870eb331d96623b, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -49,7 +49,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: b300ce3114b01c04e97c9acfd744879f, type: 2}
+  m_Motion: {fileID: 7400000, guid: eb656ee8622d8d043af8bb5f101fb154, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -101,7 +101,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 27c1f12ba2070e34fbc2ae1a0fe8c5a8, type: 2}
+  m_Motion: {fileID: 7400000, guid: c00580e2584b12c4899c7ae7b09a324a, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -163,7 +163,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: prophet
+  m_Name: goblin_4
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: walkLeft
