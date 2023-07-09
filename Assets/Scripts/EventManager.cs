@@ -29,13 +29,9 @@ public class EventManager : MonoBehaviour
     private static GameObject npc;
     private static BarterManager barterManager;
 
-
     private static List<EventTemplate> eventTemplates;
 
-
-
-
-    public static int human_loyalty =0 ;
+    public static int human_loyalty = 0 ;
     public static int goblin_loyalty = 0;
     public static int philanthropic = 0;
     public static int business = 0;
@@ -46,7 +42,7 @@ public class EventManager : MonoBehaviour
 
     public bool human_guests_occurred;
     public bool goblin_guests_occurred;
-    public bool goblin_kick_occured;
+    public bool goblin_kick_occurred;
   
 
 // Start is called before the first frame update
@@ -245,15 +241,15 @@ public void Start()
             return true;
 
         }
-        else if (human_loyalty > goblin_loyalty_guests_threshold && !goblin_guests_occurred)
+        else if (goblin_loyalty > goblin_loyalty_guests_threshold && !goblin_guests_occurred)
         {
             goblin_guests_occurred = true;
             return true;
 
         }
-        else if (human_loyalty < goblin_loyalty_kick_threshold && !goblin_kick_occured)
+        else if (human_loyalty < goblin_loyalty_kick_threshold && !goblin_kick_occurred)
         {
-            goblin_kick_occured = true;
+            goblin_kick_occurred = true;
             return true;
 
         }
@@ -304,11 +300,8 @@ public void Start()
     }
     public void AddEvent()
     {
-        if(AddSpecialEvents())
-        {
-
-        }
-        else
+        bool success = AddSpecialEvents();
+        if(!success)
         {
             AddRandomEvent();
         }
@@ -367,7 +360,6 @@ public void Start()
 
         if (nextEvent != null && !nextEvent.eventStarted && nextEventTime < dayTimeController.getCurrentTimeSeconds())
         {
-            //AddSpecialEvents();
             nextEvent.eventStarted = true;
             npc = Instantiate(nextEvent.template.npcPrefab);
             DialogDelegate dialogDelegate = () =>
