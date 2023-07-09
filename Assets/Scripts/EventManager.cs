@@ -190,6 +190,10 @@ public void Start()
         AddRandomEvent();
         AddSpecificEvent("tax_goblin", true);
         AddSpecificEvent("wealthy_merchant", true);
+        AddRandomEvent();
+        AddRandomEvent();
+        AddRandomEvent();
+        AddSpecificEvent("wealthy_merchant", true);
     }
 
     public void PrintResultAfterDelay(float delay, string message)
