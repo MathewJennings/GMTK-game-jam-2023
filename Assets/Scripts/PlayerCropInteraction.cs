@@ -55,7 +55,7 @@ public class PlayerCropInteraction : MonoBehaviour
 
     private void serviceCrop()
     {
-        if (plot == null)
+        if (plot == null || plot.isDesolate)
         {
             return;
         }

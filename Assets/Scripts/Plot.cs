@@ -8,10 +8,14 @@ public class Plot : MonoBehaviour
 
     public Seed seed;
     public bool isWatered;
+    public bool isDesolate;
+    public int hoursUnusable;
+    public float timeDesolate = 0f;
     public float timePlanted = 0f;
     public float timeWatered = 0f;
     public float timeOutOfWater = 0f;
     public SpriteRenderer spriteRenderer;
+    public Sprite desolate;
     public Sprite barren;
     public Sprite seeded;
     public Sprite watered;
@@ -40,7 +44,9 @@ public class Plot : MonoBehaviour
     {
         if (!dayTimeController.isTimePaused)
         {
+            
             checkWater();
+            checkHealthy();
             if (seed != null)
             {
                 checkDead();
@@ -80,6 +86,26 @@ public class Plot : MonoBehaviour
         }
     }
 
+    public void checkHealthy()
+    {
+        if (!isDesolate)
+        {
+            return;
+        }
+
+        if (readyForCrop())
+        {
+            isDesolate = false;
+            updateSprite(barren);
+        }
+
+    }
+
+    public bool readyForCrop()
+    {
+        return dayTimeController.getCurrentTimeSeconds() >= timeDesolate + (DayTimeController.secondsInAnHour * hoursUnusable);
+    }
+    
     private bool outOfWater()
     {
         if (seed != null)
@@ -94,6 +120,7 @@ public class Plot : MonoBehaviour
         if (!isWatered && outOfTime())
         {
             killPlot();
+            makeDesolate();
         }
     }
 
@@ -156,25 +183,31 @@ public class Plot : MonoBehaviour
         // Update sprite when harvested
         Item yield = Instantiate(seed.yield);
         yield.SetQuantity(seed.yieldQuantity);
-        seed = null;
-        updateSprite(isWatered ? watered : barren);
-        removePlant();
+        makeDesolate();
         return yield;
     }
 
     public void killPlot()
     {
         // Update Sprite when killed
-        this.isWatered = false;
-        updateSprite(barren);
-        removePlant();
+        Seed seed = this.seed;
+        makeDesolate();
         if (seed != null)
         {
             eventManager.PrintResult("Your " + seed.gameObject.GetComponent<Item>().GetItemId() + " dried out and shriveled in the unrelenting sun.", EventManager.tutorialMessageTime);
         }
-        this.seed = null;
     }
 
+    public void makeDesolate()
+    {
+        timeDesolate = dayTimeController.getCurrentTimeSeconds();
+        isDesolate = true;
+        seed = null;
+        watered = null;
+        updateSprite(desolate);
+        removePlant();
+    }
+    
     public bool needsWatering()
     {
         return !isEmpty() && !this.isWatered;
