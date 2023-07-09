@@ -9,7 +9,7 @@ using Button = UnityEngine.UIElements.Button;
 public class DayTimeController : MonoBehaviour
 {
 
-    public static float secondsInADay = 10;
+    public static float secondsInADay = 64;
     public static float secondsInAnHour = 4;
     // hoursInADay = 16
 
