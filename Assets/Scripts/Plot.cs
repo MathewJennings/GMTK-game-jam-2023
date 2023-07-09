@@ -134,6 +134,14 @@ public class Plot : MonoBehaviour
         this.timeWatered = dayTimeController.getCurrentTimeSeconds();
         updateSprite(isEmpty() ? watered : seededAndWatered);
     }
+
+    public void unwaterPlot()
+    {
+        this.isWatered = false;
+        this.timeOutOfWater = dayTimeController.getCurrentTimeSeconds();
+        updateSprite(isEmpty() ? barren : seeded);
+    }
+
     public Item harvest()
     {
         // Update sprite when harvested

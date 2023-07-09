@@ -20,20 +20,17 @@ public class PlayerStats : MonoBehaviour
     float hungerTickIntervalSeconds = DayTimeController.secondsInAnHour * 3; // -1 hunger every 3 hours
     DayTimeController dayTimeController;
 
-    [SerializeField] GameObject originalStartPosition;
-
     private EventManager eventManager;
 
     // Start is called before the first frame update
     public void Start()
     {
-        ap = maxAp; 
-        hunger = maxHunger/3; // Start at 3/10 hunger so the player learns to eat
+        hunger = maxHunger / 3; // Start at 3/10 hunger so the player learns to eat
         SetBar(BarType.Hunger, .33f);
-        SetBar(BarType.AP, maxAp/2); // Start at 7/15 energy so the player learns to eat
+        ap = maxAp / 2; // Start at 7/15 energy so the player learns to eat
+        SetBar(BarType.AP, 0.5f);
         nextHungerTick = hungerTickIntervalSeconds;
         dayTimeController = FindAnyObjectByType<DayTimeController>();
-        gameObject.transform.position = originalStartPosition.transform.position;
 
         eventManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>();
         eventManager.PrintResultAfterDelay(1f, "You feel hungry, check your inventory (I) for something to eat.");
