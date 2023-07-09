@@ -68,7 +68,7 @@ PrefabInstance:
     - target: {fileID: 3228856449878463659, guid: e125e33635f104c42b8d83445da4e719,
         type: 3}
       propertyPath: description
-      value: Grows into a foo. What is a foo anyway?
+      value: A thin, brittle seed. Might produce an apple tree, with some care.
       objectReference: {fileID: 0}
     - target: {fileID: 3228856449878463659, guid: e125e33635f104c42b8d83445da4e719,
         type: 3}
