@@ -73,8 +73,8 @@ public class Plot : MonoBehaviour
                 if (!firstCropDried)
                 {
                     firstCropDried = true;
-                    eventManager.PrintResult("The water evaporated due to the heat.", 3f);
-                    eventManager.PrintResultAfterDelay(3f, "Better water it again if you hope to ever harvest it. (E)", 3f);
+                    eventManager.PrintResult("The water evaporated due to the heat.", EventManager.tutorialMessageTime);
+                    eventManager.PrintResultAfterDelay(EventManager.tutorialMessageTime, "Better water it again if you hope to ever harvest it. (E)", EventManager.tutorialMessageTime);
                 }
             }
         }
@@ -82,7 +82,11 @@ public class Plot : MonoBehaviour
 
     private bool outOfWater()
     {
-        return dayTimeController.getCurrentTimeSeconds() >= timeWatered + seed.getWaterDurationTime();
+        if (seed != null)
+        {
+            return dayTimeController.getCurrentTimeSeconds() >= timeWatered + seed.getWaterDurationTime();
+        }
+        return false;
     }
 
     private void checkDead()
@@ -166,7 +170,7 @@ public class Plot : MonoBehaviour
         removePlant();
         if (seed != null)
         {
-            eventManager.PrintResult("Your " + seed.gameObject.GetComponent<Item>().GetItemId() + " dried out and shriveled in the unrelenting sun.");
+            eventManager.PrintResult("Your " + seed.gameObject.GetComponent<Item>().GetItemId() + " dried out and shriveled in the unrelenting sun.", EventManager.tutorialMessageTime);
         }
         this.seed = null;
     }
@@ -183,7 +187,6 @@ public class Plot : MonoBehaviour
 
     public bool isMature()
     {
-        Debug.Log(timeSpentWatered + "/" + seed.getMaturationTime());
         return timeSpentWatered >= seed.getMaturationTime();
     }
 }

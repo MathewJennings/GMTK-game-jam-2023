@@ -12,40 +12,64 @@ public class EventConsequences
 
     public static EventDelegate giveGrandma = () => {
         Inventory playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
-        if (playerInventory.inventory["gold"].GetQuantity() < 5)
+        int currGoldQuantity = playerInventory.inventory["gold"].GetQuantity();
+        if (currGoldQuantity < 1)
         {
             GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
-                .PrintResult("You do not have enough gold.");
+                .PrintResult("You do not have any gold to give.");
             return false;
         }
+        int goldToGive = currGoldQuantity >= 5 ? 5 : currGoldQuantity;
 
-        playerInventory.RemoveItem("gold", 5);
+        playerInventory.RemoveItem("gold", goldToGive);
         EventManager.philanthropic++;
         GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
-            .PrintResult("You gave 5 gold.");
+            .PrintResult(goldToGive == 5 ? "You gave her the 5 gold she asked for." : "You gave her what you had.");
         return true;
     };
 
-    public static EventDelegate robGrandma = () => {
+    public static EventDelegate sendGrandmaAway = () => {
         Inventory playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
         playerInventory.AddItem("gold", 10);
         GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
-            .PrintResult("You stole 10 gold.");
-        EventManager.robber_count++;
+            .PrintResult("You grit your teeth and send her away. You can barely manage for yourself these days.", 5f);
+        EventManager.refugee_denied_count++;
         return true;
     };
-    public static EventDelegate giveFoo = () => {
+    public static EventDelegate giveFood = () => {
         Inventory playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
-        if (playerInventory.inventory["appleCrop"].GetQuantity() < 2)
+        int numCarrots = playerInventory.inventory["carrotCrop"].GetQuantity();
+        int numApples = playerInventory.inventory["appleCrop"].GetQuantity();
+        int numGiven = 0;
+        if (numCarrots >= 2)
+        {
+            playerInventory.RemoveItem("carrotCrop", 2);
+            numGiven += 2;
+        } else if (numCarrots == 1)
+        {
+            playerInventory.RemoveItem("carrotCrop", 1);
+            numGiven += 1;
+        }
+        if (numGiven < 2)
+        {
+            if (numGiven == 0 && numApples >= 2)
+            {
+                playerInventory.RemoveItem("appleCrop", 2);
+                numGiven += 2;
+            } else if (numApples > 0)
+            {
+                playerInventory.RemoveItem("appleCrop", 1);
+                numGiven += 1;
+            }
+        }
+        if (numGiven == 0)
         {
             GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
-                .PrintResult("You do not have enough apples.");
+                .PrintResult("You do not have any food to spare.");
             return false;
         }
-
-        playerInventory.RemoveItem("appleCrop", 2);
         GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
-            .PrintResult("You gave 2 apples.");
+            .PrintResult("You gave the poor soldier what you could (" + numGiven + ").", 5f);
         EventManager.philanthropic++;
         EventManager.human_loyalty++;
         return true;
@@ -55,36 +79,28 @@ public class EventConsequences
         EventManager.goblin_loyalty++;
         playerInventory.AddItem("gold", 2);
         GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
-            .PrintResult("You got 2 gold.");
+            .PrintResult("After he leaves you tell the army about him. They plan to hunt him down, and pay you 2 gold for the information.", 5f);
+        EventManager.refugee_denied_count++;
         EventManager.goblin_loyalty++;
         return true;
     };
-    public static EventDelegate GoblinSoldier_GiveUp = () => {
+    public static EventDelegate GoblinSoldier_OfferInventory = () => {
         Inventory playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
-        if (playerInventory.inventory["appleCrop"].GetQuantity() < 3 ||
-            playerInventory.inventory["carrotCrop"].GetQuantity() < 3 ||
-            playerInventory.inventory["gold"].GetQuantity() < 5)
-        {
-            GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
-                .PrintResult("You do not have enough resources to give.");
-            return false;
-        }
 
-        playerInventory.RemoveItem("appleCrop", 3);
-        playerInventory.RemoveItem("carrotCrop", 3);
-        playerInventory.RemoveItem("gold", 5);
+        playerInventory.Clear();
         GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
-            .PrintResult("Lost 3 apples, 3 carrots, and 5 gold.");
+            .PrintResult("You placate them by giving them everything you have, but at least they didn't assault you.", 5f);
         return true;
 
 
     };
-    public static EventDelegate GoblinSoldier_FightBack = () => {
+    public static EventDelegate GoblinSoldier_Assault = () => {
+        int energyCost = -7;
         GameObject player = GameObject.FindGameObjectWithTag("Player");
-        player.GetComponent<PlayerStats>().ChangeAp(-3);
+        player.GetComponent<PlayerStats>().ChangeAp(energyCost);
         player.GetComponent<PlayerMovement>().CrippleMovement();
         GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
-            .PrintResult("You get injured and lose 3 energy.");
+            .PrintResult("They assault you all at once, leaving you bloodied and broken. (" + energyCost + ")", 5f);
         EventManager.goblin_loyalty--;
         return true;
     };
@@ -93,87 +109,113 @@ public class EventConsequences
         if (playerInventory.inventory["gold"].GetQuantity() < 5)
         {
             GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
-                .PrintResult("You do not have enough money to give.");
+                .PrintResult("They demand more than that (5G).");
             return false;
         }
 
         playerInventory.RemoveItem("gold", 5);
         GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
-            .PrintResult("Paid 5 gold.");
+            .PrintResult("They extorted you, but at least you're not hurt.", 5f);
         EventManager.goblin_loyalty++;
         return true;
     };
     public static EventDelegate NotPayTax = () => {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
+        Inventory playerInventory = player.GetComponent<Inventory>();
+        playerInventory.Clear();
         player.GetComponent<PlayerStats>().ChangeAp(-3);
         player.GetComponent<PlayerMovement>().CrippleMovement();
         GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
-            .PrintResult("You get hurt and lose 3 energy.");
+        .PrintResult("The mercenaries won't let you get away with that. They take pleasure in assaulting you (-3) and stealing what you have.", 5f);
         EventManager.goblin_loyalty--;
         return true;
     };
 
     public static EventDelegate PayRobber = () => {
         Inventory playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
-        if (playerInventory.inventory["gold"].GetQuantity() < 20)
+        int goldToGive = playerInventory.inventory["gold"].GetQuantity();
+        if (goldToGive > 20)
+        {
+            goldToGive = 20;
+        }
+        else if (goldToGive < 1)
         {
             GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
-                .PrintResult("The robber demands 20 gold.");
+                .PrintResult("You don't have any gold to give.");
             return false;
         }
 
-        playerInventory.RemoveItem("gold", 20);
+        playerInventory.RemoveItem("gold", goldToGive);
         GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
-            .PrintResult("Lost 20 gold.");
+            .PrintResult("The robber extorted you for " + goldToGive + " gold. At least you weren't assaulted.");
         return true;
     };
 
-    public static EventDelegate FightRobber = () => {
+    public static EventDelegate AttackedByRobber = () => {
+        int energyCost = -5;
         GameObject player = GameObject.FindGameObjectWithTag("Player");
-        player.GetComponent<PlayerStats>().ChangeAp(-10);
+        player.GetComponent<PlayerStats>().ChangeAp(energyCost);
         player.GetComponent<PlayerMovement>().CrippleMovement();
         GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
-            .PrintResult("You get thrashed and lose 10 energy.");
+            .PrintResult("Clearly upset, the robber thrashed you before leaving you bloodied and bruised (" + energyCost + ")");
         return true;
     };
 
     public static EventDelegate OpenChest = () =>
     {
         Inventory playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
-        playerInventory.AddItem("gold", 10);
+        playerInventory.AddItem("gold", 20);
         GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
-            .PrintResult("You find 10 gold.");
+            .PrintResult("The chest contained 20 gold, a small fortune these days. Your curiosity was rewarded.", 5f);
         EventManager.treasure_count++;
         return true;
     };
 
+    public static EventDelegate IgnoreChest = () =>
+    {
+        GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
+            .PrintResult("You let the chest go, unsure of the nature of its magic.", 5f);
+        return true;
+    };
+
     public static EventDelegate OpenMimicChest = () => {
+        int energyCost = -5;
         GameObject player = GameObject.FindGameObjectWithTag("Player");
-        player.GetComponent<PlayerStats>().ChangeAp(-3);
+        player.GetComponent<PlayerStats>().ChangeAp(energyCost);
         player.GetComponent<PlayerMovement>().CrippleMovement();
         GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
-            .PrintResult("It was a Mimic! You are hurt and lost 3 energy.");
+            .PrintResult("Your luck has turned, this chest was a mimic! It takes a bite out of you before running away (" + energyCost + ").", 5f);
         return true;
     };
 
     public static EventDelegate TreasureOwnerReturnMoney = () => {
         Inventory playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
-        if (playerInventory.inventory["gold"].GetQuantity() < 10)
+        int goldToGive = playerInventory.inventory["gold"].GetQuantity();
+        if (goldToGive > 20)
+        {
+            goldToGive = 20;
+        } else if (goldToGive < 1)
         {
             GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
-                .PrintResult("You no longer have the money.");
+                .PrintResult("You don't have any gold to return to the mage.");
             return false;
         }
 
-        playerInventory.RemoveItem("gold", 10);
+        playerInventory.RemoveItem("gold", goldToGive);
         GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
-            .PrintResult("Handed back 10 gold.");
+            .PrintResult("Fearing for your life, you meekly return " + goldToGive + " gold. Satisfied, he leaves. You stop holding your breath.", 5f);
         EventManager.human_loyalty++;
         return true;
     };
 
     public static EventDelegate TreasureOwnerSayNo = () => {
         EventManager.philanthropic--;
+        int energyCost = -10;
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        player.GetComponent<PlayerStats>().ChangeAp(energyCost);
+        player.GetComponent<Inventory>().Clear();
+        GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
+            .PrintResult("Displeased, the mage calls down a bolt of lightning on you and robs you while you lay there stunned (" + energyCost + ").", 5f);
         return true;
     };
 
@@ -189,7 +231,7 @@ public class EventConsequences
             p.waterPlot();
         }
         GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
-            .PrintResult("All your plots have been watered.");
+            .PrintResult("Your whole field has been watered by the downpour.", 5f);
         return true;
     };
 
@@ -205,7 +247,7 @@ public class EventConsequences
             p.unwaterPlot();
         }
         GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
-            .PrintResult("All your plots have dried up.");
+            .PrintResult("Your whole field has dried up. Better rewater the crops before they dry out.", 5f);
         return true;
     };
 
@@ -224,7 +266,7 @@ public class EventConsequences
             }
         }
         GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
-            .PrintResult("Some of your plots have exploded.");
+            .PrintResult("Your field has been partially destroyed. You'll have to plant new crops.", 5f);
         return true;
     };
 
