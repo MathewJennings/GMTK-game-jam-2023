@@ -17,10 +17,10 @@
                 {
                     "name": "OpenInventory",
                     "type": "Button",
-                    "id": "ed5bbf05-ec7b-48ba-b1e6-6dac763aab19",
+                    "id": "c5f1f4f3-8c18-46fe-9149-9a2276343667",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Press",
                     "initialStateCheck": false
                 }
             ],
@@ -38,8 +38,8 @@
                 },
                 {
                     "name": "",
-                    "id": "afa4d55a-635b-4269-9ae7-4756cbe8721e",
-                    "path": "",
+                    "id": "3941d8d9-3805-4502-9383-6d89530aa208",
+                    "path": "<Keyboard>/i",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

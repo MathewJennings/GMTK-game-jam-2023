@@ -10,12 +10,14 @@ public class PlayerCropInteraction : MonoBehaviour
 
     private InventoryUI inventoryUI;
     private Inventory playerInventory;
+    private EventManager eventManager;
 
     // Start is called before the first frame update
     void Start()
     {
         inventoryUI = GetComponent<InventoryUI>();
         playerInventory = GetComponent<Inventory>();
+        eventManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>();
     }
 
     // Update is called once per frame
@@ -93,6 +95,7 @@ public class PlayerCropInteraction : MonoBehaviour
     public void eatCrop(Item item, Crop crop) {
         playerManager.ChangeHunger(crop.sustenance);
         playerInventory.RemoveItem(item.GetItemId(), 1);
+        eventManager.PrintResult("The " + item.GetItemId() + " made you less hungry. (+" + crop.sustenance + ")");
     }
 
     private void OnTriggerStay2D(Collider2D collision)

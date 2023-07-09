@@ -36,8 +36,7 @@ PrefabInstance:
     - target: {fileID: 3467385716305010558, guid: 0bae09c30bd1c31479a0e4c33260aade,
         type: 3}
       propertyPath: description
-      value: Bars are high in protien, but also high in sugar. Great for a war torn
-        hellscape no?
+      value: A dried and discolored carrot. It's better than nothing.
       objectReference: {fileID: 0}
     - target: {fileID: 3467385716305010558, guid: 0bae09c30bd1c31479a0e4c33260aade,
         type: 3}

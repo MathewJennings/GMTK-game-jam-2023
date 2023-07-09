@@ -26,6 +26,17 @@ public class InventoryUI : MonoBehaviour
         return isOpen;
     }
 
+    public void OnOpenInventory()
+    {
+        if (isOpen)
+        {
+            CloseInventory();
+        } else
+        {
+            OpenInventory();
+        }
+    }
+
     public void OpenInventory()
     {
         if (isOpen)
