@@ -345,12 +345,9 @@ public void Start()
         if (nextEvent != null && !nextEvent.eventStarted && nextEventTime < dayTimeController.getCurrentTimeSeconds())
         {
             nextEvent.eventStarted = true;
-            npc = Instantiate(nextEvent.template.npcPrefab);
-            DialogDelegate dialogDelegate = () =>
+            if(npc == null)
             {
                 dialogBox.SetActive(true);
-                npc.transform.GetChild(3).gameObject.SetActive(true);
-                playerPortrait.SetActive(true);
                 // Clear out all listeners on buttons to make sure we're not accumulating multiple
                 // listeners on a single button.
                 ResetChoiceButtons();
@@ -363,7 +360,7 @@ public void Start()
                 {
                     //needed because if you use i directly, i will update between when the listener is set vs when the listener is evaluated
                     int temp = i;
-                    Event tempEvent = nextEvent; 
+                    Event tempEvent = nextEvent;
                     string tempChoice = nextEvent.template.choices[i];
                     choiceButtons[i].clicked += () =>
                     {
@@ -383,9 +380,53 @@ public void Start()
                     };
                 }
                 nextEvent = null;
-            };
 
-            npc.GetComponent<Npc>().SetFields(dialogDelegate);
+            } else
+            {
+                
+                npc = Instantiate(nextEvent.template.npcPrefab);
+                DialogDelegate dialogDelegate = () =>
+                {
+                    dialogBox.SetActive(true);
+                    npc.transform.GetChild(3).gameObject.SetActive(true);
+                    playerPortrait.SetActive(true);
+                    // Clear out all listeners on buttons to make sure we're not accumulating multiple
+                    // listeners on a single button.
+                    ResetChoiceButtons();
+                    dayTimeController.SetPausedTime(true);
+                    VisualElement root = uidoc.rootVisualElement;
+                    root.Q<Label>("Label").text = nextEvent.template.dialogText;
+                    choiceButtons.Add(root.Q<Button>("acceptButton"));
+                    choiceButtons.Add(root.Q<Button>("declineButton"));
+                    for (int i = 0; i < choiceButtons.Count; i++)
+                    {
+                        //needed because if you use i directly, i will update between when the listener is set vs when the listener is evaluated
+                        int temp = i;
+                        Event tempEvent = nextEvent; 
+                        string tempChoice = nextEvent.template.choices[i];
+                        choiceButtons[i].clicked += () =>
+                        {
+                            bool success = tempEvent.template.executeOption(temp);
+
+                            if (success)
+                            {
+                                InitializeEventSummaryIfNotExist();
+                                eventSummary.Add(new List<string> { tempEvent.template.name, tempChoice });
+                                dayTimeController.SetPausedTime(false);
+                                dialogBox.SetActive(false);
+                                //playerPortrait.SetActive(false);
+                                //npc.transform.GetChild(3).gameObject.SetActive(false);
+                                //npc.GetComponent<Animator>().SetBool("walkRight", true);
+                            }
+                            // else keep dialog open and wait for a different choice.
+                        };
+                    }
+                    nextEvent = null;
+                };
+
+                npc.GetComponent<Npc>().SetFields(dialogDelegate);
+            }
+
         }
     }
     private void InitializeEventSummaryIfNotExist()
