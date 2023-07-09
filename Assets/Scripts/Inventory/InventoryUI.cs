@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Linq;
 using System.Globalization;
+using Unity.VisualScripting;
 
 public class InventoryUI : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] GameObject inventoryBackground;
     [SerializeField] public TMP_Text itemName;
     [SerializeField] public TMP_Text itemDescription;
+    [SerializeField] public Inventory_Item goldInventoryItem;
 
     private bool isOpen;
     private List<GameObject> currentInventoryItems = new List<GameObject>();
@@ -26,25 +28,31 @@ public class InventoryUI : MonoBehaviour
 
     public void OpenInventory()
     {
-        if(isOpen)
+        if (isOpen)
         {
             return;
         }
         inventoryBackground.SetActive(true);
+        setupGoldInventoryItem();
         instantiateInventoryItems();
         ArrangeImagesHorizontally();
         isOpen = true;
+    }
+
+    private void setupGoldInventoryItem()
+    {
+        goldInventoryItem.setItem(inventory.inventory["gold"]);
+        goldInventoryItem.setInventoryUI(this);
     }
 
     private void instantiateInventoryItems()
     {
         foreach (Item item in inventory.inventory.Values)
         {
-            if (item.GetQuantity() != 0)
+            if (item.GetItemId() != "gold" && item.GetQuantity() != 0)
             {
                 GameObject inventoryItem = Instantiate(inventoryItemPrefab);
                 inventoryItem.transform.SetParent(inventoryBackground.transform, false);
-                inventoryItem.transform.position = new Vector3(Screen.width * 0.5f, 105, 0);
                 currentInventoryItems.Add(inventoryItem);
                 Inventory_Item inventoryItemScript = inventoryItem.GetComponent<Inventory_Item>();
                 inventoryItemScript.setInventoryUI(this);
@@ -82,5 +90,12 @@ public class InventoryUI : MonoBehaviour
     {
         itemName.text = new CultureInfo("en-US", false).TextInfo.ToTitleCase(item.GetItemId());
         itemDescription.text = item.GetDescription();
+    }
+
+    public void refresh()
+    {
+        setupGoldInventoryItem();
+        CloseInventory();
+        OpenInventory();
     }
 }

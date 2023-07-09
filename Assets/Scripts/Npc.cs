@@ -12,10 +12,13 @@ public class Npc : MonoBehaviour
     int waypointIndex;
     DayTimeController dayTimeController;
     private Animator animator;
+    private GameObject player;
+    private BarterManager barterManager;
 
     void Awake()
     {
-        Debug.Log("awake");
+        player = GameObject.FindGameObjectWithTag("Player");
+        barterManager = GameObject.FindGameObjectWithTag("BarterManager").GetComponent<BarterManager>();
         worldSpaceWaypoints = new List<GameObject>();
         foreach(GameObject waypoint in waypoints)
         {
@@ -42,31 +45,46 @@ public class Npc : MonoBehaviour
     }
     void Update()
     {
-        GameObject nextWaypoint = worldSpaceWaypoints[waypointIndex];
-        transform.position = Vector2.MoveTowards(transform.position, nextWaypoint.transform.position, dayTimeController.isTimePaused ? 0 : moveSpeed * Time.deltaTime);
-        if (transform.position == nextWaypoint.transform.position)
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            // walking left
-            if (waypointIndex < dialogIndex)
+            stopTrading();
+        }
+        GameObject nextWaypoint = worldSpaceWaypoints[waypointIndex];
+        bool doNotMove = barterManager.IsTrading() || dayTimeController.isTimePaused;
+        float maxDistanceDelta = doNotMove ? 0 : moveSpeed * Time.deltaTime;
+        if(!doNotMove)
+        {
+            transform.position = Vector2.MoveTowards(transform.position, nextWaypoint.transform.position, maxDistanceDelta);
+            if (transform.position == nextWaypoint.transform.position)
             {
-                animator.SetBool("walkLeft", true);
+                // walking left
+                if (waypointIndex < dialogIndex)
+                {
+                    animator.SetBool("walkLeft", true);
 
-            }
-            //arrived at the dialogIndex
-            else if (waypointIndex == dialogIndex)
-            {
-                animator.SetBool("walkLeft", false);
-                animator.SetBool("walkRight", false);
-                dialogDelegate.Invoke();
+                }
+                //arrived at the dialogIndex
+                else if (waypointIndex == dialogIndex)
+                {
+                    animator.SetBool("walkLeft", false);
+                    animator.SetBool("walkRight", false);
+                    dialogDelegate.Invoke();
 
-            }
-            waypointIndex++;
-            if (waypointIndex >= worldSpaceWaypoints.Count)
-            {
-
-                Destroy(this.gameObject);
+                }
+                waypointIndex++;
+                if (waypointIndex >= worldSpaceWaypoints.Count)
+                {
+                    Destroy(this.gameObject);
+                }
             }
         }
+    }
+
+    private void stopTrading()
+    {
+        barterManager.stopTrading();
+        animator.SetBool("walkRight", true);
+        this.transform.GetChild(3).gameObject.SetActive(false);
     }
 
 }

@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 public class EventManager : MonoBehaviour
 {
-    Queue<Event> events;
+    LinkedList<Event> events;
     Event nextEvent;
     public DayTimeController dayTimeController;
     public TMP_Text dialogText;
@@ -27,6 +27,7 @@ public class EventManager : MonoBehaviour
     private float eventCurrentDay;
 
     private static GameObject npc;
+    private static BarterManager barterManager;
 
 
     private static List<EventTemplate> eventTemplates;
@@ -51,6 +52,7 @@ public class EventManager : MonoBehaviour
 // Start is called before the first frame update
 public void Start()
     {
+        barterManager = GameObject.FindGameObjectWithTag("BarterManager").GetComponent<BarterManager>();
         eventTemplates = new List<EventTemplate> {
             new EventTemplate(
                 "merchant",
@@ -95,9 +97,9 @@ public void Start()
         nextEventTime = 2f;
         nextEvent = new Event(eventTemplates[0]);
 
-        events = new Queue<Event>();
-        AddSpecificEvent("human soldier");
-        AddSpecificEvent("tax Event");
+        events = new LinkedList<Event>();
+        AddSpecificEvent("human soldier", true);
+        AddSpecificEvent("tax Event", true);
     }
 
     public void PrintResult(string message)
@@ -230,7 +232,7 @@ public void Start()
 
     EventDelegate openShopMenu = () =>
     {
-        npc.GetComponent<InventoryUI>().OpenInventory(); //TODO
+        barterManager.startTrading(npc.gameObject);
         return true;
     };
 
@@ -277,17 +279,24 @@ public void Start()
             }
         }
 
-        events.Enqueue(new Event(eventTemplates[randomIndex]));
+        events.AddLast(new Event(eventTemplates[randomIndex]));
 
     }
     //Add an event of name "name"
-    public void AddSpecificEvent(string name)
+    public void AddSpecificEvent(string name, bool addLast)
     {
         foreach(EventTemplate template in eventTemplates) 
         {
             if(template.name == name)
             {
-                events.Enqueue(new Event(template));
+                if (addLast)
+                {
+                    events.AddLast(new Event(template));
+                }
+                else
+                {
+                    events.AddFirst(new Event(template));
+                }
                 return;
             }
         }
@@ -347,7 +356,8 @@ public void Start()
             if (events.Count > 0)
             {
                 nextEventTime = RandomNextEventTime();
-                nextEvent = events.Dequeue();
+                nextEvent = events.First.Value;
+                events.RemoveFirst();
             }
             if (events.Count < 2)
             {
@@ -363,7 +373,6 @@ public void Start()
             DialogDelegate dialogDelegate = () =>
             {
                 dialogBox.SetActive(true);
-                // TODO
                 npc.transform.GetChild(3).gameObject.SetActive(true);
                 // Clear out all listeners on buttons to make sure we're not accumulating multiple
                 // listeners on a single button.
@@ -384,10 +393,8 @@ public void Start()
                         {
                             dayTimeController.SetPausedTime(false);
                             dialogBox.SetActive(false);
-                            // TODO
-                            npc.transform.GetChild(3).gameObject.SetActive(false);
-                            npc.GetComponent<Animator>().SetBool("walkRight", true);
-                npc.GetComponentInChildren<SpriteRenderer>().enabled = true;
+                            //npc.transform.GetChild(3).gameObject.SetActive(false);
+                            //npc.GetComponent<Animator>().SetBool("walkRight", true);
                         }
                         // else keep dialog open and wait for a different choice.
                     });
