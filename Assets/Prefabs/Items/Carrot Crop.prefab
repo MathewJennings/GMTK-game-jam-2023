@@ -136,4 +136,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e73e0251823ae5444b2a952770204389, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sustenance: 3
+  sustenance: 7

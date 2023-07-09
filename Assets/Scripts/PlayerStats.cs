@@ -31,9 +31,9 @@ public class PlayerStats : MonoBehaviour
     public void Start()
     {
         ap = maxAp; 
-        hunger = maxHunger/2; // Start at half hunger so the player learns to eat
-        SetBar(BarType.Hunger, .5f);
-        SetBar(BarType.AP, 1);
+        hunger = maxHunger/3; // Start at 3/10 hunger so the player learns to eat
+        SetBar(BarType.Hunger, .33f);
+        SetBar(BarType.AP, maxAp/2); // Start at 7/15 energy so the player learns to eat
         nextHungerTick = hungerTickIntervalSeconds;
         dayTimeController = FindAnyObjectByType<DayTimeController>();
         gameObject.transform.position = originalStartPosition.transform.position;
@@ -66,6 +66,7 @@ public class PlayerStats : MonoBehaviour
     public void ChangeAp(int delta)
     {
         ap += delta;
+        if (ap > maxAp) ap = maxAp;
         if (ap <= 0)
         {
             Debug.Log("You are overworked. You died");
@@ -94,13 +95,14 @@ public class PlayerStats : MonoBehaviour
 
     public bool canAffordAction(int ap)
     {
-        return this.ap > ap;
+        return this.ap >= ap;
     }
 
     public void ChangeHunger(int delta)
     {
         hunger += delta;
-        if(hunger <= 0)
+        if (hunger > maxHunger) hunger = maxHunger;
+        if (hunger <= 0)
         {
             overlayManager.GetComponent<OverlayManager>().GameOverTransition(
                 "You Starved",

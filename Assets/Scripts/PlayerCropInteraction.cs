@@ -7,7 +7,7 @@ using static UnityEditor.Progress;
 public class PlayerCropInteraction : MonoBehaviour
 {
     public Plot plot;
-    public PlayerStats playerManager;
+    public PlayerStats playerStats;
 
     private InventoryUI inventoryUI;
     private Inventory playerInventory;
@@ -38,7 +38,6 @@ public class PlayerCropInteraction : MonoBehaviour
 
     public void OnUse()
     {
-        Debug.Log("USE");
         serviceCrop();
     }
 
@@ -56,11 +55,12 @@ public class PlayerCropInteraction : MonoBehaviour
                 inventoryUI.OpenInventory(); // So that we can trigger plantSeed() from Inventory_Item.OnClick()
             }
         }
-        else if (plot.needsWatering())
+        else if (plot.needsWatering() && !plot.isMature())
         {
-            if (playerManager.canAffordAction(1))
+            int cost = 1;
+            if (playerStats.canAffordAction(cost))
             {
-                playerManager.ChangeAp(-1);
+                playerStats.ChangeAp(-1*cost);
                 plot.waterPlot();
                 if (!wateredFirstCrop)
                 {
@@ -70,17 +70,25 @@ public class PlayerCropInteraction : MonoBehaviour
                 }
             } else
             {
-                printOutOfEnergyMessage();
+                printOutOfEnergyMessage(cost);
             }
 
         } else if (plot.isMature())
         {
-            if (playerManager.canAffordAction(3))
+            int cost = 0;
+            if (playerStats.canAffordAction(cost))
             {
-                playerManager.ChangeAp(-3);
+                playerStats.ChangeAp(-1*cost);
                 Item yield = plot.harvest();
                 playerInventory.AddItem(yield.GetItemId(), yield.GetQuantity());
-                //add it to your summary
+                playerInventory.AddItem(yield.GetCorrespondingId(), 1); // yield 1 seed as well
+
+                if(!harvestedFirstCrop)
+                {
+                    eventManager.PrintResult("You harvested a " + yield.GetItemId() + " and got a seed too. You're not sure if you should eat it or sell it.", 3f);
+                    harvestedFirstCrop = true;
+                }
+                
                 InitializeCropSummaryIfNotExist();
                 if (!cropSummary.ContainsKey(yield.name))
                 {
@@ -92,7 +100,7 @@ public class PlayerCropInteraction : MonoBehaviour
                 }
             } else
             {
-                printOutOfEnergyMessage();
+                printOutOfEnergyMessage(cost);
             }
         }
     }
@@ -125,9 +133,10 @@ public class PlayerCropInteraction : MonoBehaviour
         }
         if (plot.isEmpty())
         {
-            if (playerManager.canAffordAction(2))
+            int cost = 1;
+            if (playerStats.canAffordAction(cost))
             {
-                playerManager.ChangeAp(-2);
+                playerStats.ChangeAp(-1*cost);
                 plot.plantSeed(seed);
                 playerInventory.RemoveItem(item.GetItemId(), 1);
                 if (!plantedFirstSeed)
@@ -139,20 +148,23 @@ public class PlayerCropInteraction : MonoBehaviour
             }
             else
             {
-                printOutOfEnergyMessage();
+                printOutOfEnergyMessage(cost);
             }
         }
     }
 
-    private void printOutOfEnergyMessage()
+    private void printOutOfEnergyMessage(int necessaryAP)
     {
-        eventManager.PrintResult("You are too exhausted to do that (0 Action Points)");
+        eventManager.PrintResult("You are too tired to do that (need " + necessaryAP + " Energy)");
     }
 
     public void eatCrop(Item item, Crop crop) {
-        playerManager.ChangeHunger(crop.sustenance);
-        playerInventory.RemoveItem(item.GetItemId(), 1);
+        playerStats.ChangeHunger(crop.sustenance);
         eventManager.PrintResult("The " + item.GetItemId() + " made you less hungry. (+" + crop.sustenance + ")", 3f);
+        int energyChange = crop.sustenance;
+        playerStats.ChangeAp(energyChange);
+        eventManager.PrintResultAfterDelay(3f, "... You feel a bit more energized too. (+" + energyChange + ")", 3f);
+        playerInventory.RemoveItem(item.GetItemId(), 1);
         InitializeEatenSummaryIfNotExist();
         if (!eatenSummary.ContainsKey(crop.name))
         {

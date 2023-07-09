@@ -80,7 +80,7 @@ public void Start()
                 allNpcPrefabsList[2],1
             ),
             new EventTemplate(
-                "human soldier",
+                "human_soldier",
                 "You hear a voice coming from your gate. It's a human soldier. He seems tired and injured. Maybe some foo will help him.",
                 new List<string> { "Give Foo", "Report to Goblin soliders" },
                 new List<EventDelegate> { EventConsequences.giveFoo, EventConsequences.reportHumanSoldier },
@@ -94,11 +94,11 @@ public void Start()
                 allNpcPrefabsList[4],0
             ),
             new EventTemplate(
-                "tax Event",
+                "tax_goblin",
                 "You hear yelling from your gate. You see goblin soldiers standing there. \"We have come today to collect your taxes! This will be crucial to win this war! Now behave and pay your taxes!\"",
                 new List<string> { "Pay", "Ignore" },
                 new List<EventDelegate> { EventConsequences.PayTax, EventConsequences.NotPayTax },
-                allNpcPrefabsList[3],0
+                allNpcPrefabsList[3],1
             ),
             new EventTemplate(
                 "robber",
@@ -112,7 +112,7 @@ public void Start()
                 "A treasure chest walks up to your front door...",
                 new List<string> { "Open Chest", "Ignore" },
                 new List<EventDelegate> { EventConsequences.OpenChest, EventConsequences.closeDialog },
-                allNpcPrefabsList[5],0
+                allNpcPrefabsList[8],1
             ),
             new EventTemplate(
                 "treasure_owner",
@@ -126,14 +126,14 @@ public void Start()
                 "A treasure chest walks up to your front door...",
                 new List<string> { "Open Chest", "Ignore" },
                 new List<EventDelegate> { EventConsequences.OpenMimicChest, EventConsequences.closeDialog },
-                allNpcPrefabsList[5],0
+                allNpcPrefabsList[8],1
             ),
             new EventTemplate(
                 "rain",
                 "A cloud covers the sun for a brief moment and you feel rain against your forehead.",
                 new List<string> { "I'm drenched", "I'm still drenched" },
                 new List<EventDelegate> { EventConsequences.Rain, EventConsequences.Rain },
-                allNpcPrefabsList[5],0
+                null,1
             ),
         };
 
@@ -144,10 +144,8 @@ public void Start()
         nextEvent = new Event(eventTemplates[0]);
 
         events = new LinkedList<Event>();
-        AddSpecificEvent("rain", true);
-        AddSpecificEvent("lady", true);
-        AddSpecificEvent("human soldier", true);
-        AddSpecificEvent("tax Event", true);
+        AddSpecificEvent("tax_goblin", true);
+        AddSpecificEvent("merchant", true);
     }
 
     public void PrintResultAfterDelay(float delay, string message)
@@ -213,22 +211,21 @@ public void Start()
             ReplaceNextEvent("treasure_owner");
             return true;
         }
-        if (human_loyalty > human_loyalty_guests_threshold && !human_guests_occurred)
-        {
-            human_guests_occurred = true;
-            AddSpecificEvent("Friendly Humans",true);
-            return true;
-        }
-        if (goblin_loyalty > goblin_loyalty_guests_threshold && !goblin_guests_occurred)
-        {
-            goblin_guests_occurred = true;
-            return true;
-        }
-        if (human_loyalty < goblin_loyalty_kick_threshold && !goblin_kick_occurred)
-        {
-            goblin_kick_occurred = true;
-            return true;
-        }
+        //if (human_loyalty > human_loyalty_guests_threshold && !human_guests_occurred)
+        //{
+        //    human_guests_occurred = true;
+        //    return true;
+        //}
+        //if (goblin_loyalty > goblin_loyalty_guests_threshold && !goblin_guests_occurred)
+        //{
+        //    goblin_guests_occurred = true;
+        //    return true;
+        //}
+        //if (human_loyalty < goblin_loyalty_kick_threshold && !goblin_kick_occurred)
+        //{
+        //    goblin_kick_occurred = true;
+        //    return true;
+        //}
         return false;
     }
 
@@ -345,7 +342,7 @@ public void Start()
         if (nextEvent != null && !nextEvent.eventStarted && nextEventTime < dayTimeController.getCurrentTimeSeconds())
         {
             nextEvent.eventStarted = true;
-            if(npc == null)
+            if(nextEvent.template.npcPrefab == null)
             {
                 dialogBox.SetActive(true);
                 // Clear out all listeners on buttons to make sure we're not accumulating multiple
