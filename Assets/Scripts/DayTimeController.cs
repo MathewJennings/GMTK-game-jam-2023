@@ -7,8 +7,8 @@ using UnityEngine.UI;
 public class DayTimeController : MonoBehaviour
 {
 
-    public static float secondsInADay = 6;
-    public static float secondsInAnHour = 2;
+    public static float secondsInADay = 64;
+    public static float secondsInAnHour = 4;
 
     public Color nightLightColor;
     public AnimationCurve nightTimeCurve;
@@ -60,8 +60,9 @@ public class DayTimeController : MonoBehaviour
             overlayManager.DayTransition(currentDay);
         }
         float numSecRemaining = time % secondsInADay;
-        int numHours = (int)(numSecRemaining / secondsInAnHour);
-        currTime.text = "Day: " + (numDays+1).ToString() + "\nTime: " + numHours.ToString() + ":00\n" + "elapsedTime: " + time.ToString();
+        int numHours = (int)(numSecRemaining / secondsInAnHour) + 6; // Start day at 6am
+        string numHoursText = numHours < 10 ? "0" + numHours : numHours.ToString();
+        currTime.text = "Day: " + (numDays+1).ToString() + "\nTime: " + numHoursText + ":00\n" + "elapsedTime: " + time.ToString();
     }
 
 

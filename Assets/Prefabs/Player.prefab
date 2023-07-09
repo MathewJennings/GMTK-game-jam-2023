@@ -53,7 +53,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8923f518b9a6204dac8f3ca40c9b07e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 2.8
 --- !u!212 &5906261969621895122
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -276,7 +276,11 @@ MonoBehaviour:
   maxHunger: 10
   hungerLostPerTick: 1
   hungerEmptyBar: {fileID: 0}
+  hungerText: {fileID: 0}
   apEmptyBar: {fileID: 0}
+  apText: {fileID: 0}
+  overlayManager: {fileID: 0}
+  originalStartPosition: {fileID: 0}
 --- !u!114 &7846411221716759685
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -316,3 +320,4 @@ MonoBehaviour:
   inventoryBackground: {fileID: 0}
   itemName: {fileID: 0}
   itemDescription: {fileID: 0}
+  goldInventoryItem: {fileID: 0}

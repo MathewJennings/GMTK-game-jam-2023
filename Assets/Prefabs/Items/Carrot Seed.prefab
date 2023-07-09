@@ -53,7 +53,7 @@ PrefabInstance:
     - target: {fileID: 3228856449878463659, guid: e125e33635f104c42b8d83445da4e719,
         type: 3}
       propertyPath: description
-      value: Grows into a bar. Takes 3 days to grow
+      value: A thin, brittle seed. Might produce a carrot, with some care.
       objectReference: {fileID: 0}
     - target: {fileID: 3228856449878463659, guid: e125e33635f104c42b8d83445da4e719,
         type: 3}

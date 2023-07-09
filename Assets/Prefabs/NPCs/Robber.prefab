@@ -8,6 +8,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2457092576051856506, guid: c798d6131e1c3394db6bc89416b2de22,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2457092576051856506, guid: c798d6131e1c3394db6bc89416b2de22,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.3
+      objectReference: {fileID: 0}
     - target: {fileID: 2547172948823885662, guid: c798d6131e1c3394db6bc89416b2de22,
         type: 3}
       propertyPath: m_RootOrder
@@ -73,11 +83,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Robber
       objectReference: {fileID: 0}
-    - target: {fileID: 5189488540934649361, guid: c798d6131e1c3394db6bc89416b2de22,
+    - target: {fileID: 5596473273028023291, guid: c798d6131e1c3394db6bc89416b2de22,
         type: 3}
-      propertyPath: moveSpeed
-      value: 9
-      objectReference: {fileID: 0}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 750af4161961779419521d45143d7410,
+        type: 3}
     - target: {fileID: 8777041752715548236, guid: c798d6131e1c3394db6bc89416b2de22,
         type: 3}
       propertyPath: m_Sprite
