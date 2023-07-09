@@ -64,7 +64,7 @@ public class PlayerCropInteraction : MonoBehaviour
                 plot.waterPlot();
                 if (!wateredFirstCrop)
                 {
-                    eventManager.PrintResult("Your back aches from watering the crop. (-1)");
+                    eventManager.PrintResult("Your back aches from watering the crop. (-" + cost + ")");
                     eventManager.PrintResultAfterDelay(2f, "It will probably be ready for harvest tomorrow...");
                     wateredFirstCrop = true;
                 }
@@ -141,7 +141,7 @@ public class PlayerCropInteraction : MonoBehaviour
                 playerInventory.RemoveItem(item.GetItemId(), 1);
                 if (!plantedFirstSeed)
                 {
-                    eventManager.PrintResult("You planted your " + item.GetItemId() + ". You're always so tired now. (-2)", 3f);
+                    eventManager.PrintResult("You planted your " + item.GetItemId() + ". You're always so tired now. (-" + cost + ")", 3f);
                     eventManager.PrintResultAfterDelay(3f, "Don't forget to water it (E)");
                     plantedFirstSeed = true;
                 }
