@@ -27,14 +27,14 @@ public class PlayerStats : MonoBehaviour
     public void Start()
     {
         hunger = maxHunger / 3; // Start at 3/10 hunger so the player learns to eat
-        SetBar(BarType.Hunger, .33f);
+        SetBar(BarType.Hunger, .35f);
         ap = maxAp / 2; // Start at 7/15 energy so the player learns to eat
         SetBar(BarType.AP, 0.5f);
         nextHungerTick = hungerTickIntervalSeconds;
         dayTimeController = FindAnyObjectByType<DayTimeController>();
 
         eventManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>();
-        eventManager.PrintResultAfterDelay(1f, "You feel hungry, check your inventory (I) for something to eat.");
+        eventManager.PrintResultAfterDelay(1f, "You feel hungry, check your inventory (I) for something to eat.", EventManager.tutorialMessageTime);
     }
 
     // Update is called once per frame
@@ -64,7 +64,6 @@ public class PlayerStats : MonoBehaviour
         if (ap > maxAp) ap = maxAp;
         if (ap <= 0)
         {
-            Debug.Log("You are overworked. You died");
             ap = 0;
             SetBar(BarType.AP, 0);
         } else if (ap >= maxAp) {
@@ -99,7 +98,7 @@ public class PlayerStats : MonoBehaviour
         if (hunger > maxHunger) hunger = maxHunger;
         if (hunger <= warningHunger)
         {
-            eventManager.PrintResult("You are starving (" + hunger + ")");
+            eventManager.PrintResult("You are starving to death (" + hunger + ")", EventManager.tutorialMessageTime);
         }
         if (hunger <= 0)
         {
