@@ -10,6 +10,10 @@ public class PlayerCropInteraction : MonoBehaviour
 
     private InventoryUI inventoryUI;
     private Inventory playerInventory;
+    private EventManager eventManager;
+    private bool plantedFirstSeed;
+    private bool wateredFirstCrop;
+    private bool harvestedFirstCrop;
     private SummaryManager summaryManager;
     //Summary in the format <cropName, countOfCropHarvested>
     private Dictionary<string, int> cropSummary;
@@ -21,6 +25,7 @@ public class PlayerCropInteraction : MonoBehaviour
     {
         inventoryUI = GetComponent<InventoryUI>();
         playerInventory = GetComponent<Inventory>();
+        eventManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>();
         summaryManager = FindAnyObjectByType<SummaryManager>(); 
     }
 
@@ -58,7 +63,7 @@ public class PlayerCropInteraction : MonoBehaviour
                 plot.waterPlot();
             } else
             {
-                Debug.Log("You are out of energy and can not perform that action!");
+                printOutOfEnergyMessage();
             }
 
         } else if (plot.isMature())
@@ -68,19 +73,19 @@ public class PlayerCropInteraction : MonoBehaviour
                 playerManager.ChangeAp(-3);
                 Item yield = plot.harvest();
                 playerInventory.AddItem(yield.GetItemId(), yield.GetQuantity());
-                //STICK IT IN THE INVENTORY!!!!!
                 //add it to your summary
                 InitializeCropSummaryIfNotExist();
                 if (!cropSummary.ContainsKey(yield.name))
                 {
                     cropSummary.Add(yield.name, yield.GetQuantity());
-                } else
+                }
+                else
                 {
                     cropSummary[yield.name] += yield.GetQuantity();
                 }
             } else
             {
-                Debug.Log("You are out of energy and can not perform that action!");
+                printOutOfEnergyMessage();
             }
         }
     }
@@ -118,16 +123,29 @@ public class PlayerCropInteraction : MonoBehaviour
                 playerManager.ChangeAp(-2);
                 plot.plantSeed(seed);
                 playerInventory.RemoveItem(item.GetItemId(), 1);
-            } else
+                if (!plantedFirstSeed)
+                {
+                    eventManager.PrintResult("You planted your " + item.GetItemId() + ". You're always so tired now. (-2)", 3f);
+                    eventManager.PrintResultAfterDelay(3f, "Don't forget to water it (E)");
+                    plantedFirstSeed = true;
+                }
+            }
+            else
             {
-                Debug.Log("You are out of energy and can not perform that action!");
+                printOutOfEnergyMessage();
             }
         }
+    }
+
+    private void printOutOfEnergyMessage()
+    {
+        eventManager.PrintResult("You are too exhausted to do that (0 Action Points)");
     }
 
     public void eatCrop(Item item, Crop crop) {
         playerManager.ChangeHunger(crop.sustenance);
         playerInventory.RemoveItem(item.GetItemId(), 1);
+        eventManager.PrintResult("The " + item.GetItemId() + " made you less hungry. (+" + crop.sustenance + ")", 3f);
         InitializeEatenSummaryIfNotExist();
         if (!eatenSummary.ContainsKey(crop.name))
         {

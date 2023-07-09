@@ -6,6 +6,8 @@ using UnityEngine;
 using UnityEngine.Android;
 using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
+using Button = UnityEngine.UIElements.Button;
 
 public class EventManager : MonoBehaviour
 {
@@ -15,8 +17,6 @@ public class EventManager : MonoBehaviour
     // List of tuples <EventName, EventChoice>
     List<List<string>> eventSummary;
     public DayTimeController dayTimeController;
-    public TMP_Text dialogText;
-    public List<Button> choiceButtons;
     public GameObject dialogBox;
     public GameObject consequenceBox;
     public TMP_Text consequenceText;
@@ -32,33 +32,38 @@ public class EventManager : MonoBehaviour
     private static GameObject npc;
     private static BarterManager barterManager;
 
-
     private static List<EventTemplate> eventTemplates;
+    private UIDocument uidoc;
+    private List<Button> choiceButtons;
 
-    public static int human_loyalty =0 ;
+    public static int human_loyalty = 0 ;
     public static int goblin_loyalty = 0;
     public static int philanthropic = 0;
-    public static int business = 0;
+    public static int robber_count = 0;
 
     public static int human_loyalty_guests_threshold = 3;
     public static int goblin_loyalty_guests_threshold = 3;
     public static int goblin_loyalty_kick_threshold = -3;
 
+    public bool robber_occurred;
     public bool human_guests_occurred;
     public bool goblin_guests_occurred;
-    public bool goblin_kick_occured;
+    public bool goblin_kick_occurred;
   
 
 // Start is called before the first frame update
 public void Start()
     {
+        uidoc = dialogBox.GetComponent<UIDocument>();
+        choiceButtons = new List<Button>();
+
         summaryManager = FindAnyObjectByType<SummaryManager>();
         barterManager = GameObject.FindGameObjectWithTag("BarterManager").GetComponent<BarterManager>();
         eventTemplates = new List<EventTemplate> {
             new EventTemplate(
                 "merchant",
-                "You hear a knock at your gate. \"Would you like to make a trade?",
-                new List<string> { "Let's Trade", "Ignore" },
+                "You hear a knock at your gate. \"Would you like to make a trade?\"",
+                new List<string> { "Let's Trade", "Not today" },
                 new List<EventDelegate> { openShopMenu, closeDialog },
                 allNpcPrefabsList[0],1
             ),
@@ -90,30 +95,55 @@ public void Start()
                 new List<EventDelegate> { PayTax, NotPayTax },
                 allNpcPrefabsList[3],1
             ),
+              new EventTemplate(
+                "robber",
+                "A disheveled goblin crashes through your gate. \"Oye! I heard you've been robbing passerbys in these parts. There's only enough room for one robber here!\"",
+                new List<string> { "Hand over money", "Fight" },
+                new List<EventDelegate> { PayRobber, FightRobber },
+                allNpcPrefabsList[4],0
+            ),
         };
 
         eventCurrentDay = 0;
 
-        // Hard code first event to be merchant appearing 2 seconds in.
-        nextEventTime = 2f;
+        // Hard code first event to be merchant appearing 10 seconds in.
+        nextEventTime = 10f;
         nextEvent = new Event(eventTemplates[0]);
 
         events = new LinkedList<Event>();
+        AddSpecificEvent("lady", true);
+        AddSpecificEvent("lady", true);
         AddSpecificEvent("human soldier", true);
         AddSpecificEvent("tax Event", true);
     }
 
+    public void PrintResultAfterDelay(float delay, string message)
+    {
+        StartCoroutine(WaitAndPrintResult(delay, message));
+    }
+
+    IEnumerator WaitAndPrintResult(float delay, string message)
+    {
+        yield return new WaitForSeconds(delay);
+        PrintResult(message);
+    }
+
     public void PrintResult(string message)
+    {
+        PrintResult(message, 2f);
+    }
+
+    public void PrintResult(string message, float visibleTime)
     {
         consequenceBox.SetActive(true);
         consequenceText.text = message;
 
-        StartCoroutine(WaitAndDisableConsequence());
+        StartCoroutine(WaitAndDisableConsequence(visibleTime));
     }
 
-    IEnumerator WaitAndDisableConsequence()
+    IEnumerator WaitAndDisableConsequence(float visibleTime)
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(visibleTime);
         consequenceBox.SetActive(false);
     }
 
@@ -144,7 +174,7 @@ public void Start()
         playerInventory.AddItem("gold", 10);
         GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
             .PrintResult("You got 5 gold.");
-        business--;
+        robber_count++;
         return true;
     };
     EventDelegate giveFoo = () => {
@@ -218,8 +248,6 @@ public void Start()
             .PrintResult("Lost 5 gold.");
         goblin_loyalty++;
         return true;
-
-
     };
     EventDelegate NotPayTax = () => {
         GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>().ChangeAp(-3);
@@ -227,36 +255,60 @@ public void Start()
             .PrintResult("Lost 3 AP.");
         goblin_loyalty--;
         return true;
-
-
     };
 
-    EventDelegate openShopMenu = () =>
+    EventDelegate PayRobber = () => {
+        Inventory playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
+        if (playerInventory.inventory["gold"].GetQuantity() < 20)
+        {
+            GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
+                .PrintResult("The robber demands 20 gold.");
+            return false;
+        }
+
+        playerInventory.RemoveItem("gold", 20);
+        GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
+            .PrintResult("Lost 20 gold.");
+        return true;
+    };
+
+    EventDelegate FightRobber = () => {
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>().ChangeAp(-10);
+        GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
+            .PrintResult("Lost 10 AP.");
+        return true;
+    };
+
+EventDelegate openShopMenu = () =>
     {
         barterManager.startTrading(npc.gameObject);
         return true;
     };
 
     //Events that occur based on parameters are added through this method
+    // Override whatever the next random event was going to be.
     public bool AddSpecialEvents()
     {
+        if (robber_count >= 2 && !robber_occurred)
+        {
+            robber_occurred = true;
+            ReplaceNextEvent("robber");
+            return true;
+        }
         if (human_loyalty > human_loyalty_guests_threshold && !human_guests_occurred)
         {
             human_guests_occurred = true;
             return true;
-
         }
-        else if (human_loyalty > goblin_loyalty_guests_threshold && !goblin_guests_occurred)
+        if (goblin_loyalty > goblin_loyalty_guests_threshold && !goblin_guests_occurred)
         {
             goblin_guests_occurred = true;
             return true;
-
         }
-        else if (human_loyalty < goblin_loyalty_kick_threshold && !goblin_kick_occured)
+        if (human_loyalty < goblin_loyalty_kick_threshold && !goblin_kick_occurred)
         {
-            goblin_kick_occured = true;
+            goblin_kick_occurred = true;
             return true;
-
         }
         return false;
     }
@@ -301,15 +353,22 @@ public void Start()
                 return;
             }
         }
-
     }
+    public void ReplaceNextEvent(string name)
+    {
+        foreach (EventTemplate template in eventTemplates)
+        {
+            if (template.name == name)
+            {
+                nextEvent = new Event(template);
+            }
+        }
+    }
+
     public void AddEvent()
     {
-        if(AddSpecialEvents())
-        {
-
-        }
-        else
+        bool success = AddSpecialEvents();
+        if(!success)
         {
             AddRandomEvent();
         }
@@ -341,10 +400,11 @@ public void Start()
     // Clear listeners on all buttons.
     private void ResetChoiceButtons()
     {
-        for (int i = 0; i < choiceButtons.Count; i++)
-        {
-            choiceButtons[i].onClick.RemoveAllListeners();
-        }
+        choiceButtons.Clear();
+        //for (int i = 0; i < choiceButtons.Count; i++)
+        //{
+        //    choiceButtons[i].onClick.RemoveAllListeners();
+        //}
     }
 
     // Update is called once per frame
@@ -368,25 +428,27 @@ public void Start()
 
         if (nextEvent != null && !nextEvent.eventStarted && nextEventTime < dayTimeController.getCurrentTimeSeconds())
         {
-            //AddSpecialEvents();
             nextEvent.eventStarted = true;
             npc = Instantiate(nextEvent.template.npcPrefab);
             DialogDelegate dialogDelegate = () =>
             {
                 dialogBox.SetActive(true);
+                npc.transform.GetChild(3).gameObject.SetActive(true);
                 // Clear out all listeners on buttons to make sure we're not accumulating multiple
                 // listeners on a single button.
                 ResetChoiceButtons();
                 dayTimeController.SetPausedTime(true);
-                dialogText.text = nextEvent.template.dialogText;
+                VisualElement root = uidoc.rootVisualElement;
+                root.Q<Label>("Label").text = nextEvent.template.dialogText;
+                choiceButtons.Add(root.Q<Button>("acceptButton"));
+                choiceButtons.Add(root.Q<Button>("declineButton"));
                 for (int i = 0; i < choiceButtons.Count; i++)
                 {
                     //needed because if you use i directly, i will update between when the listener is set vs when the listener is evaluated
                     int temp = i;
-                    Event tempEvent = nextEvent;
+                    Event tempEvent = nextEvent; 
                     string tempChoice = nextEvent.template.choices[i];
-                    choiceButtons[i].GetComponentInChildren<TMP_Text>().text = tempChoice;
-                    choiceButtons[i].onClick.AddListener(() =>
+                    choiceButtons[i].clicked += () =>
                     {
                         bool success = tempEvent.template.executeOption(temp);
 
@@ -396,10 +458,11 @@ public void Start()
                             eventSummary.Add(new List<string> { tempEvent.template.name, tempChoice });
                             dayTimeController.SetPausedTime(false);
                             dialogBox.SetActive(false);
+                            //npc.transform.GetChild(3).gameObject.SetActive(false);
                             //npc.GetComponent<Animator>().SetBool("walkRight", true);
                         }
                         // else keep dialog open and wait for a different choice.
-                    });
+                    };
                 }
                 nextEvent = null;
             };
