@@ -27,6 +27,18 @@ public class PlayerMovement : MonoBehaviour
         gameObject.transform.position = originalStartPosition.transform.position;
     }
 
+    public void ResetToOriginalStartPositionAfterDelay()
+    {
+        StartCoroutine(WaitAndResetToOriginalStartPosition());
+    }
+
+    IEnumerator WaitAndResetToOriginalStartPosition()
+    {
+        yield return new WaitForSeconds(3f);
+        ResetToOriginalStartPosition();
+    }
+
+
     public void setAllowMovement(bool a)
     {
         allowMovement = a;

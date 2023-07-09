@@ -21,6 +21,7 @@ public class PlayerStats : MonoBehaviour
     DayTimeController dayTimeController;
 
     private EventManager eventManager;
+    private int warningHunger = 3;
 
     // Start is called before the first frame update
     public void Start()
@@ -96,6 +97,10 @@ public class PlayerStats : MonoBehaviour
     {
         hunger += delta;
         if (hunger > maxHunger) hunger = maxHunger;
+        if (hunger <= warningHunger)
+        {
+            eventManager.PrintResult("You are starving (" + hunger + ")");
+        }
         if (hunger <= 0)
         {
             overlayManager.GetComponent<OverlayManager>().GameOverTransition(
