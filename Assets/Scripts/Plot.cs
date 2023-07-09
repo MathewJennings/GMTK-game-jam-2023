@@ -167,6 +167,10 @@ public class Plot : MonoBehaviour
 
     public void waterPlot()
     {
+        if (isDesolate)
+        {
+            return;
+        }
         // Update Sprite on watering
         this.isWatered = true;
         this.timeWatered = dayTimeController.getCurrentTimeSeconds();
@@ -175,6 +179,10 @@ public class Plot : MonoBehaviour
 
     public void unwaterPlot()
     {
+        if(isDesolate)
+        {
+            return;
+        }
         this.isWatered = false;
         this.timeOutOfWater = dayTimeController.getCurrentTimeSeconds();
         updateSprite(isEmpty() ? barren : seeded);
