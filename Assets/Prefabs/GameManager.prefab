@@ -2791,7 +2791,7 @@ Transform:
   - {fileID: 8545144284075769543}
   - {fileID: 4038486093737006013}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1734365405346249591
 MonoBehaviour:
@@ -2858,7 +2858,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   dayLightColor: {r: 0.61636704, g: 0.6267744, b: 0.764151, a: 0.15686275}
-  sun: {fileID: 0}
+  sun: {fileID: 2625404656882117530}
   overlayManager: {fileID: 2149463482883547177}
   playerMovement: {fileID: 5347596603119480014}
   pauseButtonObject: {fileID: 6821718323940032531}
