@@ -7363,45 +7363,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 542878234581287013, guid: aa2292d6d5083244d88a9a0035904307,
+    - target: {fileID: 4930164356034139387, guid: aa2292d6d5083244d88a9a0035904307,
         type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -28
-      objectReference: {fileID: 0}
-    - target: {fileID: 736308081891960951, guid: aa2292d6d5083244d88a9a0035904307,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -284
-      objectReference: {fileID: 0}
-    - target: {fileID: 2765327865388016795, guid: aa2292d6d5083244d88a9a0035904307,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4434155431768650354, guid: aa2292d6d5083244d88a9a0035904307,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 24
-      objectReference: {fileID: 0}
-    - target: {fileID: 4499003117539304550, guid: aa2292d6d5083244d88a9a0035904307,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -88
-      objectReference: {fileID: 0}
-    - target: {fileID: 5513638857243225584, guid: aa2292d6d5083244d88a9a0035904307,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 472
-      objectReference: {fileID: 0}
-    - target: {fileID: 6169191803693248025, guid: aa2292d6d5083244d88a9a0035904307,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 420
-      objectReference: {fileID: 0}
-    - target: {fileID: 6317471723249644179, guid: aa2292d6d5083244d88a9a0035904307,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 572
+      propertyPath: m_FlipX
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6557457336749286637, guid: aa2292d6d5083244d88a9a0035904307,
         type: 3}
@@ -7469,12 +7434,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 9004766857100604809, guid: aa2292d6d5083244d88a9a0035904307,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 1693391682, guid: e77f6a4bbf8dfc846bf0c7154fb8fc37,
-        type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

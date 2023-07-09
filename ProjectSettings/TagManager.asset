@@ -8,6 +8,7 @@ TagManager:
   - InventoryUI
   - UIInputManager
   - BarterManager
+  - GameManager
   layers:
   - Default
   - TransparentFX

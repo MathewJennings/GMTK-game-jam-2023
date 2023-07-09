@@ -282,10 +282,15 @@ public class EventConsequences
                 .PrintResult("You do not have enough resources to meet the emissary's demands.");
             return false;
         }
-        GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
-            .PrintResult("You successfully supported the humans on the eve of the decisive battle. Their victory is all but assured.", 5f);
         EventManager.philanthropic++;
         EventManager.human_loyalty++;
+        GameObject.FindAnyObjectByType<OverlayManager>().GameOverTransition(
+                "You did it! You survived!",
+                "You successfully supported the humans on the eve of the decisive battle. Their victory is all but assured. Despite all of the odds, you, a humble goblin farmer living between two warring factions have survived the war. Were you able to live proudly? Or did you need to do what it took to survive. Maybe for another goblin, the conditions would have been different.",
+                true,
+                "Another Story Awaits",
+                () => GameObject.FindAnyObjectByType<RestartManager>().Restart()
+            );
         return true;
     };
 
@@ -313,10 +318,15 @@ public class EventConsequences
                 .PrintResult("You do not have enough resources to meet the emissary's demands.");
             return false;
         }
-        GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
-            .PrintResult("You successfully supported the goblins on the eve of the decisive battle. Their victory is all but assured.", 5f);
         EventManager.philanthropic++;
         EventManager.human_loyalty++;
+        GameObject.FindAnyObjectByType<OverlayManager>().GameOverTransition(
+                "You did it! You survived!",
+                "You successfully supported the goblins on the eve of the decisive battle. Their victory is all but assured. Despite all of the odds, you, a humble goblin farmer living between two warring factions have survived the war. Were you able to live proudly? Or did you need to do what it took to survive. Maybe for another goblin, the conditions would have been different.",
+                true,
+                "Another Story Awaits",
+                () => GameObject.FindAnyObjectByType<RestartManager>().Restart()
+            );
         return true;
     };
 

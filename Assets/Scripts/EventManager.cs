@@ -478,7 +478,19 @@ public void Start()
                             {
                                 InitializeEventSummaryIfNotExist();
                                 eventSummary.Add(new List<string> { tempEvent.template.name, tempChoice });
-                                dayTimeController.SetPausedTime(false);
+                                List<string> events = new List<string>();
+                                foreach (List<string> singleEventSummary in eventSummary)
+                                {
+                                    events.Add(singleEventSummary[0]);
+                                }
+                                if(events.Contains("final_event_goblin") || events.Contains("final_event_human"))
+                                {
+                                    dayTimeController.SetPausedTime(true);
+                                }
+                                else
+                                {
+                                    dayTimeController.SetPausedTime(false);
+                                }
                                 dialogBox.SetActive(false);
                                 eventOverlay.SetActive(false);
                                 //playerPortrait.SetActive(false);
@@ -493,7 +505,6 @@ public void Start()
 
                 npc.GetComponent<Npc>().SetFields(dialogDelegate);
             }
-
         }
     }
     private void InitializeEventSummaryIfNotExist()
