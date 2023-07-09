@@ -84,6 +84,7 @@ public class Npc : MonoBehaviour
     {
         barterManager.stopTrading();
         animator.SetBool("walkRight", true);
+        this.transform.GetChild(3).gameObject.SetActive(false);
     }
 
 }

@@ -407,6 +407,7 @@ EventDelegate openShopMenu = () =>
             DialogDelegate dialogDelegate = () =>
             {
                 dialogBox.SetActive(true);
+                npc.transform.GetChild(3).gameObject.SetActive(true);
                 // Clear out all listeners on buttons to make sure we're not accumulating multiple
                 // listeners on a single button.
                 ResetChoiceButtons();
@@ -426,6 +427,7 @@ EventDelegate openShopMenu = () =>
                         {
                             dayTimeController.SetPausedTime(false);
                             dialogBox.SetActive(false);
+                            //npc.transform.GetChild(3).gameObject.SetActive(false);
                             //npc.GetComponent<Animator>().SetBool("walkRight", true);
                         }
                         // else keep dialog open and wait for a different choice.
