@@ -144,7 +144,8 @@ public void Start()
         nextEvent = new Event(eventTemplates[0]);
 
         events = new LinkedList<Event>();
-        AddSpecificEvent("lady", true);
+        AddSpecificEvent("tax_goblin", true);
+        AddSpecificEvent("merchant", true);
     }
 
     public void PrintResultAfterDelay(float delay, string message)
@@ -210,22 +211,21 @@ public void Start()
             ReplaceNextEvent("treasure_owner");
             return true;
         }
-        if (human_loyalty > human_loyalty_guests_threshold && !human_guests_occurred)
-        {
-            human_guests_occurred = true;
-            AddSpecificEvent("Friendly Humans",true);
-            return true;
-        }
-        if (goblin_loyalty > goblin_loyalty_guests_threshold && !goblin_guests_occurred)
-        {
-            goblin_guests_occurred = true;
-            return true;
-        }
-        if (human_loyalty < goblin_loyalty_kick_threshold && !goblin_kick_occurred)
-        {
-            goblin_kick_occurred = true;
-            return true;
-        }
+        //if (human_loyalty > human_loyalty_guests_threshold && !human_guests_occurred)
+        //{
+        //    human_guests_occurred = true;
+        //    return true;
+        //}
+        //if (goblin_loyalty > goblin_loyalty_guests_threshold && !goblin_guests_occurred)
+        //{
+        //    goblin_guests_occurred = true;
+        //    return true;
+        //}
+        //if (human_loyalty < goblin_loyalty_kick_threshold && !goblin_kick_occurred)
+        //{
+        //    goblin_kick_occurred = true;
+        //    return true;
+        //}
         return false;
     }
 
