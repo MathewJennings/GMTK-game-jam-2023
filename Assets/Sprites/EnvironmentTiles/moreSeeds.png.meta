@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 74fed3cd0737a654cbe97addb903d2f3
+guid: d681228167d11ce4598acc49e4c6ddf1
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -136,13 +136,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: rainPlots_0
+      name: moreSeeds_0
       rect:
         serializedVersion: 2
-        x: 1
+        x: 2
         y: 0
         width: 32
-        height: 30
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -150,29 +150,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4da7dccd3d8eb4240b23347c113718a0
-      internalID: 2065706958
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: rainPlots_1
-      rect:
-        serializedVersion: 2
-        x: 33
-        y: 0
-        width: 32
-        height: 30
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 94848e26f4a701c448b22ad6d479f13a
-      internalID: -2035111309
+      spriteID: f6981c62ce926c843830ec45efcd9478
+      internalID: 123909246
       vertices: []
       indices: 
       edges: []
@@ -188,8 +167,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      rainPlots_0: 2065706958
-      rainPlots_1: -2035111309
+      moreSeeds_0: 123909246
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
