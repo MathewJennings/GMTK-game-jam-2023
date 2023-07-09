@@ -74,7 +74,7 @@ public void Start()
         eventTemplates = new List<EventTemplate> {
             new EventTemplate(
                 "merchant",
-                "A stranger walks up to your gate, a trader by the looks of her. You've been anxious of visitors ever since the human victory in the war started to become a slow inevitability. She approaches cautiously and, gauging you to be non-violent, asks you \"Want to trade?\"",
+                "A stranger walks up to your gate, a trader by the looks of her. You've been anxious of visitors ever since the human victory in the war started to become a slow inevitability. She approaches cautiously and, gauging you to be non-violent, asks you if you'd like to trade.",
                 new List<string> { "Take a look at her wares", "Ask her to be on her way" },
                 new List<EventDelegate> { openShopMenu, EventConsequences.closeDialog },
                 allNpcPrefabsList[0],1
@@ -164,11 +164,18 @@ public void Start()
                 allNpcPrefabsList[9],1
             ),
             new EventTemplate(
-                "final_event",
-                "I'm the final event.",
-                new List<string> { "Much", "Wow" },
-                new List<EventDelegate> { EventConsequences.FinalChoice1, EventConsequences.FinalChoice2 },
-                null,1
+                "final_event_human",
+                "An important human emissary has approached your farm. He says that the final battle is drawing near and that the humans need your support. He's asking you to lend a cornucopia of money and food to help them land the decisive blow. They want 10 carrot crops, 10 apple crops, and 15 gold.",
+                new List<string> { "Offer your support to the humans", "Apologize and deny the request" },
+                new List<EventDelegate> { EventConsequences.SupportHumanVictory, EventConsequences.RejectHumanVictory },
+                allNpcPrefabsList[5],0
+            ),
+            new EventTemplate(
+                "final_event_goblin",
+                "An important goblin emissary has approached your farm. He says that the final battle is drawing near and that the goblins need your support to fend off the human army. He's asking you to lend your support via gold and a cornucopia of food to help them land the decisive blow. They want 10 carrot crops, 10 apple crops, and 15 gold.",
+                new List<string> { "Offer your support to the goblins", "Apologize and deny the request" },
+                new List<EventDelegate> { EventConsequences.SupportGoblinVictory, EventConsequences.RejectGoblinVictory},
+                allNpcPrefabsList[7],0
             )
         };
 

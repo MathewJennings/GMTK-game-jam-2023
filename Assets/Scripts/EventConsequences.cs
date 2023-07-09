@@ -270,13 +270,65 @@ public class EventConsequences
         return true;
     };
 
-    public static EventDelegate FinalChoice1 = () =>
+    public static EventDelegate SupportHumanVictory = () =>
     {
+        Inventory playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
+        int numCarrots = playerInventory.inventory["carrotCrop"].GetQuantity();
+        int numApples = playerInventory.inventory["appleCrop"].GetQuantity();
+        int numGold = playerInventory.inventory["gold"].GetQuantity();
+        if (numCarrots < 10 || numApples < 10 || numGold < 15)
+        {
+            GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
+                .PrintResult("You do not have enough resources to meet the emissary's demands.");
+            return false;
+        }
+        GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
+            .PrintResult("You successfully supported the humans on the eve of the decisive battle. Their victory is all but assured.", 5f);
+        EventManager.philanthropic++;
+        EventManager.human_loyalty++;
         return true;
     };
 
-    public static EventDelegate FinalChoice2 = () =>
+    public static EventDelegate RejectHumanVictory = () =>
     {
+        GameObject.FindAnyObjectByType<OverlayManager>().GameOverTransition(
+                "You were killed",
+                "Though you attempted to survive in this cruel wartorn land, it was not enough. You were immediately slain where you stood by the human emessary. Maybe a different goblin would fair better in the future.",
+                true,
+                "The Struggle Continues",
+                () => GameObject.FindAnyObjectByType<RestartManager>().Restart()
+            );
+        return true;
+    };
+
+    public static EventDelegate SupportGoblinVictory = () =>
+    {
+        Inventory playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
+        int numCarrots = playerInventory.inventory["carrotCrop"].GetQuantity();
+        int numApples = playerInventory.inventory["appleCrop"].GetQuantity();
+        int numGold = playerInventory.inventory["gold"].GetQuantity();
+        if (numCarrots < 10 || numApples < 10 || numGold < 15)
+        {
+            GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
+                .PrintResult("You do not have enough resources to meet the emissary's demands.");
+            return false;
+        }
+        GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
+            .PrintResult("You successfully supported the goblins on the eve of the decisive battle. Their victory is all but assured.", 5f);
+        EventManager.philanthropic++;
+        EventManager.human_loyalty++;
+        return true;
+    };
+
+    public static EventDelegate RejectGoblinVictory = () =>
+    {
+        GameObject.FindAnyObjectByType<OverlayManager>().GameOverTransition(
+                "You were killed",
+                "Though you attempted to survive in this cruel wartorn land, it was not enough. You were immediately slain where you stood by the goblin emessary. Maybe a different goblin would fair better in the future.",
+                true,
+                "The Struggle Continues",
+                () => GameObject.FindAnyObjectByType<RestartManager>().Restart()
+            );
         return true;
     };
 }
