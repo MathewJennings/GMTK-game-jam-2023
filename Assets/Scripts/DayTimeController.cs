@@ -3,29 +3,36 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
+using Button = UnityEngine.UIElements.Button;
 
 public class DayTimeController : MonoBehaviour
 {
 
     public static float secondsInADay = 64;
     public static float secondsInAnHour = 4;
+    // hoursInADay = 16
 
     public Color nightLightColor;
     public AnimationCurve nightTimeCurve;
     public Color dayLightColor = Color.white;
     public OverlayManager overlayManager;
     public PlayerMovement playerMovement;
+    public GameObject pauseButtonObject;
     public int numDaysToWin;
 
     float time = 0;
     public bool isTimePaused = false;
     int currentDay = 0;
 
+    private Button pauseButtonElement;
+
     public TMP_Text currTime;
     //TODO can plug in lighting here
 
     public void Start()
     {
+        pauseButtonElement = pauseButtonObject.GetComponent<UIDocument>().rootVisualElement.Q<Button>("pauseButton");
         time = 0;
         isTimePaused = false;
         currentDay = 0;
@@ -62,13 +69,31 @@ public class DayTimeController : MonoBehaviour
         float numSecRemaining = time % secondsInADay;
         int numHours = (int)(numSecRemaining / secondsInAnHour) + 6; // Start day at 6am
         string numHoursText = numHours < 10 ? "0" + numHours : numHours.ToString();
-        currTime.text = "Day: " + (numDays+1).ToString() + "\nTime: " + numHoursText + ":00\n" + "elapsedTime: " + time.ToString();
+        int numMinutes = Mathf.RoundToInt(time) % 60;
+        string numMinutesText = numMinutes.ToString();
+        if (numMinutes < 10)
+        {
+            numMinutesText = "0" + numMinutesText;
+        }
+        currTime.text = "Day " + (numDays + 1).ToString() + "\n" + numHoursText + ":" + numMinutesText; //+ "elapsedTime: " + time.ToString();
+
+        updatePauseButtonOnClick();
     }
 
-
-    public void togglePausedTime()
-    {
-        isTimePaused = !isTimePaused;
+    public void updatePauseButtonOnClick() {
+        pauseButtonElement.clicked += () =>
+        {
+            if (isTimePaused)
+            {
+                SetPausedTime(false);
+                pauseButtonElement.text = "Pause";
+            }
+            else
+            {
+                SetPausedTime(true);
+                pauseButtonElement.text = "Resume";
+            }
+        };
     }
 
     public void SetPausedTime(bool paused)

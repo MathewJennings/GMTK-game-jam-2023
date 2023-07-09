@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEditor.Progress;
 
 public class PlayerCropInteraction : MonoBehaviour
 {
@@ -61,6 +62,12 @@ public class PlayerCropInteraction : MonoBehaviour
             {
                 playerManager.ChangeAp(-1);
                 plot.waterPlot();
+                if (!wateredFirstCrop)
+                {
+                    eventManager.PrintResult("Your back aches from watering the crop. (-1)");
+                    eventManager.PrintResultAfterDelay(2f, "It will probably be ready for harvest tomorrow...");
+                    wateredFirstCrop = true;
+                }
             } else
             {
                 printOutOfEnergyMessage();
