@@ -154,13 +154,20 @@ public void Start()
                 new List<EventDelegate> { EventConsequences.Explosion, EventConsequences.Explosion },
                 null,1
             ),
+            new EventTemplate(
+                "wealthy merchant",
+                "The air smells like gold and arrogance. You hear an anticipated knock on your door. The wealthy merchant has appeared at your door.",
+                new List<string> { "Shall we trade?", "Too rich for me" },
+                new List<EventDelegate> { openShopMenu, EventConsequences.closeDialog },
+                allNpcPrefabsList[9],1
+            ),
         };
 
         eventCurrentDay = 0;
 
         // Hard code first event to be merchant appearing 10 seconds in.
         nextEventTime = 10f;
-        nextEvent = GetSpecificEvent("merchant");
+        nextEvent = GetSpecificEvent("wealthy merchant");
 
         events = new LinkedList<Event>();
         AddSpecificEvent("tax_goblin", true);
