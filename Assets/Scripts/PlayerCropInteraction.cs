@@ -57,6 +57,13 @@ public class PlayerCropInteraction : MonoBehaviour
     {
         if (plot == null)
         {
+
+            return;
+        }
+
+        if (plot.isDesolate)
+        {
+            eventManager.PrintResult("This plot is exhausted. Land takes time to recover.", EventManager.tutorialMessageTime);
             return;
         }
 
