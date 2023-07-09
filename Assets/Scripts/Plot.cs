@@ -123,6 +123,7 @@ public class Plot : MonoBehaviour
         Debug.Log(seed);
         this.timePlanted = dayTimeController.getCurrentTimeSeconds();
         this.timeOutOfWater = dayTimeController.getCurrentTimeSeconds();
+        this.timeSpentWatered = 0;
         this.seed = seed;
         updateSprite(isWatered ? seededAndWatered : seeded);
     }
