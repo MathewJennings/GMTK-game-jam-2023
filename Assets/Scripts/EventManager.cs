@@ -160,7 +160,7 @@ public void Start()
 
         // Hard code first event to be merchant appearing 10 seconds in.
         nextEventTime = 10f;
-        nextEvent = new Event(eventTemplates[0]);
+        nextEvent = GetSpecificEvent("merchant");
 
         events = new LinkedList<Event>();
         AddSpecificEvent("tax_goblin", true);
@@ -273,22 +273,34 @@ public void Start()
     //Add an event of name "name"
     public void AddSpecificEvent(string name, bool addLast)
     {
-        foreach(EventTemplate template in eventTemplates) 
+        Event e = GetSpecificEvent(name);
+        if (e == null)
         {
-            if(template.name == name)
-            {
-                if (addLast)
-                {
-                    events.AddLast(new Event(template));
-                }
-                else
-                {
-                    events.AddFirst(new Event(template));
-                }
-                return;
-            }
+            return;
+        }
+
+        if (addLast)
+        {
+            events.AddLast(e);
+        }
+        else
+        {
+            events.AddFirst(e);
         }
     }
+
+    public Event GetSpecificEvent(string name)
+    {
+        foreach (EventTemplate template in eventTemplates)
+        {
+            if (template.name == name)
+            {
+                return new Event(template);
+            }
+        }
+        return null;
+    }
+
     public void ReplaceNextEvent(string name)
     {
         foreach (EventTemplate template in eventTemplates)

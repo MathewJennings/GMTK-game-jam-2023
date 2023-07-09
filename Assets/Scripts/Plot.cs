@@ -160,7 +160,10 @@ public class Plot : MonoBehaviour
         this.isWatered = false;
         updateSprite(barren);
         removePlant();
-        eventManager.PrintResult("Your " + seed.gameObject.GetComponent<Item>().GetItemId() + " dried out and shriveled in the unrelenting sun.");
+        if (seed != null)
+        {
+            eventManager.PrintResult("Your " + seed.gameObject.GetComponent<Item>().GetItemId() + " dried out and shriveled in the unrelenting sun.");
+        }
         this.seed = null;
     }
 
