@@ -69,7 +69,7 @@ public class Plot : MonoBehaviour
                 if (!firstCropDried)
                 {
                     firstCropDried = true;
-                    eventManager.PrintResult("The water evaporated quickly in the heat.", 3f);
+                    eventManager.PrintResult("The water evaporated due to the heat.", 3f);
                     eventManager.PrintResultAfterDelay(3f, "Better water it again if you hope to ever harvest it. (E)", 3f);
                 }
             }

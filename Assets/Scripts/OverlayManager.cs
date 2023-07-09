@@ -35,7 +35,7 @@ public class OverlayManager : MonoBehaviour
         StartCoroutine(DisplayOverlay("Day " + (currentDay + 1).ToString(), "Finished the day with " + hunger.ToString() + " Hunger\nResting overnight you gained " + hunger.ToString() + " Energy", false));
 
         PlayerMovement playerMovement = player.GetComponent<PlayerMovement>();
-        playerMovement.ResetToOriginalStartPosition();
+        playerMovement.ResetToOriginalStartPositionAfterDelay();
     }
 
     public void GameOverTransition(string title, string subtitle, bool showButton, string buttonText, ButtonDelegate buttonDelegate)
