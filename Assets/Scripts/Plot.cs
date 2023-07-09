@@ -82,7 +82,11 @@ public class Plot : MonoBehaviour
 
     private bool outOfWater()
     {
-        return dayTimeController.getCurrentTimeSeconds() >= timeWatered + seed.getWaterDurationTime();
+        if (seed != null)
+        {
+            return dayTimeController.getCurrentTimeSeconds() >= timeWatered + seed.getWaterDurationTime();
+        }
+        return false;
     }
 
     private void checkDead()
@@ -183,7 +187,6 @@ public class Plot : MonoBehaviour
 
     public bool isMature()
     {
-        Debug.Log(timeSpentWatered + "/" + seed.getMaturationTime());
         return timeSpentWatered >= seed.getMaturationTime();
     }
 }
