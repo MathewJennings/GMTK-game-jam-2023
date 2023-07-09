@@ -31,7 +31,7 @@ PrefabInstance:
     - target: {fileID: 3467385716305010558, guid: 0bae09c30bd1c31479a0e4c33260aade,
         type: 3}
       propertyPath: description
-      value: I see, so this is a foo.
+      value: A sour apple. More filling than a carrot, but not by much..
       objectReference: {fileID: 0}
     - target: {fileID: 3467385716305010558, guid: 0bae09c30bd1c31479a0e4c33260aade,
         type: 3}
