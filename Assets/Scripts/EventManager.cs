@@ -160,7 +160,7 @@ public void Start()
             new EventTemplate(
                 "wealthy_merchant",
                 "The air smells like gold and arrogance. You hear an anticipated knock on your door. The wealthy merchant has appeared at your door.",
-                new List<string> { "Take a look at her wares?", "Ask her to leave." },
+                new List<string> { "Take a look at her wares", "Ask her to leave." },
                 new List<EventDelegate> { openShopMenu, EventConsequences.closeDialog },
                 allNpcPrefabsList[9],1
             ),
@@ -428,9 +428,6 @@ public void Start()
                             dayTimeController.SetPausedTime(false);
                             dialogBox.SetActive(false);
                             eventOverlay.SetActive(false);
-                            //playerPortrait.SetActive(false);
-                            //npc.transform.GetChild(3).gameObject.SetActive(false);
-                            //npc.GetComponent<Animator>().SetBool("walkRight", true);
                         }
                         // else keep dialog open and wait for a different choice.
                     };
@@ -474,9 +471,13 @@ public void Start()
                                 dayTimeController.SetPausedTime(false);
                                 dialogBox.SetActive(false);
                                 eventOverlay.SetActive(false);
-                                //playerPortrait.SetActive(false);
-                                //npc.transform.GetChild(3).gameObject.SetActive(false);
-                                //npc.GetComponent<Animator>().SetBool("walkRight", true);
+                                // else we let the Npc.stopTrading() handle the UI update
+                                if (tempChoice != "Take a look at her wares")
+                                {
+                                    playerPortrait.SetActive(false);
+                                    npc.transform.GetChild(3).gameObject.SetActive(false);
+                                    npc.GetComponent<Animator>().SetBool("walkRight", true);
+                                }
                             }
                             // else keep dialog open and wait for a different choice.
                         };
