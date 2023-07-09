@@ -53,8 +53,8 @@ public void Start()
         eventTemplates = new List<EventTemplate> {
             new EventTemplate(
                 "merchant",
-                "You hear a knock at your gate. \"Would you like to make a trade?",
-                new List<string> { "Let's Trade", "Ignore" },
+                "You hear a knock at your gate. \"Would you like to make a trade?\"",
+                new List<string> { "Let's Trade", "Not today" },
                 new List<EventDelegate> { openShopMenu, closeDialog },
                 allNpcPrefabsList[0],1
             ),
