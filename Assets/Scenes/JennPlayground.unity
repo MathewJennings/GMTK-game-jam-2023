@@ -7261,9 +7261,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 635cff0b51987974189d2fff8fd755f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maturationHours: 0
-  waterHours: 0
-  dryHours: 0
+  hoursToMaturation: 0
+  waterDurationInHours: 0
+  dryTimeToleranceInHours: 0
   yieldQuantity: 0
   yield: {fileID: 0}
   sproutSprite: {fileID: 0}

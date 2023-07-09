@@ -22,6 +22,7 @@ public class EventManager : MonoBehaviour
     public TMP_Text consequenceText;
     public List<GameObject> allNpcPrefabsList;
     public GameObject npcManager;
+    public GameObject playerPortrait;
 
     //when the next event that was added to the queue is
     private static float nextEventTime;
@@ -316,6 +317,7 @@ public void Start()
             {
                 dialogBox.SetActive(true);
                 npc.transform.GetChild(3).gameObject.SetActive(true);
+                playerPortrait.SetActive(true);
                 // Clear out all listeners on buttons to make sure we're not accumulating multiple
                 // listeners on a single button.
                 ResetChoiceButtons();
@@ -340,6 +342,7 @@ public void Start()
                             eventSummary.Add(new List<string> { tempEvent.template.name, tempChoice });
                             dayTimeController.SetPausedTime(false);
                             dialogBox.SetActive(false);
+                            //playerPortrait.SetActive(false);
                             //npc.transform.GetChild(3).gameObject.SetActive(false);
                             //npc.GetComponent<Animator>().SetBool("walkRight", true);
                         }
