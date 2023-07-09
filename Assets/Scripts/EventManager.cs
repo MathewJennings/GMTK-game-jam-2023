@@ -160,7 +160,7 @@ public void Start()
             new EventTemplate(
                 "wealthy_merchant",
                 "The air smells like gold and arrogance. You hear an anticipated knock on your door. The wealthy merchant has appeared at your door.",
-                new List<string> { "Take a look at her wares", "Ask her to leave." },
+                new List<string> { "Take a look at his wares", "Ask him to leave." },
                 new List<EventDelegate> { openShopMenu, EventConsequences.closeDialog },
                 allNpcPrefabsList[9],1
             ),
@@ -340,8 +340,8 @@ public void Start()
     {
         // Earliest time is 5 seconds into the day.
         float earliestTime = (eventCurrentDay * DayTimeController.secondsInADay) + 5f;
-        // Latest time is 5 seconds before end of day.
-        float latestTime = ((eventCurrentDay + 1) * DayTimeController.secondsInADay) - 5f;
+        // Latest time is 20 seconds before end of day.
+        float latestTime = ((eventCurrentDay + 1) * DayTimeController.secondsInADay) - 20f;
 
         return UnityEngine.Random.Range(earliestTime, latestTime);
     }
