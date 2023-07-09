@@ -13,20 +13,27 @@ public class PlayerStats : MonoBehaviour
     public int ap { set; get; }
     public GameObject hungerEmptyBar;
     public GameObject apEmptyBar;
+    public GameObject overlayManager;
 
     float nextHungerTick;
     float hungerTickIntervalSeconds = DayTimeController.secondsInAnHour;
     DayTimeController dayTimeController;
+    Vector2 originalStartPosition;
 
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
+        if(originalStartPosition == null)
+        {
+            originalStartPosition = transform.position;
+        }
         ap = maxAp; 
         hunger = maxHunger;
         SetBar(BarType.Hunger, maxHunger);
         SetBar(BarType.AP, maxAp);
         nextHungerTick = hungerTickIntervalSeconds;
         dayTimeController = FindAnyObjectByType<DayTimeController>();
+        gameObject.transform.position = originalStartPosition;
     }
 
     // Update is called once per frame
@@ -89,7 +96,14 @@ public class PlayerStats : MonoBehaviour
         hunger += delta;
         if(hunger <= 0)
         {
-            Debug.Log("You died as you lived, hungry and alone.");
+            overlayManager.GetComponent<OverlayManager>().GameOverTransition(
+                "You Starved",
+                "You died as you lived, hungry and alone. As you struggle to maintain consciousness you wonder to yourself... what could have happened if things went just a little differently?",
+                true,
+                "The Struggle Continues",
+                // Restart manager will 
+                () => FindAnyObjectByType<RestartManager>().Restart()
+            );
             hunger = 0;
             SetBar(BarType.Hunger, 0);
         } else if(hunger >= maxHunger)

@@ -198,7 +198,7 @@ MonoBehaviour:
   - {fileID: 3778988841053979637}
   - {fileID: 2304601846614705520}
   - {fileID: 1281050499090895873}
-  moveSpeed: 1
+  moveSpeed: 9
   dialogIndex: 1
 --- !u!95 &2687478305636269686
 Animator:

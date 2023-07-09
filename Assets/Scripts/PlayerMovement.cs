@@ -10,19 +10,35 @@ public class PlayerMovement : MonoBehaviour
 
     private Rigidbody2D rigidbody;
     private Animator animator;
+    private bool allowMovement;
 
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
         rigidbody = gameObject.GetComponent<Rigidbody2D>();
         animator = gameObject.GetComponent<Animator>();
+        allowMovement = true;
+    }
+
+    public void setAllowMovement(bool a)
+    {
+        allowMovement = a;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        float h = Input.GetAxisRaw("Horizontal");
-        float v = Input.GetAxisRaw("Vertical");
+        float h;
+        float v;
+        if (!allowMovement)
+        {
+            h = 0;
+            v = 0;
+        } else
+        {
+            h = Input.GetAxisRaw("Horizontal");
+            v = Input.GetAxisRaw("Vertical");
+        }
         if (h > 0)
         {
             animator.SetBool("walkRight", true);
