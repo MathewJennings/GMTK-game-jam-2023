@@ -117,49 +117,49 @@ public void Start()
             ),
             new EventTemplate(
                 "treasure",
-                "Are your eyes deceiving you? You can't believe it. A treasure chest has somehow walked up to your farm. You reason that magicians must be fighting in the war now -- an indication that its reaching its climax. Regardless, you figure this is probably a blessing of pure luck. You consider your options...",
+                "Are your eyes deceiving you? You can't believe it. A treasure chest has somehow walked up to your farm. You reason that it must have been created by one of the human war mages -- clearly this war is approaching its climax. War mages are powerful figures, and you know you wouldn't want to ever cross one. But as long as none of them are around...",
                 new List<string> { "Claim the chest", "Too risky..." },
                 new List<EventDelegate> { EventConsequences.OpenChest, EventConsequences.IgnoreChest },
                 allNpcPrefabsList[8],1
             ),
             new EventTemplate(
                 "treasure_owner",
-                "A mage approaches your farm. You notice that he is brimming with magical energy as the atmosphere in his immediate vicinity electrifies. This is a dangerous man. Aware of the power imbalance, he confidently asks you if you've seen his magic chest. He is clearly expecting you to say yes.",
+                "A war mage approaches your farm. He walks proudly in his rich robes -- he is clearly a respected individual. And clearly powerful too. The atmosphere around him is practically electric from the energy he carries within himself. This is a dangerous man. He confidently asks you if you've seen his magic chest. He clearly expects you to say yes.",
                 new List<string> { "Fess up and pay him back", "Grovel and feign ignorance" },
                 new List<EventDelegate> { EventConsequences.TreasureOwnerReturnMoney, EventConsequences.TreasureOwnerSayNo },
                 allNpcPrefabsList[5],0
             ),
             new EventTemplate(
                 "treasure_mimic",
-                "You can't believe it. A treasure chest has somehow walked up to your farm. You reason that magicians must be fighting in the war now -- an indication that its reaching its climax. Regardless, you figure this is probably a blessing of pure luck. You consider your options...",
+                "Are your eyes deceiving you? You can't believe it. A treasure chest has somehow walked up to your farm. You reason that it must have been created by one of the human war mages -- clearly this war is approaching its climax. War mages are powerful figures, and you know you wouldn't want to ever cross one. But as long as none of them are around...",
                 new List<string> { "Claim the chest", "Too risky..." },
                 new List<EventDelegate> { EventConsequences.OpenMimicChest, EventConsequences.IgnoreChest },
                 allNpcPrefabsList[8],1
             ),
             new EventTemplate(
                 "rain",
-                "Clouds move in, blanketing the sky. It's a preciously rare sight these days. Before you know it, you start to feel water on your forehead. It rapidly swells to a dark torrent. As you stand in the down pour you feel a well of appreciation for today's respite.",
+                "Dark clouds quickly move in, blanketing the sky. Before you know it, you start to feel waterdrops on your forehead. The weather rapidly swells to a dark torrent. As you stand in the down pour you feel a well of appreciation for today's respite.",
                 new List<string> { "Rest", "Reflect" },
                 new List<EventDelegate> { EventConsequences.Rain, EventConsequences.Rain },
                 null,1
             ),
             new EventTemplate(
                 "drought",
-                "The sun's heat intensifies today. An oppressive miasma of humidity suffocates you as you watch your plants start to shrivel in the heat.",
+                "The sun's heat suddenly intensifies. An oppressive miasma of humidity suffocates you as you watch your plants start to dry out in the heat.",
                 new List<string> { "Time to get to work", "No rest for the wicked..." },
                 new List<EventDelegate> { EventConsequences.Drought, EventConsequences.Drought },
                 null,1
             ),
             new EventTemplate(
                 "explosions",
-                "You suddenly hear loud explosions nearby. It must be a battle nearby, including mages. You sense imminent danger and pray to your gods that you and your land aren't caught in the crossfire...",
+                "You suddenly hear loud explosions nearby. It must be a battle involving powerful human war mages. You worry about your kinsmen. Not even your mystical shamans can summon power remotely equal in strength. You sense imminent danger and pray to your gods that you and your land aren't caught in the crossfire...",
                 new List<string> { "Brace", "Seek shelter" },
                 new List<EventDelegate> { EventConsequences.Explosion, EventConsequences.Explosion },
                 null,1
             ),
             new EventTemplate(
                 "wealthy_merchant",
-                "The air smells like gold and arrogance. You hear an anticipated knock on your door. The wealthy merchant has appeared at your door.",
+                "An opulent trader approaches your land. The air fills with the scent of dandelions and tea leaves. Miraculously, this individual seems to be thriving right now",
                 new List<string> { "Take a look at his wares", "Ask him to leave." },
                 new List<EventDelegate> { openShopMenu, EventConsequences.closeDialog },
                 allNpcPrefabsList[9],1

@@ -126,7 +126,7 @@ public class EventConsequences
         player.GetComponent<PlayerStats>().ChangeAp(-3);
         player.GetComponent<PlayerMovement>().CrippleMovement();
         GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>()
-        .PrintResult("The mercenaries won't let you get away with that. They take pleasure in assaulting you (-3) and stealing what you have.", 5f);
+        .PrintResult("The mercenaries won't let you get away with that. They take pleasure in assaulting you (-3) and stealing everything you have.", 5f);
         EventManager.goblin_loyalty--;
         return true;
     };
