@@ -13,18 +13,20 @@ public class Inventory_Item : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     private InventoryUI inventoryUI;
     private UIInputManager uiInputManager;
     private PlayerCropInteraction playerCropInteraction;
+    private BarterManager barterManager;
 
     private Item item;
 
     private void Start()
     {
         uiInputManager = GameObject.FindGameObjectWithTag("UIInputManager").GetComponent<UIInputManager>();
-        playerCropInteraction = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCropInteraction>();
+        barterManager = GameObject.FindGameObjectWithTag("BarterManager").GetComponent<BarterManager>();
     }
 
     public void setInventoryUI(InventoryUI inventoryUI)
     {
         this.inventoryUI = inventoryUI;
+        playerCropInteraction = inventoryUI.gameObject.GetComponent<PlayerCropInteraction>(); // Only the Player's instance should successfully find this
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -44,31 +46,54 @@ public class Inventory_Item : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         quantityText.text = item.GetQuantity().ToString();
     }
 
+    public string getItemId()
+    {
+        return item.GetItemId();
+    }
+
+    public bool isPlayerItem()
+
+    {
+        return playerCropInteraction != null;
+    }
+
     public void OnClick()
     {
+        Item.ItemType itemType = item.GetItemType();
         if (uiInputManager.GetClickedGameObjects().Contains(this.gameObject))
         {
-            Item.ItemType itemType = item.GetItemType();
-
-            if (Item.ItemType.Seed == itemType)
+            if (barterManager.IsTrading() && itemType != Item.ItemType.Gold)
             {
-                Seed seed = item.GetSeed();
-                if (seed != null)
-                {
-                    playerCropInteraction.plantSeed(item, seed);
-                    inventoryUI.CloseInventory();
-                }
-            } else if (Item.ItemType.Crop == itemType)
-            {
-                Crop crop = item.GetCrop();
-                if (crop != null)
-                {
-                   playerCropInteraction.eatCrop(item, crop);
-                    inventoryUI.CloseInventory();
-                }
+                barterManager.setBarteringItem(this);
             }
-            
+            else if (Item.ItemType.Seed == itemType)
+            {
+                PlantSeed();
+            }
+            else if (Item.ItemType.Crop == itemType)
+            {
+                EatCrop();
+            }
         }
     }
 
+    private void PlantSeed()
+    {
+        Seed seed = item.GetSeed();
+        if (seed != null)
+        {
+            playerCropInteraction.plantSeed(item, seed);
+            inventoryUI.CloseInventory();
+        }
+    }
+
+    private void EatCrop()
+    {
+        Crop crop = item.GetCrop();
+        if (crop != null)
+        {
+            playerCropInteraction.eatCrop(item, crop);
+            inventoryUI.CloseInventory();
+        }
+    }
 }

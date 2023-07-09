@@ -6,8 +6,8 @@ TagManager:
   tags:
   - ItemManager
   - InventoryUI
-  - DayTransitionOverlay
   - UIInputManager
+  - BarterManager
   layers:
   - Default
   - TransparentFX

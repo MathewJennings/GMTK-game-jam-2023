@@ -27,6 +27,7 @@ public class EventManager : MonoBehaviour
     private float eventCurrentDay;
 
     private static GameObject npc;
+    private static BarterManager barterManager;
 
 
     private static List<EventTemplate> eventTemplates;
@@ -51,6 +52,7 @@ public class EventManager : MonoBehaviour
 // Start is called before the first frame update
 public void Start()
     {
+        barterManager = GameObject.FindGameObjectWithTag("BarterManager").GetComponent<BarterManager>();
         eventTemplates = new List<EventTemplate> {
             new EventTemplate(
                 "merchant",
@@ -85,7 +87,7 @@ public void Start()
                 "You hear yelling from your gate. You see goblin soldiers standing there. \"We have come today to collect your taxes! This will be crucial to win this war! Now behave and pay your taxes!\"",
                 new List<string> { "Pay", "Ignore" },
                 new List<EventDelegate> { PayTax, NotPayTax },
-                allNpcPrefabsList[3],0
+                allNpcPrefabsList[3],1
             ),
         };
 
@@ -96,15 +98,22 @@ public void Start()
         nextEvent = new Event(eventTemplates[0]);
 
         events = new Queue<Event>();
+        AddSpecificEvent("human soldier");
         AddSpecificEvent("tax Event");
-        
     }
 
     public void PrintResult(string message)
     {
-        // TODO: Make this print to UI.
-        
+        consequenceBox.SetActive(true);
         consequenceText.text = message;
+
+        StartCoroutine(WaitAndDisableConsequence());
+    }
+
+    IEnumerator WaitAndDisableConsequence()
+    {
+        yield return new WaitForSeconds(2f);
+        consequenceBox.SetActive(false);
     }
 
     EventDelegate closeDialog = () =>
@@ -223,7 +232,7 @@ public void Start()
 
     EventDelegate openShopMenu = () =>
     {
-        npc.GetComponent<InventoryUI>().OpenInventory(); //TODO
+        barterManager.startTrading(npc.gameObject);
         return true;
     };
 
@@ -233,26 +242,18 @@ public void Start()
         if (human_loyalty > human_loyalty_guests_threshold && !human_guests_occurred)
         {
             human_guests_occurred = true;
-            //AddSpecificEvent("Human Guests");
-            //Debug.Log("Special Event added");
             return true;
 
         }
         else if (human_loyalty > goblin_loyalty_guests_threshold && !goblin_guests_occurred)
         {
             goblin_guests_occurred = true;
-            //AddSpecificEvent("Goblin Guests");
-           // Debug.Log("Special Event added");
-
             return true;
 
         }
         else if (human_loyalty < goblin_loyalty_kick_threshold && !goblin_kick_occured)
         {
             goblin_kick_occured = true;
-            //AddSpecificEvent("Goblin Exiled");
-            //Debug.Log("Special Event added");
-
             return true;
 
         }
@@ -265,25 +266,18 @@ public void Start()
         float currentPossibility = UnityEngine.Random.Range(0f, 1f);
         int randomIndex = UnityEngine.Random.Range(0, eventTemplates.Count - 1);
         int testing = 0;
-        //Debug.Log("random index:" + randomIndex + "out of "+ (eventTemplates.Count - 1));
-        //Debug.Log("last one"+eventTemplates[eventTemplates.Count - 1].name);
     
         //If the event that we are thinking about does not occur based on the possibility, we try to look for another event. This is repeated.
         while (currentPossibility >= eventTemplates[randomIndex].possibility)
         {
-            //Debug.Log("random index:" + randomIndex);
-
-            //Debug.Log(randomIndex);
             currentPossibility = UnityEngine.Random.Range(0f, 1f);
             randomIndex = UnityEngine.Random.Range(0, eventTemplates.Count);
             testing++;
             if(testing>=100)
             {
-                //Debug.Log("possibily infinite while loop");
                 return;
             }
         }
-        //Debug.Log(eventTemplates[randomIndex].name + "");
 
         events.Enqueue(new Event(eventTemplates[randomIndex]));
 
@@ -348,19 +342,16 @@ public void Start()
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("event current day " + eventCurrentDay);
-        Debug.Log("next event time " + nextEventTime);
-        if (eventCurrentDay <= dayTimeController.getCurrentDay() && nextEvent==null)
+        if (eventCurrentDay < dayTimeController.getCurrentDay() && nextEvent==null)
         {
             // We hit the next day. Pull out an event from the queue.
-            Debug.Log("We started a new day");
-            eventCurrentDay = dayTimeController.getCurrentDay()+1;
+            eventCurrentDay = dayTimeController.getCurrentDay();
             if (events.Count > 0)
             {
                 nextEventTime = RandomNextEventTime();
                 nextEvent = events.Dequeue();
             }
-            else
+            if (events.Count < 2)
             {
                 AddEvent();
             }
@@ -368,12 +359,6 @@ public void Start()
 
         if (nextEvent != null && !nextEvent.eventStarted && nextEventTime < dayTimeController.getCurrentTimeSeconds())
         {
-            Debug.Log("length of event: "+ events.Count);
-            if (events.Count < 2)
-            {
-                AddEvent();
-
-            }
             //AddSpecialEvents();
             nextEvent.eventStarted = true;
             npc = Instantiate(nextEvent.template.npcPrefab);
@@ -399,7 +384,7 @@ public void Start()
                         {
                             dayTimeController.SetPausedTime(false);
                             dialogBox.SetActive(false);
-                            npc.GetComponent<Animator>().SetBool("walkRight", true);
+                            //npc.GetComponent<Animator>().SetBool("walkRight", true);
                         }
                         // else keep dialog open and wait for a different choice.
                     });

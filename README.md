@@ -105,6 +105,13 @@
  * [Sam M] Better crop user experience
  * [Felix] Something something Events
 
+### Sprint 2.5: Tweaking the feel
+* Game design/feel balancing
+* Summary screen to personalize your story
+* One more thing you can do to balance player activities?
+* Content (more events with better written events)
+* Small UI enhancements
+
 
 * end days early
 * starvation
