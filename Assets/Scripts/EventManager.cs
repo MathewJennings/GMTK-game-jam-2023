@@ -80,7 +80,7 @@ public void Start()
                 allNpcPrefabsList[2],1
             ),
             new EventTemplate(
-                "human soldier",
+                "human_soldier",
                 "You hear a voice coming from your gate. It's a human soldier. He seems tired and injured. Maybe some foo will help him.",
                 new List<string> { "Give Foo", "Report to Goblin soliders" },
                 new List<EventDelegate> { EventConsequences.giveFoo, EventConsequences.reportHumanSoldier },
@@ -94,7 +94,7 @@ public void Start()
                 allNpcPrefabsList[4],0
             ),
             new EventTemplate(
-                "tax Event",
+                "tax_goblin",
                 "You hear yelling from your gate. You see goblin soldiers standing there. \"We have come today to collect your taxes! This will be crucial to win this war! Now behave and pay your taxes!\"",
                 new List<string> { "Pay", "Ignore" },
                 new List<EventDelegate> { EventConsequences.PayTax, EventConsequences.NotPayTax },
@@ -144,10 +144,7 @@ public void Start()
         nextEvent = new Event(eventTemplates[0]);
 
         events = new LinkedList<Event>();
-        AddSpecificEvent("treasure", true);
         AddSpecificEvent("lady", true);
-        AddSpecificEvent("human soldier", true);
-        AddSpecificEvent("tax Event", true);
     }
 
     public void PrintResultAfterDelay(float delay, string message)
