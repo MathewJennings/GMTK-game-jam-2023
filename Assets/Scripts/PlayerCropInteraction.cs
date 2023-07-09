@@ -105,7 +105,9 @@ public class PlayerCropInteraction : MonoBehaviour
                 Instantiate(sythePrefab, gameObject.transform, false);
                 playerInventory.AddItem(yield.GetItemId(), yield.GetQuantity());
                 playerInventory.AddItem(yield.GetCorrespondingId(), 1); // yield 1 seed as well
-                inventoryUI.refresh();
+                if (inventoryUI.isInventoryOpen()) {
+                    inventoryUI.refresh();
+                }
 
 
                 if (!harvestedFirstCrop)
