@@ -42,12 +42,14 @@ public class EventManager : MonoBehaviour
 
     public static int philanthropic = 0;
     public static int robber_count = 0;
+    public static int treasure_count = 0;
 
     public static int human_loyalty_guests_threshold = 3;
     public static int goblin_loyalty_guests_threshold = 3;
     public static int goblin_loyalty_kick_threshold = -3;
 
     public bool robber_occurred;
+    public bool treasure_owner_occurred;
     public bool angry_goblin_occurred;
     public bool human_guests_occurred;
     public bool goblin_guests_occurred;
@@ -105,6 +107,34 @@ public void Start()
                 new List<EventDelegate> { EventConsequences.PayRobber, EventConsequences.FightRobber },
                 allNpcPrefabsList[4],0
             ),
+            new EventTemplate(
+                "treasure",
+                "A treasure chest walks up to your front door...",
+                new List<string> { "Open Chest", "Ignore" },
+                new List<EventDelegate> { EventConsequences.OpenChest, EventConsequences.closeDialog },
+                allNpcPrefabsList[5],0
+            ),
+            new EventTemplate(
+                "treasure_owner",
+                "A man walks up to your door. \"My treasure chest grew legs and ran off! Have you seen it?\"",
+                new List<string> { "Return money", "Say no" },
+                new List<EventDelegate> { EventConsequences.TreasureOwnerReturnMoney, EventConsequences.TreasureOwnerSayNo },
+                allNpcPrefabsList[5],0
+            ),
+            new EventTemplate(
+                "treasure_mimic",
+                "A treasure chest walks up to your front door...",
+                new List<string> { "Open Chest", "Ignore" },
+                new List<EventDelegate> { EventConsequences.OpenMimicChest, EventConsequences.closeDialog },
+                allNpcPrefabsList[5],0
+            ),
+            new EventTemplate(
+                "rain",
+                "A cloud covers the sun for a brief moment and you feel rain against your forehead.",
+                new List<string> { "I'm drenched", "I'm still drenched" },
+                new List<EventDelegate> { EventConsequences.Rain, EventConsequences.Rain },
+                allNpcPrefabsList[5],0
+            ),
         };
 
         eventCurrentDay = 0;
@@ -114,7 +144,7 @@ public void Start()
         nextEvent = new Event(eventTemplates[0]);
 
         events = new LinkedList<Event>();
-        AddSpecificEvent("lady", true);
+        AddSpecificEvent("rain", true);
         AddSpecificEvent("lady", true);
         AddSpecificEvent("human soldier", true);
         AddSpecificEvent("tax Event", true);
@@ -175,6 +205,12 @@ public void Start()
         {
             angry_goblin_occurred = true;
             ReplaceNextEvent("angry_goblin");
+            return true;
+        }
+        if (treasure_count >= 1 && !treasure_owner_occurred)
+        {
+            treasure_owner_occurred = true;
+            ReplaceNextEvent("treasure_owner");
             return true;
         }
         if (human_loyalty > human_loyalty_guests_threshold && !human_guests_occurred)
@@ -303,10 +339,7 @@ public void Start()
                 nextEvent = events.First.Value;
                 events.RemoveFirst();
             }
-            if (events.Count < 2)
-            {
-                AddEvent();
-            }
+            AddEvent();
         }
 
         if (nextEvent != null && !nextEvent.eventStarted && nextEventTime < dayTimeController.getCurrentTimeSeconds())

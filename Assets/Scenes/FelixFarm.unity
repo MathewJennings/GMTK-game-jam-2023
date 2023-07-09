@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748171, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -7261,9 +7261,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 635cff0b51987974189d2fff8fd755f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maturationHours: 0
-  waterHours: 0
-  dryHours: 0
+  hoursToMaturation: 0
+  waterDurationInHours: 0
+  dryTimeToleranceInHours: 0
   yieldQuantity: 0
   yield: {fileID: 0}
   sproutSprite: {fileID: 0}
@@ -7363,6 +7363,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1734365405346249591, guid: aa2292d6d5083244d88a9a0035904307,
+        type: 3}
+      propertyPath: numDaysToWin
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 6557457336749286637, guid: aa2292d6d5083244d88a9a0035904307,
         type: 3}
       propertyPath: m_Name
