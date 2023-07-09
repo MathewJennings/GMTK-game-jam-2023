@@ -441,3 +441,4 @@ MonoBehaviour:
   waterPlant: {fileID: 8300000, guid: f7b973478d2e8724d9d860203ec30d1c, type: 3}
   plantSeed: {fileID: 8300000, guid: e5b1b932f4fba9344af05628d0b6ff33, type: 3}
   harvestPlant: {fileID: 8300000, guid: 98597350119548d49a310abe20f859b4, type: 3}
+  eatFood: {fileID: 8300000, guid: cb2da99dae29d214bbe1560c4b8be462, type: 3}

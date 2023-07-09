@@ -170,6 +170,7 @@ public class PlayerCropInteraction : MonoBehaviour
     }
 
     public void eatCrop(Item item, Crop crop) {
+        playerSounds.playEatFood();
         playerStats.ChangeHunger(crop.sustenance);
         eventManager.PrintResult("The " + item.GetItemId() + " made you less hungry. (+" + crop.sustenance + ")", 3f);
         int energyChange = crop.sustenance;

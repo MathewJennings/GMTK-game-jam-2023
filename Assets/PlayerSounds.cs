@@ -14,6 +14,7 @@ public class PlayerSounds : MonoBehaviour
     public AudioClip waterPlant;
     public AudioClip plantSeed;
     public AudioClip harvestPlant;
+    public AudioClip eatFood;
     
     public void playLeftStep()
     {
@@ -52,5 +53,10 @@ public class PlayerSounds : MonoBehaviour
     public void playHarvestPlant()
     {
         audioSource.PlayOneShot(harvestPlant);
+    }
+
+    public void playEatFood()
+    {
+        audioSource.PlayOneShot(eatFood);
     }
 }
