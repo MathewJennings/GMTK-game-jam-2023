@@ -8,6 +8,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2457092576051856506, guid: c798d6131e1c3394db6bc89416b2de22,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2457092576051856506, guid: c798d6131e1c3394db6bc89416b2de22,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2457092576051856506, guid: c798d6131e1c3394db6bc89416b2de22,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2457092576051856506, guid: c798d6131e1c3394db6bc89416b2de22,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.8
+      objectReference: {fileID: 0}
     - target: {fileID: 2547172948823885662, guid: c798d6131e1c3394db6bc89416b2de22,
         type: 3}
       propertyPath: m_RootOrder
@@ -73,6 +93,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Goblin_1
       objectReference: {fileID: 0}
+    - target: {fileID: 5596473273028023291, guid: c798d6131e1c3394db6bc89416b2de22,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 1973212794, guid: f52af188e883b934aa70d85627d521c1,
+        type: 3}
     - target: {fileID: 8777041752715548236, guid: c798d6131e1c3394db6bc89416b2de22,
         type: 3}
       propertyPath: m_Size.x
