@@ -58,6 +58,24 @@ public class SummaryManager : MonoBehaviour
             }
             stringBuilder.AppendLine();
         }
+        //inventory
+        Inventory inventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
+        Dictionary<string, Item> items = inventory.inventory;
+        bool firstItem = true;
+        stringBuilder.Append("Inventory: ");
+        foreach (Item i in items.Values) {
+            if (i.GetQuantity() > 0)
+            {
+                if (!firstItem)
+                {
+                    stringBuilder.Append(", ");
+                }
+                stringBuilder.Append(i.GetItemId().ToString() + ": " + i.GetQuantity().ToString());
+                firstItem = false;
+            }
+        }
+        stringBuilder.AppendLine();
+
         // faction loyalty
         int factionAllegience = EventManager.goblin_loyalty - EventManager.human_loyalty;
         // favor goblins
