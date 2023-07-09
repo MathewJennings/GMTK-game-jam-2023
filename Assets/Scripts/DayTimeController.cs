@@ -7,14 +7,15 @@ using UnityEngine.UI;
 public class DayTimeController : MonoBehaviour
 {
 
-    public static float secondsInADay = 30;
-    public static float secondsInAnHour = 6;
+    public static float secondsInADay = 6;
+    public static float secondsInAnHour = 2;
 
     public Color nightLightColor;
     public AnimationCurve nightTimeCurve;
     public Color dayLightColor = Color.white;
     public OverlayManager overlayManager;
     public PlayerMovement playerMovement;
+    public int numDaysToWin;
 
     float time = 0;
     public bool isTimePaused = false;
@@ -31,14 +32,31 @@ public class DayTimeController : MonoBehaviour
     }
     void Update()
     {
-        if(!isTimePaused)
+        if (isTimePaused)
+        {
+            return;
+        } else if (!isTimePaused)
         {
             time += Time.deltaTime;
         }
         int numDays = (int)(time / secondsInADay);
-        if( numDays > currentDay)
+        bool dayTransitioned = numDays > currentDay;
+        if (dayTransitioned)
         {
             currentDay = numDays;
+        }
+        if (currentDay >= numDaysToWin)
+        {
+            overlayManager.GetComponent<OverlayManager>().GameOverTransition(
+                "You Did It. You Survived",
+                "Despite all of the odds, you, a humble goblin farmer living between two warring factions have survived the war. Were you able to live proudly? Or did you need to do what it took to survive. Maybe for another goblin, the conditions would have been different.",
+                true,
+                "Try Again",
+                // Restart manager will 
+                () => FindAnyObjectByType<RestartManager>().Restart()
+            );
+        } else if (dayTransitioned)
+        {
             overlayManager.DayTransition(currentDay);
         }
         float numSecRemaining = time % secondsInADay;
