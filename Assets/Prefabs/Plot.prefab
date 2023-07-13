@@ -231,12 +231,12 @@ MonoBehaviour:
   seed: {fileID: 0}
   isWatered: 0
   isDesolate: 0
-  hoursUnusable: 0
   daysUnusable: 4
   timeDesolate: 0
   timePlanted: 0
   timeWatered: 0
   timeOutOfWater: 0
+  plotWaterDurationInHours: 4
   spriteRenderer: {fileID: 8114517396543361322}
   desolate: {fileID: 21300000, guid: 6196aec8a288bcd49bc72e347d72f7e1, type: 3}
   barren: {fileID: 449031696, guid: 43637c696ef63da40838c03ca3699744, type: 3}

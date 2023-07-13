@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class Plot : MonoBehaviour
 {
-
     public Seed seed;
     public bool isWatered;
     public bool isDesolate;
@@ -14,6 +13,7 @@ public class Plot : MonoBehaviour
     public float timePlanted = 0f;
     public float timeWatered = 0f;
     public float timeOutOfWater = 0f;
+    public float plotWaterDurationInHours = 0f;
     public SpriteRenderer spriteRenderer;
     public Sprite desolate;
     public Sprite barren;
@@ -70,20 +70,22 @@ public class Plot : MonoBehaviour
     }
     private void checkWater()
     {
-        if (isWatered)
+        if (!isWatered)
         {
-            timeSpentWatered += Time.deltaTime;
-            if (outOfWater())
+            return;
+        }
+
+        timeSpentWatered += Time.deltaTime;
+        if (outOfWater())
+        {
+            isWatered = false;
+            timeOutOfWater = dayTimeController.getCurrentTimeSeconds();
+            updateSprite(seed == null ? barren : seeded);
+            if (!firstCropDried)
             {
-                isWatered = false;
-                timeOutOfWater = dayTimeController.getCurrentTimeSeconds();
-                updateSprite(seed == null ? barren : seeded);
-                if (!firstCropDried)
-                {
-                    firstCropDried = true;
-                    eventManager.PrintResult("The water evaporated due to the heat.", EventManager.tutorialMessageTime);
-                    eventManager.PrintResultAfterDelay(EventManager.tutorialMessageTime, "Better water it again if you hope to ever harvest it. (E)", EventManager.tutorialMessageTime);
-                }
+                firstCropDried = true;
+                eventManager.PrintResult("The water evaporated due to the heat.", EventManager.tutorialMessageTime);
+                eventManager.PrintResultAfterDelay(EventManager.tutorialMessageTime, "Better water it again if you hope to ever harvest it. (E)", EventManager.tutorialMessageTime);
             }
         }
     }
@@ -107,14 +109,15 @@ public class Plot : MonoBehaviour
     {
         return dayTimeController.getCurrentTimeSeconds() >= timeDesolate + (DayTimeController.secondsInADay * daysUnusable);
     }
-    
+
     private bool outOfWater()
     {
-        if (seed != null)
-        {
-            return dayTimeController.getCurrentTimeSeconds() >= timeWatered + seed.getWaterDurationTime();
-        }
-        return false;
+        float waterDuration =
+            seed == null ?
+            plotWaterDurationInHours * DayTimeController.secondsInAnHour :
+            seed.getWaterDurationTime();
+        
+        return dayTimeController.getCurrentTimeSeconds() >= timeWatered + waterDuration;
     }
 
     private void checkDead()
